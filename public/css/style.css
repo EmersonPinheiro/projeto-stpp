@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=La+Belle+Aurore');
+@font-face {
+    font-family: Mistral;
+    src: url(../fonts/mistral.ttf);
+}
+
+/* TAGS EM GERAL */
+
+body {
+  background-color: #CFD8DC;
+  padding-top: 70px;
+  font-family: 'Lato', sans-serif;
+  color: #263238;
+}
+
+label {
+  font-weight: lighter;
+}
+
+.content {
+  margin-bottom: 20px;
+}
+
+.quadro {
+  background-color: #fff;
+  border-radius: 2px;
+  margin: 10px 0;
+  padding: 30px;
+}
+
+/* PÁGINA INICIAL */
+
+.quadro-login {
+  background-color: #fff;
+  border-radius: 2px;
+  margin: 10px 0;
+}
+
+.quadro-form-login {
+  padding: 30px;
+}
+
+.quadro-info {
+  background-image: url("../books.jpg");
+  border-radius: 2px;
+  margin: 10px 0;
+  min-height: 314px;
+  padding: 30px;
+}
+
+.info {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #2c3e50;
+  padding: 15px;
+}
+
+.quadro-passos {
+  min-height: 200px;
+  box-shadow: 1px 1px .5px #90A4AE;
+}
+
+.titulo {
+  border-bottom: 1px solid #CFD8DC;
+  padding-bottom: 5px;
+}
+
+/* ABAS DOS FORMULÁRIOS DE LOGIN E CADASTRO */
+
+ul.nav {
+  background-color: #ECEFF1;
+}
+
+ul.nav a {
+  background-color: #f2f2f2;
+}
+
+.nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover {
+  border: 1px solid #fff;
+}
+
+/* NAVBAR */
+
+.navbar-outro {
+  background-color: #1565C0;
+  color: #ecf0f1;
+}
+
+.navbar-outro .navbar-link {
+  background-color: #1565C0;
+  color: #ecf0f1;
+}
+
+.navbar-outro .navbar-link:hover {
+  background-color: #0D47A1;
+  color: #ecf0f1;
+}
+
+.navbar-outro .navbar-link:focus {
+  background-color: #0D47A1;
+  color: #ecf0f1;
+}
+
+.navbar-outro .navbar-brand {
+  color: #ecf0f1;
+  font-family: 'Mistral';
+  font-size: 24pt;
+}
+
+.navbar-outro .navbar-toggle span{
+  background-color: #ecf0f1;
+}
+
+.navbar-outro .active {
+  background-color: #0D47A1;
+}
+
+/* FOOTER */
+
+.footer {
+  background-color: #B0BEC5;
+  padding: 10px;
+}
+
+.footer p {
+  margin-bottom: 0;
+}
+
+.footer-homepage .copy {
+  border-top: 1px solid #90A4AE;
+  padding-top: 10px;
+}
+
+.footer-homepage {
+  background-color: #B0BEC5;
+  color: #263238;
+}
+
+.quadro-footer {
+  padding: 30px 0;
+}
+
+.footer-homepage .titulo-footer {
+  border-bottom: 1px solid #90A4AE;
+  padding-bottom: 5px;
+}
+
+/* PAINEL */
+
+.quadro-painel {
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.painel-propostas {
+  margin-right: -10px;
+}
+
+.painel-propostas .panel-body {
+  min-height: 300px;
+  max-height: 450px;
+  overflow: auto;
+}
+
+.painel-notificacoes {
+  margin-left: -10px;
+}
+
+.painel-notificacoes .panel-body {
+  min-height: 300px;
+  max-height: 450px;
+  overflow: auto;
+}
+
+.painel-notificacoes .panel-body .alert {
+  margin-bottom: 5px;
+}
+
+.list-group {
+  margin-bottom: 5px;
+}
+
+.list-group .titulo-lista {
+  background-color: #f5f5f5;
+}
+
+/* INFORMAÇÕES DA PROPOSTA */
+.painel-info-proposta .panel-body, .painel-info-proposta .panel-footer {
+  padding: 20px 40px;
+}
+
+.painel-info-proposta .titulo {
+  margin-top: 30px;
+}
