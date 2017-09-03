@@ -23,14 +23,14 @@ class CreateObraPalavrasChaveTable extends Migration
         if (Schema::hasTable($this->set_schema_table)) return;
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('Obra_cod_obra');
-            $table->integer('Palavras_Chave_cod_pchave');
+            $table->increments('Obra_cod_obra')->unsigned();
+            $table->integer('Palavras_Chave_cod_pchave')->unsigned();
 
             $table->index(["Obra_cod_obra"], 'fk_Obra_has_Palavras_Chave_Obra1_idx');
 
             $table->index(["Palavras_Chave_cod_pchave"], 'fk_Obra_has_Palavras_Chave_Palavras_Chave1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Obra_cod_obra', 'fk_Obra_has_Palavras_Chave_Obra1_idx')
                 ->references('cod_obra')->on('Obra')
                 ->onDelete('no action')

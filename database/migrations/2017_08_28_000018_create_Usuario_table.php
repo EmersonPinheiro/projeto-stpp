@@ -23,15 +23,16 @@ class CreateUsuarioTable extends Migration
         if (Schema::hasTable($this->set_schema_table)) return;
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('endereco_email');
+            $table->increments('cod_usuario');
+            $table->string('endereco_email', 100);
             $table->string('senha', 30)->nullable();
-            $table->string('Pessoa_cpf', 11);
+            $table->integer('Pessoa_cod_pessoa')->unsigned();
 
-            $table->index(["Pessoa_cpf"], 'fk_Usuario_Pessoa1_idx');
-
-
-            $table->foreign('Pessoa_cpf', 'fk_Usuario_Pessoa1_idx')
-                ->references('cpf')->on('Pessoa')
+            $table->index(["Pessoa_cod_pessoa"], 'fk_Usuario_Pessoa1_idx');
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
+            $table->foreign('Pessoa_cod_pessoa', 'fk_Usuario_Pessoa1_idx')
+                ->references('cod_pessoa')->on('Pessoa')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

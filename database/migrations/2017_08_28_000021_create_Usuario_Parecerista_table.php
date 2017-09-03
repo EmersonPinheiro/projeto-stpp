@@ -24,16 +24,16 @@ class CreateUsuarioPareceristaTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('cod_parecerista');
-            $table->string('Usuario_endereco_email', 100);
-            $table->integer('Departamento_cod_departamento');
+            $table->integer('Usuario_cod_usuario')->unsigned();
+            $table->integer('Departamento_cod_departamento')->unsigned();
 
             $table->index(["Departamento_cod_departamento"], 'fk_Usuario_Parecerista_Departamento1_idx');
 
-            $table->index(["Usuario_endereco_email"], 'fk_Usuario_Parecerista_Usuario1_idx');
-
-
-            $table->foreign('Usuario_endereco_email', 'fk_Usuario_Parecerista_Usuario1_idx')
-                ->references('endereco_email')->on('Usuario')
+            $table->index(["Usuario_cod_usuario"], 'fk_Usuario_Parecerista_Usuario1_idx');
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
+            $table->foreign('Usuario_cod_usuario', 'fk_Usuario_Parecerista_Usuario1_idx')
+                ->references('cod_usuario')->on('Usuario')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 

@@ -25,11 +25,11 @@ class CreateOficioAlteracoesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_oficio');
             $table->string('url_documento', 100)->nullable();
-            $table->integer('Proposta_cod_proposta');
+            $table->integer('Proposta_cod_proposta')->unsigned();
 
             $table->index(["Proposta_cod_proposta"], 'fk_Oficio_Alteracoes_Proposta1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Proposta_cod_proposta', 'fk_Oficio_Alteracoes_Proposta1_idx')
                 ->references('cod_proposta')->on('Proposta')
                 ->onDelete('no action')

@@ -32,15 +32,15 @@ class CreateObraTable extends Migration
             $table->smallInteger('ano_publicacao')->nullable();
             $table->string('resumo')->nullable();
             $table->integer('num_paginas')->nullable();
-            $table->integer('Proposta_cod_prop');
-            $table->integer('Autor_cod_autor');
+            $table->integer('Proposta_cod_proposta')->unsigned();
+            $table->integer('Autor_cod_autor')->unsigned();
 
-            $table->index(["Proposta_cod_prop"], 'fk_Obra_Proposta1_idx');
+            $table->index(["Proposta_cod_proposta"], 'fk_Obra_Proposta1_idx');
 
             $table->index(["Autor_cod_autor"], 'fk_Obra_Autor1_idx');
-
-
-            $table->foreign('Proposta_cod_prop', 'fk_Obra_Proposta1_idx')
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
+            $table->foreign('Proposta_cod_proposta', 'fk_Obra_Proposta1_idx')
                 ->references('cod_proposta')->on('Proposta')
                 ->onDelete('no action')
                 ->onUpdate('no action');

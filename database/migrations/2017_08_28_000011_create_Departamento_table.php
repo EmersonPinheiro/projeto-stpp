@@ -25,11 +25,12 @@ class CreateDepartamentoTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_departamento');
             $table->string('nome', 100)->nullable();
-            $table->integer('Setor_cod_setor');
+            $table->string('sigla', 10)->nullable();
+            $table->integer('Setor_cod_setor')->unsigned();
 
             $table->index(["Setor_cod_setor"], 'fk_Departamento_Setor1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Setor_cod_setor', 'fk_Departamento_Setor1_idx')
                 ->references('cod_setor')->on('Setor')
                 ->onDelete('no action')

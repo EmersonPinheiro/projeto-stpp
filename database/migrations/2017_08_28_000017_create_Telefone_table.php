@@ -26,13 +26,13 @@ class CreateTelefoneTable extends Migration
             $table->increments('cod_telefone');
             $table->string('numero', 14)->nullable();
             $table->integer('tipo')->nullable();
-            $table->string('Pessoa_cpf', 11);
+            $table->integer('Pessoa_cod_pessoa')->unsigned();
 
-            $table->index(["Pessoa_cpf"], 'fk_Telefone_Pessoa_idx');
-
-
-            $table->foreign('Pessoa_cpf', 'fk_Telefone_Pessoa_idx')
-                ->references('cpf')->on('Pessoa')
+            $table->index(["Pessoa_cod_pessoa"], 'fk_Telefone_Pessoa_idx');
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
+            $table->foreign('Pessoa_cod_pessoa', 'fk_Telefone_Pessoa_idx')
+                ->references('cod_pessoa')->on('Pessoa')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

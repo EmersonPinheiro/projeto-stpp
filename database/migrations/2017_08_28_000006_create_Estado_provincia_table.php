@@ -26,16 +26,17 @@ class CreateEstadoProvinciaTable extends Migration
             $table->increments('cod_est_prov');
             $table->string('sigla', 2)->nullable();
             $table->string('nome', 50)->nullable();
-            $table->integer('Pais_cod_pais');
+            $table->integer('Pais_cod_pais')->unsigned();
 
             $table->index(["Pais_cod_pais"], 'fk_Estado_provincia_Pais1_idx');
-
-
+        });
+        Schema::table('Estado_provincia', function (Blueprint $table) {
             $table->foreign('Pais_cod_pais', 'fk_Estado_provincia_Pais1_idx')
                 ->references('cod_pais')->on('Pais')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });
+
     }
 
     /**

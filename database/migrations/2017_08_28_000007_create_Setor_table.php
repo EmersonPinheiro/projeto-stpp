@@ -25,11 +25,11 @@ class CreateSetorTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_setor');
             $table->string('nome', 100)->nullable();
-            $table->integer('Instituicao_cod_instituicao');
+            $table->integer('Instituicao_cod_instituicao')->unsigned();
 
             $table->index(["Instituicao_cod_instituicao"], 'fk_Setor_Instituicao1_idx');
-
-
+        });
+        Schema::table('Setor', function (Blueprint $table) {
             $table->foreign('Instituicao_cod_instituicao', 'fk_Setor_Instituicao1_idx')
                 ->references('cod_instituicao')->on('Instituicao')
                 ->onDelete('no action')

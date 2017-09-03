@@ -25,11 +25,11 @@ class CreateAreaConhecimentoTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_area_conhec');
             $table->string('nome', 100)->nullable();
-            $table->integer('Grande_Area_cod_grande_area');
+            $table->integer('Grande_Area_cod_grande_area')->unsigned();
 
             $table->index(["Grande_Area_cod_grande_area"], 'fk_Area_Conhecimento_Grande_Area1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Grande_Area_cod_grande_area', 'fk_Area_Conhecimento_Grande_Area1_idx')
                 ->references('cod_grande_area')->on('Grande_Area')
                 ->onDelete('no action')

@@ -28,11 +28,11 @@ class CreateMaterialTable extends Migration
             $table->string('url_documento', 150)->nullable();
             $table->string('url_imagens', 150)->nullable();
             $table->integer('edicao')->nullable();
-            $table->integer('Obra_cod_obra');
+            $table->integer('Obra_cod_obra')->unsigned();
 
             $table->index(["Obra_cod_obra"], 'fk_Material_Obra1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Obra_cod_obra', 'fk_Material_Obra1_idx')
                 ->references('cod_obra')->on('Obra')
                 ->onDelete('no action')

@@ -25,11 +25,11 @@ class CreateEspecialidadeTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_especialidade');
             $table->string('nome', 50)->nullable();
-            $table->integer('Subarea_cod_subarea');
+            $table->integer('Subarea_cod_subarea')->unsigned();
 
             $table->index(["Subarea_cod_subarea"], 'fk_Especialidade_Subarea1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Subarea_cod_subarea', 'fk_Especialidade_Subarea1_idx')
                 ->references('cod_subarea')->on('Subarea')
                 ->onDelete('no action')

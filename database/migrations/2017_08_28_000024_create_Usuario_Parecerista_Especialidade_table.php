@@ -23,14 +23,14 @@ class CreateUsuarioPareceristaEspecialidadeTable extends Migration
         if (Schema::hasTable($this->set_schema_table)) return;
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('Usuario_Parecerista_cod_parecerista');
-            $table->integer('Especialidade_cod_especialidade');
+            $table->increments('Usuario_Parecerista_cod_parecerista')->unsigned();
+            $table->integer('Especialidade_cod_especialidade')->unsigned();
 
             $table->index(["Especialidade_cod_especialidade"], 'fk_Usuario_Parecerista_has_Especialidade_Especialidade1_idx');
 
             $table->index(["Usuario_Parecerista_cod_parecerista"], 'fk_Usuario_Parecerista_has_Especialidade_Usuario_Parecerist_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Usuario_Parecerista_cod_parecerista', 'fk_Usuario_Parecerista_has_Especialidade_Usuario_Parecerist_idx')
                 ->references('cod_parecerista')->on('Usuario_Parecerista')
                 ->onDelete('no action')

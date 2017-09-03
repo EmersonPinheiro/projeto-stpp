@@ -23,14 +23,14 @@ class CreateAutorEspecialidadeTable extends Migration
         if (Schema::hasTable($this->set_schema_table)) return;
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('Autor_cod_autor');
-            $table->integer('Especialidade_cod_especialidade');
+            $table->increments('Autor_cod_autor')->unsigned();
+            $table->integer('Especialidade_cod_especialidade')->unsigned();
 
             $table->index(["Especialidade_cod_especialidade"], 'fk_Autor_has_Especialidade_Especialidade1_idx');
 
             $table->index(["Autor_cod_autor"], 'fk_Autor_has_Especialidade_Autor1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Autor_cod_autor', 'fk_Autor_has_Especialidade_Autor1_idx')
                 ->references('cod_autor')->on('Autor')
                 ->onDelete('no action')

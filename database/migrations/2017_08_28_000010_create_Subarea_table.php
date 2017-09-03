@@ -25,11 +25,11 @@ class CreateSubareaTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_subarea');
             $table->string('nome', 100)->nullable();
-            $table->integer('Area_Conhecimento_cod_area_conhec');
+            $table->integer('Area_Conhecimento_cod_area_conhec')->unsigned();
 
             $table->index(["Area_Conhecimento_cod_area_conhec"], 'fk_Subarea_Area_Conhecimento1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Area_Conhecimento_cod_area_conhec', 'fk_Subarea_Area_Conhecimento1_idx')
                 ->references('cod_area_conhec')->on('Area_Conhecimento')
                 ->onDelete('no action')

@@ -27,14 +27,14 @@ class CreateParecerTable extends Migration
             $table->string('url_documento', 150)->nullable();
             $table->integer('prazo_envio')->nullable();
             $table->date('data_envio')->nullable();
-            $table->integer('Usuario_Parecerista_cod_parecerista');
-            $table->integer('Proposta_cod_proposta');
+            $table->integer('Usuario_Parecerista_cod_parecerista')->unsigned();
+            $table->integer('Proposta_cod_proposta')->unsigned();
 
             $table->index(["Proposta_cod_proposta"], 'fk_Parecer_Proposta1_idx');
 
             $table->index(["Usuario_Parecerista_cod_parecerista"], 'fk_Parecer_Usuario_Parecerista1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Usuario_Parecerista_cod_parecerista', 'fk_Parecer_Usuario_Parecerista1_idx')
                 ->references('cod_parecerista')->on('Usuario_Parecerista')
                 ->onDelete('no action')

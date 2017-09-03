@@ -26,13 +26,13 @@ class CreateEmailTable extends Migration
             $table->increments('cod_email');
             $table->string('endereco', 100)->nullable();
             $table->integer('tipo')->nullable();
-            $table->string('Pessoa_cpf', 11);
+            $table->integer('Pessoa_cod_pessoa')->unsigned();
 
-            $table->index(["Pessoa_cpf"], 'fk_E-mail_Pessoa1_idx');
-
-
-            $table->foreign('Pessoa_cpf', 'fk_E-mail_Pessoa1_idx')
-                ->references('cpf')->on('Pessoa')
+            $table->index(["Pessoa_cod_pessoa"], 'fk_E-mail_Pessoa1_idx');
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
+            $table->foreign('Pessoa_cod_pessoa', 'fk_E-mail_Pessoa1_idx')
+                ->references('cod_pessoa')->on('Pessoa')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

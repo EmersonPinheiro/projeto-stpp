@@ -25,11 +25,11 @@ class CreateCidadeTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_cidade');
             $table->string('nome', 50)->nullable();
-            $table->integer('Estado_provincia_cod_est_prov');
+            $table->integer('Estado_provincia_cod_est_prov')->unsigned();
 
             $table->index(["Estado_provincia_cod_est_prov"], 'fk_Cidade_Estado_provincia1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Estado_provincia_cod_est_prov', 'fk_Cidade_Estado_provincia1_idx')
                 ->references('cod_est_prov')->on('Estado_provincia')
                 ->onDelete('no action')

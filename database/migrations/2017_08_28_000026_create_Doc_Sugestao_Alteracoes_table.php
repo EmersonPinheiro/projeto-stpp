@@ -25,11 +25,11 @@ class CreateDocSugestaoAlteracoesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_sug_alteracoes');
             $table->string('url_documento', 150)->nullable();
-            $table->integer('Proposta_cod_proposta');
+            $table->integer('Proposta_cod_proposta')->unsigned();
 
             $table->index(["Proposta_cod_proposta"], 'fk_Doc_Sugestao_Alteracoes_Proposta1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Proposta_cod_proposta', 'fk_Doc_Sugestao_Alteracoes_Proposta1_idx')
                 ->references('cod_proposta')->on('Proposta')
                 ->onDelete('no action')

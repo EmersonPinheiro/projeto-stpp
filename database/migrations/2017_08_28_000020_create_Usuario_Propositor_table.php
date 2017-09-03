@@ -24,13 +24,13 @@ class CreateUsuarioPropositorTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('cod_propositor');
-            $table->string('Usuario_endereco_email', 100);
+            $table->integer('Usuario_cod_usuario')->unsigned();
 
-            $table->index(["Usuario_endereco_email"], 'fk_Usuario_Autor_Usuario1_idx');
-
-
-            $table->foreign('Usuario_endereco_email', 'fk_Usuario_Autor_Usuario1_idx')
-                ->references('endereco_email')->on('Usuario')
+            $table->index(["Usuario_cod_usuario"], 'fk_Usuario_Autor_Usuario1_idx');
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
+            $table->foreign('Usuario_cod_usuario', 'fk_Usuario_Autor_Usuario1_idx')
+                ->references('cod_usuario')->on('Usuario')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

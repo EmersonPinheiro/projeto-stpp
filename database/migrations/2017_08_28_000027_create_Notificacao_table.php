@@ -26,11 +26,11 @@ class CreateNotificacaoTable extends Migration
             $table->increments('cod_notificacao');
             $table->string('descricao')->nullable();
             $table->date('data')->nullable();
-            $table->integer('Proposta_cod_proposta');
+            $table->integer('Proposta_cod_proposta')->unsigned();
 
             $table->index(["Proposta_cod_proposta"], 'fk_Notificacao_Proposta1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Proposta_cod_proposta', 'fk_Notificacao_Proposta1_idx')
                 ->references('cod_proposta')->on('Proposta')
                 ->onDelete('no action')

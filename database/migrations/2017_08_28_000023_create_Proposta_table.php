@@ -25,15 +25,15 @@ class CreatePropostaTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_proposta');
             $table->date('data_envio');
-            $table->enum('situacao', ['Submetida', 'Em avaliação', 'Aguardando parecer', 'Aguardando decisão do Conselho Editorial', 'Em trâmite'])->nullable();
-            $table->integer('Usuario_Propositor_cod_propositor');
-            $table->integer('Usuario_Adm_cod_adm');
+            $table->enum('situacao', ['Submetida', 'Em avaliação', 'Aguardando parecer', 'Aguardando decisão do Conselho Editorial', 'Em trâmite'])->nullable()->default('Submetida');
+            $table->integer('Usuario_Propositor_cod_propositor')->unsigned();
+            $table->integer('Usuario_Adm_cod_adm')->unsigned();
 
             $table->index(["Usuario_Propositor_cod_propositor"], 'fk_Proposta_Usuario_Autor1_idx');
 
             $table->index(["Usuario_Adm_cod_adm"], 'fk_Proposta_Usuario_Adm1_idx');
-
-
+        });
+        Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Usuario_Propositor_cod_propositor', 'fk_Proposta_Usuario_Autor1_idx')
                 ->references('cod_propositor')->on('Usuario_Propositor')
                 ->onDelete('no action')
