@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/','PagesController@home');
+Route::get('/enviar-proposta', 'PropostasController@create');
+Route::post('/enviar-proposta', 'PropostasController@store');

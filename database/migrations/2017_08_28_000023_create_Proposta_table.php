@@ -26,8 +26,8 @@ class CreatePropostaTable extends Migration
             $table->increments('cod_proposta');
             $table->date('data_envio');
             $table->enum('situacao', ['Submetida', 'Em avaliação', 'Aguardando parecer', 'Aguardando decisão do Conselho Editorial', 'Em trâmite'])->nullable()->default('Submetida');
-            $table->integer('Usuario_Propositor_cod_propositor')->unsigned();
-            $table->integer('Usuario_Adm_cod_adm')->unsigned();
+            $table->integer('Usuario_Propositor_cod_propositor')->unsigned()->nullable();
+            $table->integer('Usuario_Adm_cod_adm')->unsigned()->nullable();
 
             $table->index(["Usuario_Propositor_cod_propositor"], 'fk_Proposta_Usuario_Autor1_idx');
 

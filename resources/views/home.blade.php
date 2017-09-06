@@ -2,7 +2,7 @@
 @section('title', 'Home')
 
 @section('content')
-        <!-- CONTENT -->
+<!-- CONTENT -->
 <div class="content">
   <div class="container">
     <div class="row">
@@ -24,8 +24,8 @@
 
           <!-- ABAS DE LOGIN E CADASTRO -->
           <ul class="nav nav-tabs nav-justified">
-            <li class="active"><a href="#login" data-toggle="tab">Login</a></li>
-            <li><a href="#cadastro" data-toggle="tab">Cadastro</a></li>
+            <li class="active"><a href="#login" role="tab" data-toggle="tab">Login</a></li>
+            <li><a href="#cadastro" role="tab" data-toggle="tab">Cadastro</a></li>
           </ul>
 
           <!-- FORMULÁRIOS -->
@@ -33,7 +33,7 @@
             <div class="tab-content">
 
               <!-- LOGIN -->
-              <div class="tab-pane active" id="login">
+              <div role="tabpanel" class="tab-pane active" id="login">
                 <form action="painel-autor.html">
                   <div class="form-group">
                     <label for="email-login">E-mail</label>
@@ -55,8 +55,8 @@
               </div>
 
               <!-- CADASTRO -->
-              <div class="tab-pane" id="cadastro">
-                <form action="">
+              <div role="tabpanel" class="tab-pane" id="cadastro">
+                <form action="index.html">
 
                   <div class="form-group col-md-12">
                     <label>Nome</label>

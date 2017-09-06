@@ -24,16 +24,16 @@ class CreateObraTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('cod_obra');
-            $table->string('titulo', 100)->nullable();
+            $table->string('titulo', 100);
             $table->string('subtitulo', 100)->nullable();
-            $table->string('descricao');
+            $table->string('descricao')->nullable();
             $table->integer('volume')->nullable();
             $table->string('isbn', 13)->nullable();
             $table->smallInteger('ano_publicacao')->nullable();
             $table->string('resumo')->nullable();
             $table->integer('num_paginas')->nullable();
             $table->integer('Proposta_cod_proposta')->unsigned();
-            $table->integer('Autor_cod_autor')->unsigned();
+            $table->integer('Autor_cod_autor')->unsigned()->nullable();
 
             $table->index(["Proposta_cod_proposta"], 'fk_Obra_Proposta1_idx');
 

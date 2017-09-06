@@ -24,7 +24,7 @@ class CreateAutorTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('cod_autor');
-            $table->integer('categoria')->nullable();
+            $table->integer('categoria')->nullable()->default('1');
             $table->integer('Pessoa_cod_pessoa')->unsigned();
             $table->integer('Departamento_cod_departamento')->unsigned();
 
