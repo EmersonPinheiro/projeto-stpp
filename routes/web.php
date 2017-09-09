@@ -14,3 +14,7 @@
 Route::get('/','PagesController@home');
 Route::get('/enviar-proposta', 'PropostasController@create');
 Route::post('/enviar-proposta', 'PropostasController@store');
+Route::get('/painel', 'PropostasController@index');
+Route::get('/painel/{id?}', 'PropostasController@show');
+Route::get('/painel/{id?}/edit', 'PropostasController@edit');
+Route::post('/painel/{id?}/edit', 'PropostasController@update');

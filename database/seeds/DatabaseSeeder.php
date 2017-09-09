@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -54,21 +55,6 @@ class PaisTableSeeder extends Seeder
 
       DB::table('Pais')->insert([
             'nome' => 'Brasil',
-        ]);
-    }
-}
-
-class UserTableSeeder extends Seeder
-{
-
-    public function run()
-    {
-        DB::table('users')->delete();
-
-        DB::table('users')->insert([
-            'name'=>'asdfasfaf',
-            'email'=>'asdfadf@gmail.com',
-            'password'=>bcrypt('123456'),
         ]);
     }
 }
@@ -214,6 +200,39 @@ class PessoaTableSeeder extends Seeder
             'CEP'=>'84030000',
             'Cidade_cod_cidade'=>'1',
         ]);
+
+        DB::table('Pessoa')->insert([
+            'cpf'=>'09487845550',
+            'nome'=>'Maria',
+            'sobrenome'=>'da Silva',
+            'sexo'=>'F',
+            'logradouro'=>'Av. General 10',
+            'bairro'=>'Uvaranas',
+            'CEP'=>'84030000',
+            'Cidade_cod_cidade'=>'1',
+        ]);
+
+        DB::table('Pessoa')->insert([
+            'cpf'=>'09487775550',
+            'nome'=>'José',
+            'sobrenome'=>'da Silva',
+            'sexo'=>'M',
+            'logradouro'=>'Av. General 10',
+            'bairro'=>'Uvaranas',
+            'CEP'=>'84030000',
+            'Cidade_cod_cidade'=>'1',
+        ]);
+
+        DB::table('Pessoa')->insert([
+            'cpf'=>'11187845550',
+            'nome'=>'Joana',
+            'sobrenome'=>'da Silva',
+            'sexo'=>'F',
+            'logradouro'=>'Av. General 10',
+            'bairro'=>'Uvaranas',
+            'CEP'=>'84030000',
+            'Cidade_cod_cidade'=>'1',
+        ]);
     }
 }
 
@@ -254,9 +273,27 @@ class EmailTableSeeder extends Seeder
         DB::table('Email')->delete();
 
         DB::table('Email')->insert([
-            'endereco'=>str_random(10).'@exemplo.com',
+            'endereco'=>str_random(5).'@exemplo.com',
             'tipo'=>'1',
             'Pessoa_cod_pessoa'=>'1',
+        ]);
+
+        DB::table('Email')->insert([
+            'endereco'=>str_random(5).'@exemplo.com',
+            'tipo'=>'1',
+            'Pessoa_cod_pessoa'=>'2',
+        ]);
+
+        DB::table('Email')->insert([
+            'endereco'=>str_random(5).'@exemplo.com',
+            'tipo'=>'1',
+            'Pessoa_cod_pessoa'=>'3',
+        ]);
+
+        DB::table('Email')->insert([
+            'endereco'=>str_random(5).'@exemplo.com',
+            'tipo'=>'1',
+            'Pessoa_cod_pessoa'=>'4',
         ]);
     }
 }
@@ -269,7 +306,7 @@ class TecnicoCatalografiaTableSeeder extends Seeder
 
         DB::table('Tecnico_Catalografia')->insert([
             'funcao'=>'1',
-            'Pessoa_cod_pessoa'=>'1',
+            'Pessoa_cod_pessoa'=>'2',
         ]);
     }
 }
@@ -286,6 +323,24 @@ class TelefoneTableSeeder extends Seeder
             'tipo'=>'1',
             'Pessoa_cod_pessoa'=>'1',
         ]);
+
+        DB::table('Telefone')->insert([
+            'numero'=>'45988888888',
+            'tipo'=>'1',
+            'Pessoa_cod_pessoa'=>'2',
+        ]);
+
+        DB::table('Telefone')->insert([
+            'numero'=>'45999999999',
+            'tipo'=>'1',
+            'Pessoa_cod_pessoa'=>'3',
+        ]);
+
+        DB::table('Telefone')->insert([
+            'numero'=>'45911111111',
+            'tipo'=>'1',
+            'Pessoa_cod_pessoa'=>'3',
+        ]);
     }
 }
 
@@ -296,9 +351,21 @@ class UsuarioTableSeeder extends Seeder
         DB::table('Usuario')->delete();
 
         DB::table('Usuario')->insert([
-            'endereco_email'=>str_random(10).'@exemplo.com',
+            'endereco_email'=>str_random(5).'@exemplo.com',
             'senha'=>'secret',
             'Pessoa_cod_pessoa'=>'1',
+        ]);
+
+        DB::table('Usuario')->insert([
+            'endereco_email'=>str_random(5).'@exemplo.com',
+            'senha'=>'secret',
+            'Pessoa_cod_pessoa'=>'3',
+        ]);
+
+        DB::table('Usuario')->insert([
+            'endereco_email'=>str_random(5).'@exemplo.com',
+            'senha'=>'secret',
+            'Pessoa_cod_pessoa'=>'4',
         ]);
     }
 }
@@ -337,7 +404,7 @@ class UsuarioPareceristaTableSeeder extends Seeder
         DB::table('Usuario_Parecerista')->delete();
 
         DB::table('Usuario_Parecerista')->insert([
-            'Usuario_cod_usuario'=>'1',
+            'Usuario_cod_usuario'=>'2',
             'Departamento_cod_departamento'=>'1',
         ]);
     }
@@ -351,7 +418,7 @@ class UsuarioAdmTableSeeder extends Seeder
         DB::table('Usuario_Adm')->delete();
 
         DB::table('Usuario_Adm')->insert([
-            'Usuario_cod_usuario'=>'1',
+            'Usuario_cod_usuario'=>'3',
         ]);
     }
 }
@@ -364,7 +431,7 @@ class PropostaTableSeeder extends Seeder
         DB::table('Proposta')->delete();
 
         DB::table('Proposta')->insert([
-            'data_envio'=>'2017-01-09',
+            'data_envio'=>Carbon::now('America/Sao_Paulo')->format('Y-m-d'),
             'Usuario_Propositor_cod_propositor'=>'1',
             'Usuario_Adm_cod_adm'=>'1',
         ]);
@@ -434,7 +501,7 @@ class ParecerTableSeeder extends Seeder
         DB::table('Parecer')->insert([
             'url_documento'=>str_random(50),
             'prazo_envio'=>'60',
-            'data_envio'=>'2017-01-09',
+            'data_envio'=>Carbon::now('America/Sao_Paulo')->format('Y-m-d'),
             'Usuario_Parecerista_cod_parecerista'=>'1',
             'Proposta_cod_proposta'=>'1',
         ]);
