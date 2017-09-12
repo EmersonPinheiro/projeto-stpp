@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PropostaFormRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PropostasController extends Controller
 {
@@ -48,8 +49,7 @@ class PropostasController extends Controller
           //RECUPERAR O USUÁRIO LOGADO
 
         ]);*/
-
-
+/*
         $idProposta = DB::table('Proposta')->insertGetID([
           'data_envio'=>Carbon::now('America/Sao_Paulo')->format('Y-m-d'),
           'Usuario_propositor_cod_propositor'=>'1',
@@ -134,7 +134,32 @@ class PropostasController extends Controller
           'Proposta_cod_proposta'=>$idProposta,
           'Autor_cod_autor'=>$idAutor,
         ]);
+*/
+        //UPLOAD DOS ARQUIVOS
+/*
+        $docpath = $request->file('documento')->store('docs');
+        $file= storage_path()."/app/". $docpath;
 
+        $headers = [
+              'Content-Type' => 'application/pdf',
+           ];
+
+        return response()->file($file);
+*/
+
+        $docpath = Storage::putFile('documentos', $request->file('documento'), 'public');
+        //$imgpath = Storage::putFile('imagens', $request->file('imagens'), 'public');
+        $url_documento = Storage::url($docpath);
+        //$url_imagens = Storage::url($imgpath);
+        var_dump($docpath);
+        DB::table('Material')->insert([
+          //'edicao'=>
+          //'versao'=>
+          'url_documento'=>$docpath,
+          //'url_imagens'=>$url_imagens,
+          'Obra_cod_obra'=>$idObra,
+        ]);
+/*
         $idPalavraChave = DB::table('Palavras_Chave')->insertGetID([
           'palavra'=>$request->get('palavra'),
         ]);
@@ -155,8 +180,8 @@ class PropostasController extends Controller
           'tipo'=>'1',
           'Pessoa_cod_pessoa'=>$idPessoa,
         ]);
-
-        //return redirect('/enviar-proposta')->with('status', 'Proposta enviada! Sua identificação única é '.$idProposta);
+*/
+      //  return redirect('/enviar-proposta')->with('status', 'Proposta enviada! Sua identificação única é '.$idProposta);
     }
 
     /**
@@ -177,14 +202,19 @@ class PropostasController extends Controller
                     ->select('Pessoa.*')
                     ->get();
 
-
         $palavrasChave = DB::table('Palavras_Chave')
                     ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
                     ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
                     ->select('Palavras_Chave.palavra')
                     ->get();
 
-        return view('propostas.show', compact('obra', 'autores', 'palavrasChave'));
+        $material = DB::table('Material')
+                    ->join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
+                    ->where('cod_obra', $id)
+                    ->select('Material.*')
+                    ->first();
+
+        return view('propostas.show', compact('obra', 'autores', 'palavrasChave', 'material'));
     }
 
     /**
@@ -260,6 +290,6 @@ class PropostasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //CRIAR FUNÇÃO DE PERMISSÃO
     }
 }

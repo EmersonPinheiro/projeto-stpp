@@ -84,7 +84,7 @@
 
               <h4 class="titulo">Arquivos</h4>
               <h5><i>Versão 1</i></h5>
-              <p><strong>Documento (doc, docx): </strong>documento.doc<a href="">&nbsp;&nbsp;&nbsp;Baixar </a>| <a href="">Visualizar PDF</a></p>
+              <p><strong>Documento (doc, docx): </strong>documento.doc<a href="/painel/{!! $obra->cod_obra !!}/downloadMat">&nbsp;&nbsp;&nbsp;Baixar </a>| <a href="/painel/{!! $obra->cod_obra !!}/showMat">Visualizar PDF</a></p>
               <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
               <a href="" role="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;&nbsp;&nbsp;Enviar Nova Versão da Obra</a>
               <div class="modal fade" id="myModal">

@@ -17,7 +17,7 @@
             <div class="panel-body text-justify">
               <a href="/painel"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
               <!--FORMULÁRIO-->
-              <form method="post">
+              <form method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
 
                 @if (session('status'))
@@ -130,14 +130,13 @@
                 <!--ARQUIVOS-->
                 <h3 class="titulo col-md-12">Arquivos</h3>
                 <div class="form-group col-md-6">
-                  <!--
                   <label>Documento (.doc ou .docx)</label>
-                  <input type="file" class="form-control">
+                  <input type="file" id="documento" name="documento" class="form-control">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="cad7">Imagens (.rar)</label>
-                  <input type="file" class="form-control">
-                </div>-->
+                  <input type="file" id="imagens" name="imagens" class="form-control">
+                </div>
                 <button type="submit" class="btn btn-primary btn-block">Submeter</button>
               </form>
             </div>

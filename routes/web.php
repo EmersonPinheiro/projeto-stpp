@@ -18,3 +18,5 @@ Route::get('/painel', 'PropostasController@index');
 Route::get('/painel/{id?}', 'PropostasController@show');
 Route::get('/painel/{id?}/edit', 'PropostasController@edit');
 Route::post('/painel/{id?}/edit', 'PropostasController@update');
+Route::get('/painel/{id?}/downloadMat', 'MaterialController@downloadMaterial');
+Route::get('/painel/{id?}/showMat', 'MaterialController@showMaterial');
