@@ -13,6 +13,8 @@ class MaterialController extends Controller
       $url = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento')->first();
       $pathToFile = storage_path()."/app/".$url->url_documento;
       return response()->download($pathToFile, 'documento.pdf');
+
+      //FAZER O DOWNLOAD DO ZIP DAS IMAGENS
     }
 
     public function showMaterial($id)
