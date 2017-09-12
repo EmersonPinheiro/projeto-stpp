@@ -14,7 +14,7 @@ class MaterialController extends Controller
       $pathToFile = storage_path()."/app/".$url->url_documento;
       return response()->download($pathToFile, 'documento.pdf');
 
-      //FAZER O DOWNLOAD DO ZIP DAS IMAGENS
+      //IMPLEMENTAR DOWNLOAD DO ZIP DAS IMAGENS
     }
 
     public function showMaterial($id)
