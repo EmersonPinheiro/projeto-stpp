@@ -18,5 +18,10 @@ Route::get('/painel', 'PropostasController@index');
 Route::get('/painel/{id?}', 'PropostasController@show');
 Route::get('/painel/{id?}/edit', 'PropostasController@edit');
 Route::post('/painel/{id?}/edit', 'PropostasController@update');
+<<<<<<< HEAD
 Route::get('/painel/{id?}/downloadMat', 'MaterialController@downloadMaterial');
 Route::get('/painel/{id?}/showMat', 'MaterialController@showMaterial');
+=======
+Route::get('/cadastro', 'PropositorController@create');
+ROute::post('/cadastro', 'PropositorController@store');
+>>>>>>> c0fa4d43eb1ee3840ba8736434ca36311129e620
