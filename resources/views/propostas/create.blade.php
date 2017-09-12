@@ -15,7 +15,7 @@
             </div>
 
             <div class="panel-body text-justify">
-              <a href="painel-autor.html"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
+              <a href="/painel"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
               <!--FORMULÁRIO-->
               <form method="post">
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
@@ -44,11 +44,9 @@
                   <label>Resumo</label>
                   <textarea type="text" class="form-control" id="resumo" name="resumo" placeholder="Resumo"></textarea>
                 </div>
-
-
                 <div class="form-group col-md-12">
                   <label>Palavras-chave</label>
-                  <textarea type="text" id="palavras-chave" name="palavras-chave" class="form-control" placeholder="Palavras-chave"></textarea>
+                  <textarea type="text" class="form-control" id="palavra" name="palavra" placeholder="Resumo"></textarea>
                 </div>
 
 
@@ -144,7 +142,7 @@
               </form>
             </div>
             <div class="panel-footer">
-              <a href="painel-autor.html"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
+              <a href="/painel"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
             </div>
           </div> <!-- painel -->
         </div> <!-- /quadro-painel /painel-info-propostas -->

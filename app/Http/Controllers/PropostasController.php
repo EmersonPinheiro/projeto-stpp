@@ -16,7 +16,12 @@ class PropostasController extends Controller
      */
     public function index()
     {
-        //
+      //CRIAR FUNÇÃO QUE VERIFICA O USUÁRIO LOGADO
+      $propostas = DB::table('Obra')
+                        ->join('Proposta', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
+                        ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.descricao', 'Obra.cod_obra', 'Proposta.data_envio')
+                        ->get();
+      return view('painel', compact('propostas'));
     }
 
     /**
@@ -37,28 +42,20 @@ class PropostasController extends Controller
      */
     public function store(PropostaFormRequest $request)
     {
-      //DB::transaction(function(){
+
+        /*$idPropositor = DB::table('Usuario_propositor')->insertGetID([
+
+          //RECUPERAR O USUÁRIO LOGADO
+
+        ]);*/
+
 
         $idProposta = DB::table('Proposta')->insertGetID([
           'data_envio'=>Carbon::now('America/Sao_Paulo')->format('Y-m-d'),
+          'Usuario_propositor_cod_propositor'=>'1',
         ]);
-/*
-        //VERIFICA A EXISTÊNCIA DO PAÍS INSERIDO
-        $query = DB::table('Pais')->select('cod_pais')->where('nome', $request->get('pais'))->get();
-        if (!$query) {
 
-
-          //VERIFICA A EXISTÊNCIA DO ESTADO INSERIDO
-          $query = DB::table('Estado_provincia')->select('cod_est_prov')->where('nome', $request->get('estado'))->get();
-          if (!$query) {
-
-
-           //VERIFICA A EXISTÊNCIA DA CIDADE INSERIDA
-           $query = DB::table('Cidade')->select('cod_cidade')->where('nome', $request->get('cidade'))->get();
-           if (!$query) {
-           }
-          }
-        }*/
+        //VERIFICAR INSERSÃO DE VALORES IGUAIS
 
         $idPais = DB::table('Pais')->insertGetID([
           'nome'=>$request->get('pais'),
@@ -139,7 +136,7 @@ class PropostasController extends Controller
         ]);
 
         $idPalavraChave = DB::table('Palavras_Chave')->insertGetID([
-          'palavra'=>$request->get('palavras_chave'),
+          'palavra'=>$request->get('palavra'),
         ]);
 
         DB::table('Obra_Palavras_Chave')->insert([
@@ -159,9 +156,7 @@ class PropostasController extends Controller
           'Pessoa_cod_pessoa'=>$idPessoa,
         ]);
 
-        return redirect('/enviar-proposta')->with('status', 'Proposta enviada! Sua identificação única é '.$idProposta);
-          //return $request->all();
-    // });
+        //return redirect('/enviar-proposta')->with('status', 'Proposta enviada! Sua identificação única é '.$idProposta);
     }
 
     /**
@@ -172,7 +167,24 @@ class PropostasController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $obra = DB::table('Obra')->where('cod_obra', $id)->first();
+
+        $autores = DB::table('Pessoa')
+                    ->join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
+                    ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
+                    ->where('cod_obra', $id)
+                    ->select('Pessoa.*')
+                    ->get();
+
+
+        $palavrasChave = DB::table('Palavras_Chave')
+                    ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
+                    ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
+                    ->select('Palavras_Chave.palavra')
+                    ->get();
+
+        return view('propostas.show', compact('obra', 'autores', 'palavrasChave'));
     }
 
     /**
@@ -183,7 +195,23 @@ class PropostasController extends Controller
      */
     public function edit($id)
     {
-        //
+      $obra = DB::table('Obra')->where('cod_obra', $id)->first();
+
+      $autores = DB::table('Pessoa')
+                  ->join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
+                  ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
+                  ->where('cod_obra', $id)
+                  ->select('Pessoa.*')
+                  ->get();
+
+
+      $palavrasChave = DB::table('Palavras_Chave')
+                  ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
+                  ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
+                  ->select('Palavras_Chave.palavra')
+                  ->get();
+
+      return view('propostas.edit', compact('obra', 'autores', 'palavrasChave'));
     }
 
     /**
@@ -193,9 +221,35 @@ class PropostasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PropostaFormRequest $request, $id)
     {
-        //
+        DB::table('Obra')->where('cod_obra', $id)->update([
+          'titulo' => $request->get('titulo'),
+          'subtitulo' => $request->get('subtitulo'),
+          'descricao' => $request->get('descricao'),
+          'resumo' => $request->get('resumo'),
+        ]);
+
+        DB::table('Palavras_Chave')->where('cod_obra', $id)
+        ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
+        ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
+        ->update([
+          'palavra' => $request->get('palavra'),
+        ]);
+/*
+        $autores = DB::table('Pessoa')
+                    ->join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
+                    ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
+                    ->where('cod_obra', $id)
+                    ->select('Pessoa.*')
+                    ->get();
+        $palavrasChave = DB::table('Palavras_Chave')
+                    ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
+                    ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
+                    ->select('Palavras_Chave.palavra')
+                    ->get();*/
+
+        return redirect(action('PropostasController@show', $id))->with('status', 'A proposta '.$id.' foi atualizada!');
     }
 
     /**

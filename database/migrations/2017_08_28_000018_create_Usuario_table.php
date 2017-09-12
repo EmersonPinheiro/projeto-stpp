@@ -25,7 +25,7 @@ class CreateUsuarioTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_usuario');
             $table->string('endereco_email', 100);
-            $table->string('senha', 30)->nullable();
+            $table->string('senha', 30);
             $table->integer('Pessoa_cod_pessoa')->unsigned();
 
             $table->index(["Pessoa_cod_pessoa"], 'fk_Usuario_Pessoa1_idx');
