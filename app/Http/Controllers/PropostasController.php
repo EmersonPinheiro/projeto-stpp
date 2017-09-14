@@ -205,6 +205,7 @@ class PropostasController extends Controller
         $palavrasChave = DB::table('Palavras_Chave')
                     ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
                     ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
+                    ->where('cod_obra', $id)
                     ->select('Palavras_Chave.palavra')
                     ->get();
 
