@@ -13,6 +13,7 @@
             Editora UEPG
             <!-- <img src="editora_uepg.png" alt="Brand" width="110"/> -->
           </a>
+          <p class="navbar-text desc">Sistema de Submissão </br/>Online de Propostas</p>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
