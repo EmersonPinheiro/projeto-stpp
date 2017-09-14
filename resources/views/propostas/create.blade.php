@@ -18,7 +18,10 @@
               <a href="/painel"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
               <!--FORMULÁRIO-->
               <form method="post" enctype="multipart/form-data">
-                <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+
+                @foreach ($errors->all() as $error)
+                    <p class="alert alert-danger">{{ $error }}</p>
+                @endforeach
 
                 @if (session('status'))
                     <div class="alert alert-success">
@@ -26,6 +29,7 @@
                     </div>
                 @endif
 
+                <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                 <!--PROPOSTA-->
                 <h3 class="titulo col-md-12">Informações da Obra</h3>
                 <div class="form-group col-md-6">

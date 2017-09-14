@@ -20,6 +20,10 @@
 
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
 
+
+                @foreach ($errors->all() as $error)
+                    <p class="alert alert-danger">{{ $error }}</p>
+                @endforeach
                 @if (session('status'))
                     <div class="alert alert-success">
                         {{ session('status') }}
@@ -53,11 +57,13 @@
                   <label for="cad5">Autor</label>
                   @foreach($autores as $autor)
                   <label>Nome</label>
-                    <input type="text" class="form-control" id="cad5" value="{!! $autor->nome !!}">
+                    <input type="text" class="form-control" id="cad5" name="nome" value="{!! $autor->nome !!}">
                   <label>Sobrenome</label>
-                    <input type="text" class="form-control" id="cad5" value="{!! $autor->sobrenome !!}">
+                    <input type="text" class="form-control" id="cad5" name="sobrenome" value="{!! $autor->sobrenome !!}">
                   @endforeach
                 </div>
+
+                <!-- IMPLEMENTAR EDIÇÃO PARA OS CAMPOS SEGUINTES -->
                 <div class="form-group col-md-6">
                   <label for="cad6">ISBN</label>
                   <input type="text" class="form-control" id="cad6" value="{!! $obra->isbn !!}">

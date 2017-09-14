@@ -41,6 +41,8 @@ class CreatePessoaTable extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });
+
+        
     }
 
     /**

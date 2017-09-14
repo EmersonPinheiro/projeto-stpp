@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\PropostaFormRequest;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\PropostaFormRequest;
+use App\Http\Requests\PropostaEditFormRequest;
 
 class PropostasController extends Controller
 {
@@ -49,7 +50,7 @@ class PropostasController extends Controller
           //RECUPERAR O USUÁRIO LOGADO
 
         ]);*/
-/*
+
         $idProposta = DB::table('Proposta')->insertGetID([
           'data_envio'=>Carbon::now('America/Sao_Paulo')->format('Y-m-d'),
           'Usuario_propositor_cod_propositor'=>'1',
@@ -134,7 +135,7 @@ class PropostasController extends Controller
           'Proposta_cod_proposta'=>$idProposta,
           'Autor_cod_autor'=>$idAutor,
         ]);
-*/
+
         //UPLOAD DOS ARQUIVOS
 /*
         $docpath = $request->file('documento')->store('docs');
@@ -151,7 +152,6 @@ class PropostasController extends Controller
         //$imgpath = Storage::putFile('imagens', $request->file('imagens'), 'public');
         $url_documento = Storage::url($docpath);
         //$url_imagens = Storage::url($imgpath);
-        var_dump($docpath);
         DB::table('Material')->insert([
           //'edicao'=>
           //'versao'=>
@@ -159,7 +159,7 @@ class PropostasController extends Controller
           //'url_imagens'=>$url_imagens,
           'Obra_cod_obra'=>$idObra,
         ]);
-/*
+
         $idPalavraChave = DB::table('Palavras_Chave')->insertGetID([
           'palavra'=>$request->get('palavra'),
         ]);
@@ -180,8 +180,8 @@ class PropostasController extends Controller
           'tipo'=>'1',
           'Pessoa_cod_pessoa'=>$idPessoa,
         ]);
-*/
-      //  return redirect('/enviar-proposta')->with('status', 'Proposta enviada! Sua identificação única é '.$idProposta);
+
+        return redirect('/enviar-proposta')->with('status', 'Proposta enviada! Sua identificação única é '.$idProposta);
     }
 
     /**
@@ -251,7 +251,7 @@ class PropostasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PropostaFormRequest $request, $id)
+    public function update(PropostaEditFormRequest $request, $id)
     {
         DB::table('Obra')->where('cod_obra', $id)->update([
           'titulo' => $request->get('titulo'),
