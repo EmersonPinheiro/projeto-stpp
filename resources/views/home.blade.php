@@ -22,87 +22,29 @@
       <div class="col-md-4">
         <div class="quadro-login">
 
-          <!-- ABAS DE LOGIN E CADASTRO -->
-          <ul class="nav nav-tabs nav-justified">
-            <li class="active"><a href="#login" role="tab" data-toggle="tab">Login</a></li>
-            <li><a href="#cadastro" role="tab" data-toggle="tab">Cadastro</a></li>
-          </ul>
-
           <!-- FORMULÁRIOS -->
           <div class="quadro-form-login">
-            <div class="tab-content">
-
-              <!-- LOGIN -->
-              <div role="tabpanel" class="tab-pane active" id="login">
-                <form action="painel-autor.html">
-                  <div class="form-group">
-                    <label for="email-login">E-mail</label>
-                    <div class="input-group">
-                      <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-                      <input type="email" class="form-control" id="email-login" placeholder="E-mail">
-                    </div>
+            <!-- LOGIN -->
+            <div role="tabpanel" class="tab-pane active" id="login">
+              <form action="painel-autor.html">
+                <div class="form-group">
+                  <label for="email-login">E-mail</label>
+                  <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                    <input type="email" class="form-control" id="email-login" placeholder="E-mail">
                   </div>
-                  <div class="form-group">
-                    <label for="senha-login">Senha</label>
-                    <div class="input-group">
-                      <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                      <input type="password" class="form-control" id="senha-login" placeholder="Senha">
-                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="senha-login">Senha</label>
+                  <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                    <input type="password" class="form-control" id="senha-login" placeholder="Senha">
                   </div>
-                  <p class="text-right"><a href="">Esqueceu sua senha?</a></p>
-                  <button type="submit" class="btn btn-success btn-block">Entrar</button>
-                </form>
-              </div>
-
-              <!-- CADASTRO -->
-              <div role="tabpanel" class="tab-pane" id="cadastro">
-                <form action="index.html">
-
-                  <div class="form-group col-md-12">
-                    <label>Nome</label>
-                    <input type="text" class="form-control" placeholder="Nome">
-                  </div>
-                  <div class="form-group col-md-12">
-                    <label>Sobrenome</label>
-                    <input type="text" class="form-control" placeholder="Sobrenome">
-                  </div>
-                  <div class="form-group col-md-8">
-                    <label>CPF</label>
-                    <input type="text" class="form-control" placeholder="CPF">
-                  </div>
-                  <div class="form-group col-md-4">
-                    <label>Sexo</label><br/>
-                    <input type="radio" /> M&nbsp;&nbsp;&nbsp;
-                    <input type="radio" /> F
-                  </div>
-                  <div class="form-group col-md-12">
-                    <label>Cidade</label>
-                    <input type="text" class="form-control" placeholder="Cidade">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label>Estado</label>
-                    <input type="text" class="form-control" placeholder="Estado">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label>País</label>
-                    <input type="text" class="form-control" placeholder="País">
-                  </div>
-                  <div class="form-group col-md-12">
-                    <label for="email-cad">E-mail</label>
-                    <input type="email" class="form-control" id="email-cad" placeholder="E-mail">
-                  </div>
-                  <div class="form-group col-md-12">
-                    <label for="senha-cad">Senha</label>
-                    <input type="password" class="form-control" id="senha-cad" placeholder="Senha">
-                  </div>
-                  <div class="form-group col-md-12">
-                    <label for="repsenha-cad">Repita sua senha</label>
-                    <input type="password" class="form-control" id="repsenha-cad" placeholder="Senha">
-                  </div>
-                  <button type="submit" class="btn btn-primary btn-block">Cadastro</button>
-                </form>
-              </div>
-            </div> <!-- tab-content -->
+                </div>
+                <p class="text-right"><a href="">Esqueceu sua senha?</a></p>
+                <button type="submit" class="btn btn-success btn-block">Entrar</button>
+              </form>
+            </div>
           </div> <!-- quadro-form -->
         </div> <!-- quadro-login -->
       </div> <!-- col -->
