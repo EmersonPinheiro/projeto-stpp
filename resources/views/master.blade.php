@@ -10,6 +10,7 @@
     <link rel="shortcut icon" type="image/png" href="editora_uepg.png"/>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/bootstrap.js') }}"></script>
 
     <!-- Bootstrap -->
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">

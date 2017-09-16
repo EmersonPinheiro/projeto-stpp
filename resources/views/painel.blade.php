@@ -23,7 +23,7 @@
               @if($propostas->isEmpty())
               <p>Não há propostas.</p>
               @else
-              
+
               @foreach($propostas as $proposta)
               <div class="painel-lista">
                 <!-- List group -->
@@ -31,7 +31,7 @@
                   <li class="list-group-item titulo-lista">
                     <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Proposta 1
                     <div class="pull-right">
-                      <a href="{!! action('PropostasController@show', $proposta->cod_obra) !!}">Mais Informações</a>
+                      <a href="{!! action('PropostasController@show', $proposta->cod_proposta) !!}">Mais Informações</a>
                     </div>
                   </li>
                   <li class="list-group-item">

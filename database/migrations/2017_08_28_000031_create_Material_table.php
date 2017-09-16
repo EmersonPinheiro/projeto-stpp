@@ -24,7 +24,7 @@ class CreateMaterialTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('cod_material');
-            $table->integer('versao')->nullable();
+            $table->integer('versao')->nullable()->default(1);
             $table->string('url_documento', 150)->nullable();
             $table->string('url_imagens', 150)->nullable();
             $table->integer('edicao')->nullable();

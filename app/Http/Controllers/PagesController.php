@@ -20,4 +20,13 @@ class PagesController extends Controller
     {
         return view('cadastro');
     }
+
+    public function contato()
+    {
+        return view('contato');
+    }
+    public function ajuda()
+    {
+        return view('ajuda');
+    }
 }

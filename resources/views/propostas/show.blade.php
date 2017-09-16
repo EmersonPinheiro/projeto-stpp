@@ -12,12 +12,12 @@
           <div class="panel panel-default">
             <!-- CABEÇALHO PAINEL -->
             <div class="panel-heading">
-              <span class="panel-title"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Título da Proposta</span>
+              <span class="panel-title"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;{{$obra->titulo}}</span>
             </div>
 
             <div class="panel-body text-justify">
               <div class="pull-right">
-                <a class="btn btn-primary" href="{!! action('PropostasController@edit', $obra->cod_obra) !!}" role="button"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;Editar Proposta</a>
+                <a class="btn btn-primary" href="{!! action('PropostasController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;Editar Proposta</a>
                 <a href="" role="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal2"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Solicitar Cancelamento da Proposta</a>
                 <div class="modal fade" id="myModal2">
                   <div class="modal-dialog"> <!-- modal-sm, modal-lg -->
@@ -87,10 +87,15 @@
               <p><strong>Coordenação Editorial: </strong>João da Silva</p>
 
               <h4 class="titulo">Arquivos</h4>
-              <h5><i>Versão 1</i></h5>
-              <p><strong>Documento (doc, docx): </strong>documento.doc<a href="/painel/{!! $obra->cod_obra !!}/downloadMat">&nbsp;&nbsp;&nbsp;Baixar </a>| <a href="/painel/{!! $obra->cod_obra !!}/showMat">Visualizar PDF</a></p>
-              <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
-              <a href="" role="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;&nbsp;&nbsp;Enviar Nova Versão da Obra</a>
+              @foreach($materiais as $material)
+                <h5><i>Versão {!! $material->versao !!}</i></h5>
+                <p><strong>Documento (doc, docx): </strong>documento.doc<a href="{!! action('MaterialController@downloadMaterial', $material->cod_material) !!}">&nbsp;&nbsp;&nbsp;Baixar </a></p>
+                <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
+              @endforeach
+              <!--MODAL-->
+
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;&nbsp;&nbsp;Enviar Nova Versão da Obra</button>
+
               <div class="modal fade" id="myModal">
                 <div class="modal-dialog"> <!-- modal-sm, modal-lg -->
                   <div class="modal-content">
@@ -99,19 +104,26 @@
                       <h4 class="modal-title">Enviar Nova Versão da Obra</h4>
                     </div>
                     <div class="modal-body">
-                      <div class="form-group">
-                        <label for="cad1">Documento (.doc)</label>
-                        <input type="file" class="form-control" id="cad1">
-                      </div>
-                      <div class="form-group">
-                        <label for="cad2">Ofício de Alterações (.doc)</label>
-                        <input type="file" class="form-control" id="cad2">
-                      </div>
+                      <form action="/painel/{!! $obra->Proposta_cod_proposta !!}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                        <div class="form-group">
+                          <label for="novoDoc">Documento (.doc)</label>
+                          <input type="file" class="form-control" id="novoDoc" name="novoDoc">
+                          <!--<input type="hidden" name="versao" value="{!! $material->versao !!}">-->
+                          <input type="hidden" name="cod_obra" value="{!! $obra->cod_obra !!}">
+                          <input type="hidden" name="cod_proposta" value="{!! $proposta->cod_proposta !!}">
+                        </div>
+                        <div class="form-group">
+                          <label for="oficio">Ofício de Alterações (.doc)</label>
+                          <input type="file" class="form-control" id="oficio" name="oficio">
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-default" type="button" data-dismiss="modal">Cancelar</button>
+                          <input type="submit" class="btn btn-info" value="Enviar">
+                        </div>
+                      </form>
                     </div>
-                    <div class="modal-footer">
-                      <button class="btn btn-default" type="button" data-dismiss="modal">Cancelar</button>
-                      <button class="btn btn-primary" type="button" data-dismiss="modal">Enviar</button>
-                    </div>
+
                   </div> <!-- modal-content -->
                 </div> <!-- modal-dialog -->
               </div>

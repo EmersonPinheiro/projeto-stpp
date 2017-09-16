@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PropostaFormRequest;
 use App\Http\Requests\PropostaEditFormRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PropostaEnviada;
 
 class PropostasController extends Controller
 {
@@ -19,9 +21,9 @@ class PropostasController extends Controller
     public function index()
     {
       //CRIAR FUNÇÃO QUE VERIFICA O USUÁRIO LOGADO
-      $propostas = DB::table('Obra')
-                        ->join('Proposta', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
-                        ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.descricao', 'Obra.cod_obra', 'Proposta.data_envio')
+      $propostas = DB::table('Proposta')
+                        ->join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
+                        ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.descricao', 'Obra.cod_obra', 'Proposta.data_envio', 'Proposta.cod_proposta')
                         ->get();
       return view('painel', compact('propostas'));
     }
@@ -181,6 +183,9 @@ class PropostasController extends Controller
           'Pessoa_cod_pessoa'=>$idPessoa,
         ]);
 
+        $emailAdmin = 'exemploadmin@email.com';
+        Mail::to($emailAdmin)->send(new PropostaEnviada($request));
+
         return redirect('/enviar-proposta')->with('status', 'Proposta enviada! Sua identificação única é '.$idProposta);
     }
 
@@ -193,7 +198,8 @@ class PropostasController extends Controller
     public function show($id)
     {
 
-        $obra = DB::table('Obra')->where('cod_obra', $id)->first();
+        $obra = DB::table('Obra')->where('Proposta_cod_proposta', $id)->first();
+        $proposta = DB::table('Proposta')->where('cod_proposta', $id)->first();
 
         $autores = DB::table('Pessoa')
                     ->join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
@@ -209,13 +215,13 @@ class PropostasController extends Controller
                     ->select('Palavras_Chave.palavra')
                     ->get();
 
-        $material = DB::table('Material')
+        $materiais = DB::table('Material')
                     ->join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
                     ->where('cod_obra', $id)
                     ->select('Material.*')
-                    ->first();
+                    ->get();
 
-        return view('propostas.show', compact('obra', 'autores', 'palavrasChave', 'material'));
+        return view('propostas.show', compact('obra', 'autores', 'palavrasChave', 'materiais', 'proposta'));
     }
 
     /**
@@ -226,12 +232,12 @@ class PropostasController extends Controller
      */
     public function edit($id)
     {
-      $obra = DB::table('Obra')->where('cod_obra', $id)->first();
+      $obra = DB::table('Obra')->where('Proposta_cod_proposta', $id)->first();
 
       $autores = DB::table('Pessoa')
                   ->join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
                   ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
-                  ->where('cod_obra', $id)
+                  ->where('Proposta_cod_proposta', $id)
                   ->select('Pessoa.*')
                   ->get();
 
@@ -239,6 +245,7 @@ class PropostasController extends Controller
       $palavrasChave = DB::table('Palavras_Chave')
                   ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
                   ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
+                  ->where('Proposta_cod_proposta', $id)
                   ->select('Palavras_Chave.palavra')
                   ->get();
 
@@ -254,19 +261,20 @@ class PropostasController extends Controller
      */
     public function update(PropostaEditFormRequest $request, $id)
     {
-        DB::table('Obra')->where('cod_obra', $id)->update([
+        DB::table('Obra')->where('Proposta_cod_proposta', $id)->update([
           'titulo' => $request->get('titulo'),
           'subtitulo' => $request->get('subtitulo'),
           'descricao' => $request->get('descricao'),
           'resumo' => $request->get('resumo'),
+          //ADICIONAR OUTROS CAMPOS
         ]);
 
-        DB::table('Palavras_Chave')->where('cod_obra', $id)
-        ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
-        ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
-        ->update([
-          'palavra' => $request->get('palavra'),
-        ]);
+        DB::table('Palavras_Chave')->where('Proposta_cod_proposta', $id)
+          ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
+          ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
+          ->update([
+            'palavra' => $request->get('palavra'),
+          ]);
 /*
         $autores = DB::table('Pessoa')
                     ->join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
