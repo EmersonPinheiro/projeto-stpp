@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -48,9 +49,16 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'nome'=>'required|min:3|max:50',
+            'sobrenome'=>'required|min:3|max:100',
+            'cpf'=>'required|min:11|max:11',
+            'sexo'=>'required',
+            'email'=>'required|email|string|max:255',
+            'cidade'=>'required|min:3',
+            'estado'=>'required|min:3',
+            'pais'=>'required|min:3',
+            'password'=>'required|string|min:6|confirmed',
+            'password_confirmation'=>'required|string|min:6'
         ]);
     }
 
@@ -62,10 +70,46 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+        //inserir em 6 tabelas (pessoa, email, cidade, estado, pais, usuario)
+        //VERIFICAR INSERSÃO DE VALORES IGUAIS
+
+        $idPais = DB::table('Pais')->insertGetID([
+          'nome'=>$data['pais'],
         ]);
+
+        $idEstProv = DB::table('Estado_provincia')->insertGetID([
+         'nome'=>$data['estado'],
+         //falta uf
+         'Pais_cod_pais'=>$idPais,
+        ]);
+
+         $idCidade = DB::table('Cidade')->insertGetID([
+          'nome'=>$data['cidade'],
+          'Estado_provincia_cod_est_prov'=>$idEstProv,
+        ]);
+
+        $idPessoa = DB::table('Pessoa')->insertGetID([
+          'cpf'=>$data['cpf'],
+          'nome'=>$data['nome'],
+          'sobrenome'=>$data['sobrenome'],
+          'sexo'=>$data['sexo'],
+          'Cidade_cod_cidade'=>$idCidade,
+        ]);
+/*
+        DB::table('Email')->insert([
+          'endereco'=>$data['email'],
+          'tipo'=>'1',
+          'Pessoa_cod_pessoa'=>$idPessoa,
+        ]);
+*/
+        $usuario = User::create([
+           'email'=>$data['email'],
+           'password'=>bcrypt($data['password']),
+           'Pessoa_cod_pessoa'=>$idPessoa,
+        ]);
+
+        //var_dump($usuario);
+        return $usuario;
+
     }
 }

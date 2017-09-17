@@ -351,20 +351,20 @@ class UsuarioTableSeeder extends Seeder
         DB::table('Usuario')->delete();
 
         DB::table('Usuario')->insert([
-            'endereco_email'=>str_random(5).'@exemplo.com',
-            'senha'=>'secret',
+            'email'=>str_random(5).'@exemplo.com',
+            'password'=>'secret',
             'Pessoa_cod_pessoa'=>'1',
         ]);
 
         DB::table('Usuario')->insert([
-            'endereco_email'=>str_random(5).'@exemplo.com',
-            'senha'=>'secret',
+            'email'=>str_random(5).'@exemplo.com',
+            'password'=>'secret',
             'Pessoa_cod_pessoa'=>'3',
         ]);
 
         DB::table('Usuario')->insert([
-            'endereco_email'=>str_random(5).'@exemplo.com',
-            'senha'=>'secret',
+            'email'=>str_random(5).'@exemplo.com',
+            'password'=>'secret',
             'Pessoa_cod_pessoa'=>'4',
         ]);
     }

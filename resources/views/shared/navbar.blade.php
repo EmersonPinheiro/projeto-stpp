@@ -21,6 +21,15 @@
             <li><a href="/" class="navbar-link">Editora UEPG</a></li>
             <li><a href="/contato" class="navbar-link">Contato</a></li>
             <li><a href="/ajuda" class="navbar-link">Ajuda</a></li>
+            @if (Auth::check())
+            <li>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                  {{ csrf_field() }}
+                  <input type="submit" name="logout" value="Logout">
+                </form>
+            </li>
+            @endif
+
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->

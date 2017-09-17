@@ -24,8 +24,10 @@ class CreateUsuarioTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('cod_usuario');
-            $table->string('endereco_email', 100);
-            $table->string('senha', 30);
+            $table->string('email', 100)->unique();
+            $table->string('password', 60);
+            $table->rememberToken();
+            $table->timestamps();
             $table->integer('Pessoa_cod_pessoa')->unsigned();
 
             $table->index(["Pessoa_cod_pessoa"], 'fk_Usuario_Pessoa1_idx');

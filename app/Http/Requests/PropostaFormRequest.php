@@ -38,7 +38,7 @@ class PropostaFormRequest extends FormRequest
             'area_de_conhecimento'=>'required|min:3',
             'subarea'=>'required|min:3|string',
             'especialidade'=>'required|min:3',
-            'email'=>'required|email',
+            'email'=>'required|email|string|max:255',
             'telefone'=>'required|numeric',
             'cidade'=>'required|min:3',
             'estado'=>'required|min:3',
