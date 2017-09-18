@@ -71,6 +71,8 @@
                 </strong>{!! $palavraChave->palavra !!}</p>
               @endforeach
 
+              <h2>Situação: {!! $proposta->situacao !!}</h2>
+
               <h4 class="titulo">Informações Adicionais</h4>
               <p><strong>Edição: </strong>1ª</p><!--VEM DO MATERIAL-->
               <p><strong>Volume: </strong>{!! $obra->volume !!}</p>
@@ -92,8 +94,8 @@
                 <p><strong>Documento (doc, docx): </strong>documento.doc<a href="{!! action('MaterialController@downloadMaterial', $material->cod_material) !!}">&nbsp;&nbsp;&nbsp;Baixar </a></p>
                 <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
               @endforeach
-              <!--MODAL-->
 
+              <!--MODAL-->
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;&nbsp;&nbsp;Enviar Nova Versão da Obra</button>
 
               <div class="modal fade" id="myModal">
@@ -109,7 +111,7 @@
                         <div class="form-group">
                           <label for="novoDoc">Documento (.doc)</label>
                           <input type="file" class="form-control" id="novoDoc" name="novoDoc">
-                          <!--<input type="hidden" name="versao" value="{!! $material->versao !!}">-->
+
                           <input type="hidden" name="cod_obra" value="{!! $obra->cod_obra !!}">
                           <input type="hidden" name="cod_proposta" value="{!! $proposta->cod_proposta !!}">
                         </div>

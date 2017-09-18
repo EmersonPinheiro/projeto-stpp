@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use EntrustUserTrait;
 
     protected $table = 'Usuario';
     protected $primaryKey = 'cod_usuario';
@@ -28,5 +30,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
+/*
+    public function pessoa()
+    {
+      $this->belongsTo(DB::table('Pessoa'));
+    }
+*/
 }

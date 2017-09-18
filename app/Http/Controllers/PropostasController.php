@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
+use App\Permission;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,10 +12,18 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PropostaFormRequest;
 use App\Http\Requests\PropostaEditFormRequest;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use App\Mail\PropostaEnviada;
 
 class PropostasController extends Controller
 {
+
+    public function __construct()
+    {
+      if (!Auth::check()) {
+        return redirect('/');
+      }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,11 +31,22 @@ class PropostasController extends Controller
      */
     public function index()
     {
-      //CRIAR FUNÇÃO QUE VERIFICA O USUÁRIO LOGADO
+      $usuario = Auth::user()->getAttributes();
+      $idUsuario = $usuario['cod_usuario'];
+
+      $propositor = DB::table('Usuario_Propositor')
+                        ->join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+                        ->where('Usuario.cod_usuario', $idUsuario)
+                        ->select('Usuario_Propositor.cod_propositor')
+                        ->first();
+      $codPropositor = $propositor->cod_propositor;
+
       $propostas = DB::table('Proposta')
                         ->join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
+                        ->where('Usuario_Propositor_cod_propositor', $propositor->cod_propositor)
                         ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.descricao', 'Obra.cod_obra', 'Proposta.data_envio', 'Proposta.cod_proposta')
                         ->get();
+
       return view('painel', compact('propostas'));
     }
 
@@ -52,11 +74,19 @@ class PropostasController extends Controller
           //RECUPERAR O USUÁRIO LOGADO
 
         ]);*/
+        $usuario = Auth::user()->getAttributes();
+        $idUsuario = $usuario['cod_usuario'];
+
+        $propositor = DB::table('Usuario_Propositor')->join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+                              ->where('Usuario.cod_usuario', $idUsuario)
+                              ->select('Usuario_Propositor.cod_propositor')
+                              ->first();
 
         $idProposta = DB::table('Proposta')->insertGetID([
           'data_envio'=>Carbon::now('America/Sao_Paulo')->format('Y-m-d'),
-          'Usuario_propositor_cod_propositor'=>'1',
+          'Usuario_Propositor_cod_propositor'=>$propositor->cod_propositor,
         ]);
+
 
         //VERIFICAR INSERSÃO DE VALORES IGUAIS
 
@@ -150,13 +180,12 @@ class PropostasController extends Controller
         return response()->file($file);
 */
 
-        $docpath = Storage::putFile('documentos', $request->file('documento'), 'public');
+        $docpath = Storage::putFile('documentos', $request->file('documento'), 'private');
         //$imgpath = Storage::putFile('imagens', $request->file('imagens'), 'public');
         $url_documento = Storage::url($docpath);
         //$url_imagens = Storage::url($imgpath);
         DB::table('Material')->insert([
-          //'edicao'=>
-          //'versao'=>
+
           'url_documento'=>$docpath,
           //'url_imagens'=>$url_imagens,
           'Obra_cod_obra'=>$idObra,

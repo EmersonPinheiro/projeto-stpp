@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Role;
+use App\Permission;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -70,7 +72,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        //inserir em 6 tabelas (pessoa, email, cidade, estado, pais, usuario)
         //VERIFICAR INSERSÃO DE VALORES IGUAIS
 
         $idPais = DB::table('Pais')->insertGetID([
@@ -108,7 +109,14 @@ class RegisterController extends Controller
            'Pessoa_cod_pessoa'=>$idPessoa,
         ]);
 
-        //var_dump($usuario);
+        $attributes = $usuario->getAttributes();
+
+        DB::table('Usuario_Propositor')->insert([
+          'Usuario_cod_usuario'=>$attributes['cod_usuario'],
+        ]);
+
+        $usuario->attachRole(1);
+
         return $usuario;
 
     }

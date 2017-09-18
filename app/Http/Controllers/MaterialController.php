@@ -51,6 +51,7 @@ class MaterialController extends Controller
         'url_documento'=>$ofcpath,
         'Proposta_cod_proposta'=>$request->get('cod_proposta'),
       ]);
+
       return redirect(action('PropostasController@show', $request->cod_proposta))->with('status', 'A nova versão da obra foi enviada!');
 
     }
