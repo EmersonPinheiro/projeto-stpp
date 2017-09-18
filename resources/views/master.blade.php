@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>@yield('title')</title>
 
-    <link rel="shortcut icon" type="image/png" href="editora_uepg.png"/>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('img/editora_uepg.ico') }}"/>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/bootstrap.js') }}"></script>
@@ -24,10 +24,19 @@
     <![endif]-->
   </head>
   <body>
-    @include('shared.navbar')
+    @if (Auth::check())
+      @include('shared.navbar_logged')
+    @else
+      @include('shared.navbar')
+    @endif
 
     @yield('content')
 
-    @include('shared.footer')
+    @if (Auth::check())
+      @include('shared.footer_logged')
+    @else
+      @include('shared.footer')
+    @endif
+
   </body>
 </html>
