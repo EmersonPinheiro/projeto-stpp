@@ -39,7 +39,7 @@ class PropostasController extends Controller
                         ->where('Usuario.cod_usuario', $idUsuario)
                         ->select('Usuario_Propositor.cod_propositor')
                         ->first();
-      $codPropositor = $propositor->cod_propositor;
+      //$codPropositor = $propositor->cod_propositor;
 
       $propostas = DB::table('Proposta')
                         ->join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
