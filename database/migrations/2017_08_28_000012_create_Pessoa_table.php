@@ -32,6 +32,7 @@ class CreatePessoaTable extends Migration
             $table->string('bairro', 50)->nullable();
             $table->string('CEP', 8)->nullable();
             $table->integer('Cidade_cod_cidade')->unsigned();
+            $table->timestamps();
 
             $table->index(["Cidade_cod_cidade"], 'fk_Pessoa_Cidade1_idx');
         });
@@ -42,7 +43,7 @@ class CreatePessoaTable extends Migration
                 ->onUpdate('no action');
         });
 
-        
+
     }
 
     /**

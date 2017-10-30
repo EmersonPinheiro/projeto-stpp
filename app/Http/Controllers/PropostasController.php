@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\Permission;
 use App\User;
+use App\Obra;
+use App\Proposta;
+use App\Autor;
+use App\Pessoa;
+use App\Material;
+use App\UsuarioPropositor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,23 +37,21 @@ class PropostasController extends Controller
      */
     public function index()
     {
-      $usuario = Auth::user()->getAttributes();
-      $idUsuario = $usuario['cod_usuario'];
+      $usuario = Auth::user();
+      $dadosUsuario = $usuario->getAttributes();
+      $idUsuario = $dadosUsuario['cod_usuario'];
 
-      $propositor = DB::table('Usuario_Propositor')
-                        ->join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+      $propositor = UsuarioPropositor::join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
                         ->where('Usuario.cod_usuario', $idUsuario)
                         ->select('Usuario_Propositor.cod_propositor')
                         ->first();
-      //$codPropositor = $propositor->cod_propositor;
 
-      $propostas = DB::table('Proposta')
-                        ->join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
+      $propostas = Proposta::join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
                         ->where('Usuario_Propositor_cod_propositor', $propositor->cod_propositor)
                         ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.descricao', 'Obra.cod_obra', 'Proposta.data_envio', 'Proposta.cod_proposta')
                         ->get();
 
-      return view('painel', compact('propostas'));
+      return view('propostas', compact('propostas'));
     }
 
     /**
@@ -69,11 +73,6 @@ class PropostasController extends Controller
     public function store(PropostaFormRequest $request)
     {
 
-        /*$idPropositor = DB::table('Usuario_propositor')->insertGetID([
-
-          //RECUPERAR O USUÁRIO LOGADO
-
-        ]);*/
         $usuario = Auth::user()->getAttributes();
         $idUsuario = $usuario['cod_usuario'];
 
@@ -168,18 +167,6 @@ class PropostasController extends Controller
           'Autor_cod_autor'=>$idAutor,
         ]);
 
-        //UPLOAD DOS ARQUIVOS
-/*
-        $docpath = $request->file('documento')->store('docs');
-        $file= storage_path()."/app/". $docpath;
-
-        $headers = [
-              'Content-Type' => 'application/pdf',
-           ];
-
-        return response()->file($file);
-*/
-
         $docpath = Storage::putFile('documentos', $request->file('documento'), 'private');
         //$imgpath = Storage::putFile('imagens', $request->file('imagens'), 'public');
         $url_documento = Storage::url($docpath);
@@ -227,16 +214,18 @@ class PropostasController extends Controller
     public function show($id)
     {
 
-        $obra = DB::table('Obra')->where('Proposta_cod_proposta', $id)->first();
-        $proposta = DB::table('Proposta')->where('cod_proposta', $id)->first();
+      //UTILIZANDO MODELS
 
-        $autores = DB::table('Pessoa')
-                    ->join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
-                    ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
-                    ->where('cod_obra', $id)
-                    ->select('Pessoa.*')
-                    ->get();
+      $obra = Obra::where('Proposta_cod_proposta', $id)->first();
+      $proposta = Proposta::where('cod_proposta', $id)->first();
 
+      $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
+                   ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
+                   ->where('cod_obra', $id)
+                   ->select('Pessoa.*')
+                   ->get();
+
+        //EXCLUIR PALAVRAS CHAVE
         $palavrasChave = DB::table('Palavras_Chave')
                     ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
                     ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
@@ -244,13 +233,15 @@ class PropostasController extends Controller
                     ->select('Palavras_Chave.palavra')
                     ->get();
 
-        $materiais = DB::table('Material')
-                    ->join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
+        $materiais = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
                     ->where('cod_obra', $id)
                     ->select('Material.*')
                     ->get();
 
         return view('propostas.show', compact('obra', 'autores', 'palavrasChave', 'materiais', 'proposta'));
+
+
+
     }
 
     /**

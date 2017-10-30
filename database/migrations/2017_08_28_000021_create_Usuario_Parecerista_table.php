@@ -26,6 +26,7 @@ class CreateUsuarioPareceristaTable extends Migration
             $table->increments('cod_parecerista');
             $table->integer('Usuario_cod_usuario')->unsigned();
             $table->integer('Departamento_cod_departamento')->unsigned();
+            $table->timestamps();
 
             $table->index(["Departamento_cod_departamento"], 'fk_Usuario_Parecerista_Departamento1_idx');
 

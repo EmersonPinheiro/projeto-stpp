@@ -25,6 +25,7 @@ class CreateUsuarioPareceristaEspecialidadeTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('Usuario_Parecerista_cod_parecerista')->unsigned();
             $table->integer('Especialidade_cod_especialidade')->unsigned();
+            $table->timestamps();
 
             $table->index(["Especialidade_cod_especialidade"], 'fk_Usuario_Parecerista_has_Especialidade_Especialidade1_idx');
 

@@ -1,3 +1,7 @@
+@extends('master')
+@section('title', 'Contato')
+
+@section('content')
 @foreach ($errors->all() as $error)
 <p class="alert alert-danger">{{ $error }}</p>
 @endforeach
@@ -7,15 +11,6 @@
   <!-- LOGIN -->
   <form action="{!! route('login') !!}" method="post">
     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-
-
-    <!--TIPO DO USUÁRIO-->
-    <div class="form-group">
-      <input type="radio" name="user_role" checked value="propositor"/> Propositor
-      <input type="radio" name="user_role" value="parecerista"/> Avaliador
-    </div>
-
-
     <div class="form-group">
       <label for="email-login">E-mail</label>
       <div class="input-group">
@@ -45,3 +40,4 @@
 @else
 
 @endif
+@endsection

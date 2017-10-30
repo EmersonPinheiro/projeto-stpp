@@ -29,6 +29,7 @@ class CreateMaterialTable extends Migration
             $table->string('url_imagens', 150)->nullable();
             $table->integer('edicao')->nullable();
             $table->integer('Obra_cod_obra')->unsigned();
+            $table->timestamps();
 
             $table->index(["Obra_cod_obra"], 'fk_Material_Obra1_idx');
         });

@@ -13,19 +13,28 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run()
     {
-      $propositor       = new Role();
-      $propositor->name = 'propositor';
-      $propositor->save();
+      $propositor       = Role::firstOrCreate([
+        'name'=>'propositor'
+      ]);
 
-      $admin       = new Role();
-      $admin->name = 'admin';
-      $admin->save();
+      $admin            = Role::firstOrCreate([
+        'name'=>'admin'
+      ]);
 
-      $enviarProposta = new Permission();
-      $enviarProposta->name = 'enviar-proposta';
-      $enviarProposta->save();
+      $parecerista      = Role::firstOrCreate([
+        'name'=>'parecerista'
+      ]);
+
+      $enviarProposta       = Permission::firstOrCreate([
+        'name'=>'enviar-proposta'
+      ]);
+
+      $avaliarProposta       = Permission::firstOrCreate([
+        'name'=>'avaliar-proposta'
+      ]);
 
       $propositor->attachPermission($enviarProposta);
+      $parecerista->attachPermission($avaliarProposta);
 
     }
 }

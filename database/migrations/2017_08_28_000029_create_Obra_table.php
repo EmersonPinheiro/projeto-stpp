@@ -34,6 +34,7 @@ class CreateObraTable extends Migration
             $table->integer('num_paginas')->nullable();
             $table->integer('Proposta_cod_proposta')->unsigned();
             $table->integer('Autor_cod_autor')->unsigned()->nullable();
+            $table->timestamps();
 
             $table->index(["Proposta_cod_proposta"], 'fk_Obra_Proposta1_idx');
 

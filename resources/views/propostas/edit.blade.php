@@ -15,7 +15,7 @@
             </div>
 
             <div class="panel-body text-justify">
-              <a href="/painel"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
+              <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
               <form method="post">
 
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
@@ -123,7 +123,7 @@
               </form>
             </div>
             <div class="panel-footer">
-              <a href="/painel"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
+              <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
             </div>
           </div> <!-- painel -->
         </div> <!-- /quadro-painel /painel-info-propostas -->

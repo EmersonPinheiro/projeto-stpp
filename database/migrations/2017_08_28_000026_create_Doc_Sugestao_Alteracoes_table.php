@@ -26,6 +26,7 @@ class CreateDocSugestaoAlteracoesTable extends Migration
             $table->increments('cod_sug_alteracoes');
             $table->string('url_documento', 150)->nullable();
             $table->integer('Proposta_cod_proposta')->unsigned();
+            $table->timestamps();
 
             $table->index(["Proposta_cod_proposta"], 'fk_Doc_Sugestao_Alteracoes_Proposta1_idx');
         });

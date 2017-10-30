@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Role;
 use App\Permission;
+use App\UsuarioPropositor;
+use App\UsuarioParecerista;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -111,11 +113,27 @@ class RegisterController extends Controller
 
         $attributes = $usuario->getAttributes();
 
-        DB::table('Usuario_Propositor')->insert([
-          'Usuario_cod_usuario'=>$attributes['cod_usuario'],
-        ]);
+        if ($data['tipo']=='propositor') {
+          $usuarioPropositor = UsuarioPropositor::create([
+            'Usuario_cod_usuario'=>$attributes['cod_usuario'],
+          ]);
 
-        $usuario->attachRole(1);
+          $usuario->attachRole(1);
+        }
+        elseif ($data['tipo']=='parecerista') {
+          $usuarioParecerista = UsuarioParecerista::create([
+            'Usuario_cod_usuario'=>$attributes['cod_usuario'],
+            'Departamento_cod_departamento'=>'1', //TODO: ALTERAR (colocar opção no formulário)
+          ]);
+
+          //TODO: informações específicas do parecerista
+          //TODO: associar com a obra
+
+          $convite = ConviteParecerista::where('token', '=', $data['convite'])->first();
+          $convite->delete(); //Deleta o convite após o cadastro do parecerista
+
+          $usuario->attachRole(3);
+        }
 
         return $usuario;
 

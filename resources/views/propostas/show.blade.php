@@ -53,7 +53,7 @@
                   </div>
               @endif
 
-              <a href="/painel"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
+              <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
               <h4 class="titulo">Informações da Obra</h4>
               <p><strong>Título da Obra: </strong>{!! $obra->titulo !!}</p>
               <p><strong>Subtítulo da Obra: </strong>{!! $obra->subtitulo !!}</p>
@@ -95,6 +95,11 @@
                 <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
               @endforeach
 
+              <!--APENAS PARA O ADMINISTRADOR-->
+              <h2>ÁREA DO ADMINISTRADOR</h2>
+
+              <strong><a href="{!! action('ConviteController@invite', $obra->Proposta_cod_proposta) !!}">Clique aqui para convidar um avaliador para esta obra.</a></strong>
+
               <!--MODAL-->
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;&nbsp;&nbsp;Enviar Nova Versão da Obra</button>
 
@@ -106,7 +111,7 @@
                       <h4 class="modal-title">Enviar Nova Versão da Obra</h4>
                     </div>
                     <div class="modal-body">
-                      <form action="/painel/{!! $obra->Proposta_cod_proposta !!}" method="post" enctype="multipart/form-data">
+                      <form action="/propostas/{!! $obra->Proposta_cod_proposta !!}" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                         <div class="form-group">
                           <label for="novoDoc">Documento (.doc)</label>
@@ -131,7 +136,7 @@
               </div>
             </div>
             <div class="panel-footer">
-              <a href="/painel"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
+              <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
             </div>
           </div> <!-- painel -->
         </div> <!-- /quadro-painel /painel-info-propostas -->

@@ -1,8 +1,8 @@
 @extends('master')
-@section('title', 'Painel')
+@section('title', 'Propostas')
 
 @section('content')
-
+@role('propositor')
 <!-- CONTENT -->
 <div class="content">
   <div class="container">
@@ -60,5 +60,5 @@
     </div> <!-- row -->
   </div> <!--container -->
 </div> <!-- content -->
-
+@endrole
 @endsection

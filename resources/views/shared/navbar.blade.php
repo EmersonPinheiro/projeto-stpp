@@ -21,6 +21,7 @@
         <li><a href="/" class="navbar-link">Editora UEPG</a></li>
         <li><a href="/contato" class="navbar-link">Contato</a></li>
         <li><a href="/ajuda" class="navbar-link">Ajuda</a></li>
+        <li><a href="/acesso-restrito" class="navbar-link">Acesso Restrito</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

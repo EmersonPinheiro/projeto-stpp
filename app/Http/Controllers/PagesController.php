@@ -29,4 +29,8 @@ class PagesController extends Controller
     {
         return view('ajuda');
     }
+    public function restrito()
+    {
+        return view('restrito');
+    }
 }

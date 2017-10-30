@@ -25,6 +25,7 @@ class CreateUsuarioAdmTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_adm');
             $table->integer('Usuario_cod_usuario')->unsigned();
+            $table->timestamps();
 
             $table->index(["Usuario_cod_usuario"], 'fk_Usuario_Adm_Usuario1_idx');
         });

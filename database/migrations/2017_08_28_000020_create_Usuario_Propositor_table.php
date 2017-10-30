@@ -25,6 +25,7 @@ class CreateUsuarioPropositorTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_propositor');
             $table->integer('Usuario_cod_usuario')->unsigned();
+            $table->timestamps();
 
             $table->index(["Usuario_cod_usuario"], 'fk_Usuario_Autor_Usuario1_idx');
         });

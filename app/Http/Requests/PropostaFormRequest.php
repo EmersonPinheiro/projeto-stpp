@@ -44,7 +44,7 @@ class PropostaFormRequest extends FormRequest
             'estado'=>'required|min:3',
             'pais'=>'required|min:3',
             'documento'=>'required|mimes:doc, docx, odt',
-            'imagens'=>'file|mime:rar,zip',
+            'imagens'=>'file|mimes:rar, zip',
         ];
     }
 }

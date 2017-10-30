@@ -15,7 +15,7 @@
             </div>
 
             <div class="panel-body text-justify">
-              <a href="/painel"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
+              <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel da Propostas</a>
               <!--FORMULÁRIO-->
               <form method="post" enctype="multipart/form-data">
 
@@ -35,23 +35,23 @@
                   <legend>Informações da Obra</legend>
                   <div class="form-group col-md-6">
                     <label>Título</label>
-                    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título">
+                    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" value="{{old('titulo')}}">
                   </div>
                   <div class="form-group col-md-6">
                     <label>Subtítulo</label>
-                    <input type="text" class="form-control" id="subtitulo" name="subtitulo" placeholder="Subtítulo">
+                    <input type="text" class="form-control" id="subtitulo" name="subtitulo" placeholder="Subtítulo" value="{{old('subtitulo')}}">
                   </div>
                   <div class="form-group col-md-12">
                     <label>Descrição</label>
-                    <textarea type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição"></textarea>
+                    <textarea type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição" value="{{old('descricao')}}"></textarea>
                   </div>
                   <div class="form-group col-md-12">
                     <label>Resumo</label>
-                    <textarea type="text" class="form-control" id="resumo" name="resumo" placeholder="Resumo"></textarea>
+                    <textarea type="text" class="form-control" id="resumo" name="resumo" placeholder="Resumo" value="{{old('resumo')}}"></textarea>
                   </div>
                   <div class="form-group col-md-12">
                     <label>Palavras-chave</label>
-                    <textarea type="text" class="form-control" id="palavra" name="palavra" placeholder="Resumo"></textarea>
+                    <textarea type="text" class="form-control" id="palavra" name="palavra" placeholder="Palavras chave" value="{{old('titulo')}}"></textarea>
                   </div>
                 </fieldset>
 
@@ -61,18 +61,20 @@
                   <legend>Informações Pessoais do Autor</legend>
                   <div class="form-group col-md-4">
                     <label>Nome</label>
-                    <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome">
+                    <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" value="{{old('nome')}}">
                   </div>
                   <div class="form-group col-md-8">
                     <label>Sobrenome</label>
-                    <input type="text" id="sobrenome" name="sobrenome" class="form-control" placeholder="Sobrenome">
+                    <input type="text" id="sobrenome" name="sobrenome" class="form-control" placeholder="Sobrenome" value="{{old('sobrenome')}}">
                   </div>
                   <div class="form-group col-md-6">
                     <label>CPF</label>
-                    <input type="text" id="CPF" name="CPF" class="form-control" placeholder="CPF">
+                    <input type="text" id="CPF" name="CPF" class="form-control" placeholder="CPF" value="{{old('CPF')}}">
                   </div>
                   <div class="form-group col-md-6">
                     <label>Sexo</label><br/>
+
+                    <!--VERIFICAR RECUPERAÇÃO DO VALOR ANTIGO EM CASO DE ERRO NO CADASTRO-->
                     <input type="radio" name="sexo" value="M"/> M&nbsp;&nbsp;&nbsp;
                     <input type="radio" name="sexo" value="F"/> F
                   </div>
@@ -83,31 +85,31 @@
                   <legend>Informações Profissionais do Autor</legend>
                   <div class="form-group col-md-4">
                     <label>Instituição</label>
-                    <input type="text" id="instituicao" name="instituicao" class="form-control" placeholder="Instituição">
+                    <input type="text" id="instituicao" name="instituicao" class="form-control" placeholder="Instituição" value="{{old('instituicao')}}">
                   </div>
                   <div class="form-group col-md-4">
                     <label>Setor</label>
-                    <input type="text" id="setor" name="setor" class="form-control" placeholder="Setor">
+                    <input type="text" id="setor" name="setor" class="form-control" placeholder="Setor" value="{{old('setor')}}">
                   </div>
                   <div class="form-group col-md-4">
                     <label>Departamento</label>
-                    <input type="text" id="departamento" name="departamento" class="form-control" placeholder="Departamento">
+                    <input type="text" id="departamento" name="departamento" class="form-control" placeholder="Departamento" value="{{old('departamento')}}">
                   </div>
                   <div class="form-group col-md-6">
                     <label>Grande Área</label>
-                    <input type="text" id="grande_area" name="grande_area" class="form-control" placeholder="Grande Área">
+                    <input type="text" id="grande_area" name="grande_area" class="form-control" placeholder="Grande Área" value="{{old('grande_area')}}">
                   </div>
                   <div class="form-group col-md-6">
                     <label>Área de Conhecimento</label>
-                    <input type="text" id="area_de_conhecimento" name="area_de_conhecimento" class="form-control" placeholder="Área de Conhecimento">
+                    <input type="text" id="area_de_conhecimento" name="area_de_conhecimento" class="form-control" placeholder="Área de Conhecimento" value="{{old('area_de_conhecimento')}}">
                   </div>
                   <div class="form-group col-md-6">
                     <label>Subárea</label>
-                    <input type="text" id="subarea" name="subarea" class="form-control" placeholder="Subárea">
+                    <input type="text" id="subarea" name="subarea" class="form-control" placeholder="Subárea" value="{{old('subarea')}}">
                   </div>
                   <div class="form-group col-md-6">
                     <label>Especialidade</label>
-                    <input type="text" id="especialidade" name="especialidade" class="form-control" placeholder="Especialidade">
+                    <input type="text" id="especialidade" name="especialidade" class="form-control" placeholder="Especialidade" value="{{old('especialidade')}}">
                   </div>
                 </fieldset>
 
@@ -116,25 +118,25 @@
                   <legend>Informações de Contato do Autor</legend>
                   <div class="form-group col-md-6">
                     <label>E-mail</label>
-                    <input type="text" id="email" name="email" class="form-control" placeholder="E-mail">
+                    <input type="text" id="email" name="email" class="form-control" placeholder="E-mail" value="{{old('email')}}">
                   </div>
                   <div class="form-group col-md-6">
                     <label>Telefone</label>
-                    <input type="text" id="telefone" name="telefone" class="form-control" placeholder="Telefone">
+                    <input type="text" id="telefone" name="telefone" class="form-control" placeholder="Telefone" value="{{old('telefone')}}">
                   </div>
 
                   <!--LOCALIDADE-->
                   <div class="form-group col-md-4">
                     <label>Cidade</label>
-                    <input type="text" id="cidade" name="cidade" class="form-control" placeholder="Cidade">
+                    <input type="text" id="cidade" name="cidade" class="form-control" placeholder="Cidade" value="{{old('cidade')}}">
                   </div>
                   <div class="form-group col-md-4">
                     <label>Estado</label>
-                    <input type="text" id="estado" name="estado" class="form-control" placeholder="Estado">
+                    <input type="text" id="estado" name="estado" class="form-control" placeholder="Estado" value="{{old('estado')}}">
                   </div>
                   <div class="form-group col-md-4">
                     <label>País</label>
-                    <input type="text" id="pais" name="pais" class="form-control" placeholder="País">
+                    <input type="text" id="pais" name="pais" class="form-control" placeholder="País" value="{{old('pais')}}">
                   </div>
                 </fieldset>
 
@@ -146,18 +148,18 @@
                     <input type="file" id="documento" name="documento" class="form-control">
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="cad7">Imagens (.rar)</label>
+                    <label for="cad7">Imagens (.rar ou .zip)</label>
                     <input type="file" id="imagens" name="imagens" class="form-control">
                   </div>
                 </fieldset>
                 <hr>
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary" style="width:30%;">Submeter</button>
+                  <button type="submit" class="btn btn-primary" style="width:30%;">Submeter proposta</button>
                 </div>
               </form>
             </div>
             <div class="panel-footer">
-              <a href="/painel"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
+              <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
             </div>
           </div> <!-- painel -->
         </div> <!-- /quadro-painel /painel-info-propostas -->

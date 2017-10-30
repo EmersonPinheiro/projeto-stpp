@@ -1,7 +1,8 @@
 @extends('master')
-@section('title', 'Home')
+@section('title', 'Cadastro parecerista')
 
 @section('content')
+
 <!-- CONTENT -->
 <div class="content">
   <div class="container">
@@ -10,7 +11,7 @@
       <div class="col-md-6 col-md-offset-3">
 
 
-        <!-- CADASTRO -->
+        <!-- CADASTRO DO PARECERISTA CONVIDADO -->
         <div class="quadro">
           @foreach ($errors->all() as $error)
               <p class="alert alert-danger">{{ $error }}</p>
@@ -23,7 +24,8 @@
           @endif
           <form method="post" action="{{ route('register') }}">
             <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-            <input type="hidden" name="tipo" value="propositor">
+            <input type="hidden" name="convite" value="{!! $convite->token !!}">
+            <input type="hidden" name="tipo" value="parecerista">
             <fieldset>
               <legend>Informações Pessoais</legend>
               <div class="form-group col-md-12">
@@ -61,7 +63,7 @@
               <legend>Dados de Acesso ao Sistema</legend>
               <div class="form-group col-md-12">
                 <label for="email-cad">E-mail</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" value="{{old('email')}}">
+                <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" value="{!! $convite->email !!}">
               </div>
               <div class="form-group col-md-12">
                 <label for="senha-cad">Senha</label>
@@ -81,3 +83,5 @@
     </div>
   </div>
 </div>
+
+@endsection

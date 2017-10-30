@@ -29,6 +29,7 @@ class CreateParecerTable extends Migration
             $table->date('data_envio')->nullable();
             $table->integer('Usuario_Parecerista_cod_parecerista')->unsigned();
             $table->integer('Proposta_cod_proposta')->unsigned();
+            $table->timestamps();
 
             $table->index(["Proposta_cod_proposta"], 'fk_Parecer_Proposta1_idx');
 

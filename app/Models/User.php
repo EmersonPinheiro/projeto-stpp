@@ -30,10 +30,28 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-/*
+
     public function pessoa()
     {
-      $this->belongsTo(DB::table('Pessoa'));
+      return $this->belongsTo('App\Models\Pessoa', 'Pessoa_cod_pessoa');
     }
-*/
+
+    public function usuario_propositor()
+    {
+      return $this->hasMany('App\Models\UsuarioPropositor', 'Usuario_cod_usuario');
+    }
+
+    public function usuario_parecerista()
+    {
+      return $this->hasMany('App\Models\UsuarioParecerista', 'Usuario_cod_usuario');
+    }
+
+    public function usuario_admin()
+    {
+      return $this->hasMany('App\Models\UsuarioAdmin', 'Usuario_cod_usuario');
+    }
+
+
+
+
 }
