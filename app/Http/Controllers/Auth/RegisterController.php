@@ -48,6 +48,12 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = [
+          'required'=>'O campo :attribute é obrigatório.',
+          'min'=>'O campo :attribute deve ter no mínimo :min caracteres.',
+          'max'=>'O campo :attribute deve ter no máximo :max caracteres.'
+        ];
+
         return Validator::make($data, [
             'nome'=>'required|min:3|max:50',
             'sobrenome'=>'required|min:3|max:100',
@@ -59,7 +65,7 @@ class RegisterController extends Controller
             'pais'=>'required|min:3',
             'password'=>'required|string|min:6|confirmed',
             'password_confirmation'=>'required|string|min:6'
-        ]);
+        ], $messages);
     }
 
     /**
