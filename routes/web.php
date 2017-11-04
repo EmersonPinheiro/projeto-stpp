@@ -12,7 +12,7 @@
 */
 
 Route::get('/','PagesController@home');
-Route::get('/home','PagesController@home');
+Route::get('/home','PagesController@home'); //TODO: Retirar. Solução provisória.
 Route::get('/cadastro', 'PagesController@cadastro'); //RETIRAR (SUBSTITUIR PELO REGISTER PADRÃO)
 Route::get('/contato', 'PagesController@contato');
 Route::get('/ajuda', 'PagesController@ajuda');
@@ -27,8 +27,11 @@ Route::get('/propostas/{id?}/downloadMaterial', 'MaterialController@downloadMate
 Route::get('/propostas/{id?}/showMaterial', 'MaterialController@showMaterial')->middleware('auth');
 Route::get('/propostas/{id?}/convidar-parecerista', 'ConviteController@invite')->name('invite');
 Route::post('/propostas/{id?}/convidar-parecerista', 'ConviteController@process')->name('process');
-Route::get('/accept/{token}', 'ConviteController@accept')->name('accept')->middleware('guest');
+Route::get('/accept/{token}', 'ConviteController@accept')->name('accept');
 Route::get('/painel-parecerista', 'ParecerController@index')->middleware('auth');
+Route::get('/modo-acesso', 'PagesController@modoAcesso')->middleware('auth');
+Route::get('/enviar-parecer/{parecer?}', 'ParecerController@create')->middleware('auth');
+Route::post('/enviar-parecer/{parecer?}', 'ParecerController@store')->middleware('auth');
 
 Route::get('/acesso-restrito', 'PagesController@restrito');
 

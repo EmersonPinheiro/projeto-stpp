@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEstadoProvinciaTable extends Migration
+class CreateSetorTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'Estado_provincia';
+    public $set_schema_table = 'Setor';
 
     /**
      * Run the migrations.
-     * @table Estado_provincia
+     * @table Setor
      *
      * @return void
      */
@@ -23,20 +23,19 @@ class CreateEstadoProvinciaTable extends Migration
         if (Schema::hasTable($this->set_schema_table)) return;
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('cod_est_prov');
-            $table->string('sigla', 2)->nullable();
-            $table->string('nome', 50)->nullable();
-            $table->integer('Pais_cod_pais')->unsigned();
+            $table->increments('cod_setor');
+            $table->string('nome', 100)->nullable();
+            $table->integer('Instituicao_cod_instituicao')->unsigned();
+            $table->timestamps();
 
-            $table->index(["Pais_cod_pais"], 'fk_Estado_provincia_Pais1_idx');
+            $table->index(["Instituicao_cod_instituicao"], 'fk_Setor_Instituicao1_idx');
         });
-        Schema::table('Estado_provincia', function (Blueprint $table) {
-            $table->foreign('Pais_cod_pais', 'fk_Estado_provincia_Pais1_idx')
-                ->references('cod_pais')->on('Pais')
+        Schema::table('Setor', function (Blueprint $table) {
+            $table->foreign('Instituicao_cod_instituicao', 'fk_Setor_Instituicao1_idx')
+                ->references('cod_instituicao')->on('Instituicao')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });
-
     }
 
     /**

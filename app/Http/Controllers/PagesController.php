@@ -33,4 +33,8 @@ class PagesController extends Controller
     {
         return view('restrito');
     }
+    public function modoAcesso()
+    {
+        return view('modo-acesso');
+    }
 }

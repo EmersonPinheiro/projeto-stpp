@@ -23,7 +23,7 @@ class CreatePropostaTecnicoCatalografiaTable extends Migration
         if (Schema::hasTable($this->set_schema_table)) return;
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('Proposta_cod_proposta')->unsigned();
+            $table->integer('Proposta_cod_proposta')->unsigned();
             $table->integer('Tecnico_Catalografia_cod_tec_catalog')->unsigned();
 
             $table->index(["Proposta_cod_proposta"], 'fk_Proposta_has_Tecnico_Catalografia_Proposta1_idx');

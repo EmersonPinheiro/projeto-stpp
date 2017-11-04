@@ -9,15 +9,6 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
 
-    protected function redirectTo($user_role)
-    {
-      if ($user_role == 'propositor') {
-        return 'propostas';
-      }
-      elseif($user_role == 'parecerista'){
-        return 'painel-parecerista';
-      }
-    }
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -77,10 +68,10 @@ class LoginController extends Controller
     }*/
 
     //TODO: Verificar uma solução melhor.
-    public function authenticated($request)
+    public function authenticated()
     {
-      $user_role = $request->get('user_role');
-
+      $usuario = Auth::user();
+      /*
       if ($user_role == 'propositor' && Auth::user()->hasRole('propositor')){
         return redirect('/propostas');
       }
@@ -90,6 +81,20 @@ class LoginController extends Controller
       else{
         Auth::logout();
         return redirect('/')->withErrors('Acesso não permitido!');
+      }
+      */
+      if ($usuario->hasRole('propositor') && $usuario->hasRole('parecerista')) {
+        return redirect('/modo-acesso');
+      }
+      elseif ($usuario->hasRole('propositor')) {
+        return redirect('/propostas');
+      }
+      elseif($usuario->hasRole('parecerista')) {
+        return redirect('/painel-parecerista');
+      }
+      else {
+        $usuario->logout();
+        return redirect('/')->withErrors('Ocorreu um erro durante o login.');
       }
     }
 

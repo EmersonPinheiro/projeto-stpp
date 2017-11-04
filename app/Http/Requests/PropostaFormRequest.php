@@ -13,6 +13,8 @@ class PropostaFormRequest extends FormRequest
      */
     public function authorize()
     {
+      //TODO: Verificar permisser do usuário.
+
         return true;
     }
 

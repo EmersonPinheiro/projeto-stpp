@@ -58,6 +58,22 @@
             </fieldset>
 
             <fieldset>
+              <legend>Dados Institucionais</legend>
+              <div class="form-group col-md-12">
+                <label for="instituicao">Instituição</label>
+                <input type="text" class="form-control" id="instituicao" name="instituicao" placeholder="Instituição" value="{{old('instituicao')}}">
+              </div>
+              <div class="form-group col-md-12">
+                <label for="setor">Setor</label>
+                <input type="text" class="form-control" id="setor" name="setor" placeholder="Setor" value="{{old('setor')}}">
+              </div>
+              <div class="form-group col-md-12">
+                <label for="departamento">Departamento</label>
+                <input type="text" class="form-control" id="departamento" name="departamento" placeholder="Departamento" value="{{old('departamento')}}">
+              </div>
+            </fieldset>
+
+            <fieldset>
               <legend>Dados de Acesso ao Sistema</legend>
               <div class="form-group col-md-12">
                 <label for="email-cad">E-mail</label>

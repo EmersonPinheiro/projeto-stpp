@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDepartamentoTable extends Migration
+class CreateSubareaTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'Departamento';
+    public $set_schema_table = 'Subarea';
 
     /**
      * Run the migrations.
-     * @table Departamento
+     * @table Subarea
      *
      * @return void
      */
@@ -23,16 +23,16 @@ class CreateDepartamentoTable extends Migration
         if (Schema::hasTable($this->set_schema_table)) return;
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('cod_departamento');
+            $table->increments('cod_subarea');
             $table->string('nome', 100)->nullable();
-            $table->string('sigla', 10)->nullable();
-            $table->integer('Setor_cod_setor')->unsigned();
+            $table->integer('Area_Conhecimento_cod_area_conhec')->unsigned();
+            $table->timestamps();
 
-            $table->index(["Setor_cod_setor"], 'fk_Departamento_Setor1_idx');
+            $table->index(["Area_Conhecimento_cod_area_conhec"], 'fk_Subarea_Area_Conhecimento1_idx');
         });
         Schema::table($this->set_schema_table, function (Blueprint $table) {
-            $table->foreign('Setor_cod_setor', 'fk_Departamento_Setor1_idx')
-                ->references('cod_setor')->on('Setor')
+            $table->foreign('Area_Conhecimento_cod_area_conhec', 'fk_Subarea_Area_Conhecimento1_idx')
+                ->references('cod_area_conhec')->on('Area_Conhecimento')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });
