@@ -7,6 +7,18 @@ use App\Role;
 use App\Permission;
 use App\UsuarioPropositor;
 use App\UsuarioParecerista;
+use App\Pais;
+use App\EstadoProvincia;
+use App\Cidade;
+use App\Pessoa;
+use App\Instituicao;
+use App\Setor;
+use App\Departamento;
+use App\ConviteParecerista;
+use App\Proposta;
+use App\Material;
+use App\Parecer;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -64,6 +76,9 @@ class RegisterController extends Controller
             'cpf'=>'required|min:11|max:11',
             'sexo'=>'required',
             'email'=>'required|email|string|max:255',
+
+            //TODO: Departamento, etc.
+
             'cidade'=>'required|min:3',
             'estado'=>'required|min:3',
             'pais'=>'required|min:3',
@@ -82,27 +97,27 @@ class RegisterController extends Controller
     {
         //VERIFICAR INSERSÃO DE VALORES IGUAIS
 
-        $idPais = DB::table('Pais')->insertGetID([
-          'nome'=>$data['pais'],
+        $pais = Pais::firstOrCreate([
+          'nome'=>$data['pais']
         ]);
 
-        $idEstProv = DB::table('Estado_provincia')->insertGetID([
-         'nome'=>$data['estado'],
-         //falta uf
-         'Pais_cod_pais'=>$idPais,
+        $estProv = EstadoProvincia::firstOrCreate([
+          'nome'=>$data['estado'],
+          //falta uf
+          'Pais_cod_pais'=>$pais->cod_pais
         ]);
 
-         $idCidade = DB::table('Cidade')->insertGetID([
+        $cidade = Cidade::firstOrCreate([
           'nome'=>$data['cidade'],
-          'Estado_provincia_cod_est_prov'=>$idEstProv,
+          'Estado_provincia_cod_est_prov'=>$estProv->cod_est_prov
         ]);
 
-        $idPessoa = DB::table('Pessoa')->insertGetID([
+        $pessoa = Pessoa::create([
           'cpf'=>$data['cpf'],
           'nome'=>$data['nome'],
           'sobrenome'=>$data['sobrenome'],
           'sexo'=>$data['sexo'],
-          'Cidade_cod_cidade'=>$idCidade,
+          'Cidade_cod_cidade'=>$cidade->cod_cidade,
         ]);
 /*
         DB::table('Email')->insert([
@@ -110,11 +125,29 @@ class RegisterController extends Controller
           'tipo'=>'1',
           'Pessoa_cod_pessoa'=>$idPessoa,
         ]);
+
+        //TODO: Adicionar telefone.
 */
+
+        $instituicao = Instituicao::firstOrCreate([
+          'nome'=>$data['instituicao'],
+        ]);
+
+        $setor = Setor::firstOrCreate([
+          'nome'=>$data['setor'],
+          'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao
+        ]);
+
+        $departamento = Departamento::firstOrCreate([
+            'nome'=>$data['departamento'],
+            //'sigla'=>$data['sigla-departamento'],
+            'Setor_cod_setor'=>$setor->cod_setor
+        ]);
+
         $usuario = User::create([
            'email'=>$data['email'],
            'password'=>bcrypt($data['password']),
-           'Pessoa_cod_pessoa'=>$idPessoa,
+           'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
 
         $attributes = $usuario->getAttributes();
@@ -122,6 +155,7 @@ class RegisterController extends Controller
         if ($data['tipo']=='propositor') {
           $usuarioPropositor = UsuarioPropositor::create([
             'Usuario_cod_usuario'=>$attributes['cod_usuario'],
+            'Departamento_cod_departamento'=>$departamento->cod_departamento
           ]);
 
           $usuario->attachRole(1);
@@ -129,16 +163,32 @@ class RegisterController extends Controller
         elseif ($data['tipo']=='parecerista') {
           $usuarioParecerista = UsuarioParecerista::create([
             'Usuario_cod_usuario'=>$attributes['cod_usuario'],
-            'Departamento_cod_departamento'=>'1', //TODO: ALTERAR (colocar opção no formulário)
+            'Departamento_cod_departamento'=>$departamento->cod_departamento
+          ]);
+
+          $convite = ConviteParecerista::where('token', '=', $data['convite'])->first();
+
+          $proposta = Proposta::where('cod_proposta', '=', $convite->proposta)->first();
+/*
+          $material = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
+                              ->join('Proposta', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
+                              ->where('Proposta.cod_proposta', '=', $proposta->cod_proposta)
+                              ->select('Material.*')
+                              ->first();
+*/
+
+          $parecer = Parecer::create([
+            //TODO: Implementar prazo.
+            'prazo_envio'=>Carbon::now('America/Sao_Paulo')->addDays(61)->format('Y-m-d'),
+            'Proposta_cod_proposta'=>$proposta->cod_proposta,
+            'Usuario_Parecerista_cod_parecerista'=>$usuarioParecerista->cod_parecerista,
           ]);
 
           //TODO: informações específicas do parecerista
-          //TODO: associar com a obra
 
-          $convite = ConviteParecerista::where('token', '=', $data['convite'])->first();
           $convite->delete(); //Deleta o convite após o cadastro do parecerista
 
-          $usuario->attachRole(3);
+          $usuario->attachRole(3);//Associa a role 'parecerista'.
         }
 
         return $usuario;

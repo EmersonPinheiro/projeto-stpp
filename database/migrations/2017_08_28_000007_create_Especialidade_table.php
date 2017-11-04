@@ -26,6 +26,7 @@ class CreateEspecialidadeTable extends Migration
             $table->increments('cod_especialidade');
             $table->string('nome', 50)->nullable();
             $table->integer('Subarea_cod_subarea')->unsigned();
+            $table->timestamps();
 
             $table->index(["Subarea_cod_subarea"], 'fk_Especialidade_Subarea1_idx');
         });

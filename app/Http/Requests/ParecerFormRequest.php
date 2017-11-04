@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MaterialVersionFormRequest extends FormRequest
+class ParecerFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,8 +13,7 @@ class MaterialVersionFormRequest extends FormRequest
      */
     public function authorize()
     {
-      //TODO: Verificar permisser do usuário.
-
+        //TODO: Verificar permisser do usuário.
         return true;
     }
 
@@ -26,8 +25,7 @@ class MaterialVersionFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'novoDoc'=>'required|file|mimes:doc,docx,odt',
-            'oficio'=>'required|file',
+            'parecer'=>'required|file|mimes:pdf',
         ];
     }
 }
