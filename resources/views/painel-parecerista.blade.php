@@ -19,6 +19,8 @@
           </div>
       @endif
 
+      <!--TODO: Implementar função para parecerista se tornar propositor-->
+
       <!-- PAINEL PRINCIPAL -->
       <div class="col-md-10 col-md-offset-1">
         <div class="quadro-painel painel-propostas">

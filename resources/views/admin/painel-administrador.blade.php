@@ -1,13 +1,16 @@
 @extends('master')
-@section('title', 'Propostas')
+@section('title', 'Área do administrador')
 
 @section('content')
-@role('propositor')
+
 <!-- CONTENT -->
 <div class="content">
   <div class="container">
     <div class="row">
 
+      @foreach ($errors->all() as $error)
+          <p class="alert alert-danger">{{ $error }}</p>
+      @endforeach
 
       <!-- PAINEL PRINCIPAL -->
       <div class="col-md-8 col-md-offset-2">
@@ -22,7 +25,7 @@
 
               @if($propostas->isEmpty())
               <div class="alert alert-info" role="alert">
-                <p>Você ainda não cadastrou propostas! Clique no botão abaixo para submeter uma nova proposta.</p>
+                <p>Ninguém enviou uma proposta ainda. :( </p>
               </div>
               @else
 
@@ -33,7 +36,7 @@
                   <li class="list-group-item titulo-lista">
                     <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Proposta 1
                     <div class="pull-right">
-                      <a href="{!! action('PropostasController@show', $proposta->cod_proposta) !!}">Mais Informações</a>
+                      <a href="{!! action('AdminController@show', $proposta->cod_proposta) !!}">Mais Informações</a>
                     </div>
                   </li>
                   <li class="list-group-item">
@@ -61,5 +64,5 @@
     </div> <!-- row -->
   </div> <!--container -->
 </div> <!-- content -->
-@endrole
+
 @endsection

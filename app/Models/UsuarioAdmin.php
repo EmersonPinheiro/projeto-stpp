@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UsuarioAdmin extends Model
 {
-  protected $table = 'Usuario_Admin';
+  protected $table = 'Usuario_Adm';
   protected $primaryKey = 'cod_adm';
   protected $guarded = ['cod_adm'];
 
@@ -14,7 +14,7 @@ class UsuarioAdmin extends Model
   {
     return $this->belongsTo('App\Models\Usuario', 'Usuario_cod_usuario');
   }
-  
+
   public function proposta()
   {
     return $this->hasMany('App\Models\Proposta', 'Proposta_cod_proposta');

@@ -48,7 +48,7 @@ class PropostasController extends Controller
 
       $propostas = Proposta::join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
                         ->where('Usuario_Propositor_cod_propositor', $propositor->cod_propositor)
-                        ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.descricao', 'Obra.cod_obra', 'Proposta.data_envio', 'Proposta.cod_proposta')
+                        ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.descricao', 'Obra.cod_obra', 'Proposta.data_envio', 'Proposta.cod_proposta', 'Proposta.situacao')
                         ->get();
 
       return view('propostas', compact('propostas'));
@@ -61,6 +61,9 @@ class PropostasController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()->can('enviar-proposta')) {
+          return redirect()->back()->withErrors('Ação não permitida.');
+        }
         return view('propostas.create');
     }
 
@@ -223,8 +226,7 @@ class PropostasController extends Controller
                               ->first();
 
         if(($proposta = Proposta::where('cod_proposta', '=', $id)->select('Proposta.*')->first()) != null){
-          $propostaAttributes = $proposta->getAttributes();
-          if(!$propostaAttributes['Usuario_Propositor_cod_propositor'] || $propostaAttributes['Usuario_Propositor_cod_propositor'] != $propositor->cod_propositor){
+          if(!$proposta->Usuario_Propositor_cod_propositor || $proposta->Usuario_Propositor_cod_propositor != $propositor->cod_propositor){
             abort(404);
           }
         }
@@ -232,11 +234,11 @@ class PropostasController extends Controller
           abort(404);
         }
 
-        $obra = Obra::where('Proposta_cod_proposta', '=', $id)->first();
+        $obra = Obra::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->first();
 
         $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
                    ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
-                   ->where('cod_obra', $id)
+                   ->where('cod_obra', $obra->cod_obra)
                    ->select('Pessoa.*')
                    ->get();
 
@@ -244,19 +246,16 @@ class PropostasController extends Controller
         $palavrasChave = DB::table('Palavras_Chave')
                     ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
                     ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
-                    ->where('cod_obra', $id)
+                    ->where('cod_obra', $obra->cod_obra)
                     ->select('Palavras_Chave.palavra')
                     ->get();
 
         $materiais = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
-                    ->where('cod_obra', $id)
+                    ->where('cod_obra', $obra->cod_obra)
                     ->select('Material.*')
                     ->get();
 
         return view('propostas.show', compact('obra', 'autores', 'palavrasChave', 'materiais', 'proposta'));
-
-
-
     }
 
     /**
