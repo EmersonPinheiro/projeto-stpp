@@ -18,7 +18,7 @@
           <div class="panel panel-default">
             <!-- CABEÇALHO PAINEL -->
             <div class="panel-heading">
-              <span class="panel-title"><span class="glyphicon glyphicon-th-list"></span>&nbsp;&nbsp;&nbsp;Suas Propostas</span>
+              <span class="panel-title"><span class="glyphicon glyphicon-th-list"></span>&nbsp;&nbsp;&nbsp;Propostas</span>
             </div>
             <div class="panel-body">
               <!-- LISTA DE PROPOSTAS -->

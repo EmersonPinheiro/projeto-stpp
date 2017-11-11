@@ -26,6 +26,7 @@ class CreateTecnicoCatalografiaTable extends Migration
             $table->increments('cod_tec_catalog')->unsigned();
             $table->integer('funcao')->nullable();
             $table->integer('Pessoa_cod_pessoa')->unsigned();
+            $table->timestamps();
 
             $table->index(["Pessoa_cod_pessoa"], 'fk_Tecnico_Catalografia_Pessoa1_idx');
         });

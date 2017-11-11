@@ -26,9 +26,9 @@ class CreateUsuarioTable extends Migration
             $table->increments('cod_usuario');
             $table->string('email', 100)->unique();
             $table->string('password', 60);
+            $table->integer('Pessoa_cod_pessoa')->unsigned();
             $table->rememberToken();
             $table->timestamps();
-            $table->integer('Pessoa_cod_pessoa')->unsigned();
 
             $table->index(["Pessoa_cod_pessoa"], 'fk_Usuario_Pessoa1_idx');
         });

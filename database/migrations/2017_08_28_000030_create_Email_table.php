@@ -27,6 +27,7 @@ class CreateEmailTable extends Migration
             $table->string('endereco', 100)->nullable();
             $table->integer('tipo')->nullable();
             $table->integer('Pessoa_cod_pessoa')->unsigned();
+            $table->timestamps();
 
             $table->index(["Pessoa_cod_pessoa"], 'fk_E-mail_Pessoa1_idx');
         });
