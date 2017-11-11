@@ -27,6 +27,7 @@ class CreateNotificacaoTable extends Migration
             $table->string('descricao')->nullable();
             $table->date('data')->nullable();
             $table->integer('Proposta_cod_proposta')->unsigned();
+            $table->timestamps();
 
             $table->index(["Proposta_cod_proposta"], 'fk_Notificacao_Proposta1_idx');
         });

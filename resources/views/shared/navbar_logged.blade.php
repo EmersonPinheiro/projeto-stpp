@@ -24,6 +24,11 @@
         @role('parecerista')
         <li><a href="/painel-parecerista" class="navbar-link">Seus Pareceres</a></li>
         @endrole
+
+        @role('admin')
+        <li><a href="/admin/painel-administrador" class="navbar-link">Propostas</a></li>
+        @endrole
+
         <li><a href="#" class="navbar-link">Perfil</a></li>
         <li><a href="/contato" class="navbar-link">Contato</a></li>
         <li><a href="/ajuda" class="navbar-link">Ajuda</a></li>

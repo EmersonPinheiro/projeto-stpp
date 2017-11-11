@@ -64,7 +64,6 @@
               @endforeach
               <p><strong>Descrição: </strong>{!! $obra->descricao !!}</p>
               <p><strong>Resumo: </strong>{!! $obra->resumo !!}</p>
-              <p><strong>ISBN: </strong>{!! $obra->isbn !!}</p>
               <p><strong>Palavras-chave:
 
               @foreach($palavrasChave as $palavraChave)
@@ -73,32 +72,12 @@
 
               <h2>Situação: {!! $proposta->situacao !!}</h2>
 
-              <h4 class="titulo">Informações Adicionais</h4>
-              <p><strong>Edição: </strong>1ª</p><!--VEM DO MATERIAL-->
-              <p><strong>Volume: </strong>{!! $obra->volume !!}</p>
-              <p><strong>Ano: </strong>{!! $obra->ano_publicacao !!}</p>
-              <p><strong>Número de Páginas: </strong>{!! $obra->num_paginas !!}</p>
-
-              <p><strong>Diagramador: </strong>João da Silva</p>
-              <p><strong>Revisor Ortográfico: </strong>João da Silva</p>
-              <p><strong>Revisor de Idioma (Inglês): </strong>João da Silva</p>
-              <p><strong>Revisor de Idioma (Espanhol): </strong>João da Silva</p>
-              <p><strong>Pareceristas: </strong>João da Silva</p>
-              <p><strong>Criador Capa: </strong>João da Silva</p>
-              <p><strong>Projetista Gráfico: </strong>João da Silva</p>
-              <p><strong>Coordenação Editorial: </strong>João da Silva</p>
-
               <h4 class="titulo">Arquivos</h4>
               @foreach($materiais as $material)
                 <h5><i>Versão {!! $material->versao !!}</i></h5>
                 <p><strong>Documento (doc, docx): </strong>documento.doc<a href="{!! action('MaterialController@downloadMaterial', $material->cod_material) !!}">&nbsp;&nbsp;&nbsp;Baixar </a></p>
                 <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
               @endforeach
-
-              <!--APENAS PARA O ADMINISTRADOR-->
-              <h2>ÁREA DO ADMINISTRADOR</h2>
-
-              <strong><a href="{!! action('ConviteController@invite', $obra->Proposta_cod_proposta) !!}">Clique aqui para convidar um avaliador para esta obra.</a></strong>
 
               <!--MODAL-->
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;&nbsp;&nbsp;Enviar Nova Versão da Obra</button>

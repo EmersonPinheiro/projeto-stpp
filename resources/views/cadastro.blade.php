@@ -104,6 +104,7 @@
                 <div class="form-group col-md-6">
                   <label for="especialidade">Especialidade</label>
                   <input type="text" class="form-control" id="especialidade" name="especialidade" placeholder="Especialidade" value="{{old('especialidade')}}">
+
                 </div>
               </div>
             </fieldset>
@@ -175,6 +176,7 @@
                 <div class="form-group col-md-6">
                   <label for="confirma_senha">Confirme sua senha *</label>
                   <input type="password" class="form-control" id="confirma_senha" name="password_confirmation" placeholder="Senha">
+
                 </div>
               </div>
             </fieldset>
@@ -184,7 +186,6 @@
                 <button type="submit" class="btn btn-primary btn-block">Enviar</button>
               </div>
             </div>
-
           </form>
         </div> <!-- quadro -->
       </div> <!-- col -->

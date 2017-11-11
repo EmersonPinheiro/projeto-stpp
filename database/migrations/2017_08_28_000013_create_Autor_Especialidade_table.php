@@ -25,6 +25,7 @@ class CreateAutorEspecialidadeTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('Autor_cod_autor')->unsigned();
             $table->integer('Especialidade_cod_especialidade')->unsigned();
+            $table->timestamps();
 
             $table->index(["Especialidade_cod_especialidade"], 'fk_Autor_has_Especialidade_Especialidade1_idx');
 

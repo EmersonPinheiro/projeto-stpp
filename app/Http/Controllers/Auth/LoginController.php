@@ -32,57 +32,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    //TODO: CRIAR FUNÇÃO DE REDIRECIONAMENTO PARA DIFERENCIAR OS USUÁRIOS
-/*
-    public function authenticate(Request $request)
-    {
-      $email     = $request->get('email');
-      $password  = $request->get('password');
-      $user_role = $request->get('user_role');
-
-      if($user_role == 'propositor'){
-        if(Auth::user()->hasRole('propositor')){
-          if(Auth::attempt(['email' => $email, 'password' => $password])){
-            return $this->authenticated($request);
-          }
-        }
-        else{
-          return redirect('/')->with('status', 'Acesso negado!');
-        }
-      }
-
-      elseif($user_role == 'parecerista'){
-        if(Auth::user()->hasRole('parecerista')){
-          if(Auth::attempt(['email' => $email, 'password' => $password])){
-            return $this->authenticated($request);
-          }
-        }
-        else{
-          return redirect('/')->with('status', 'Acesso negado!');
-        }
-      }
-      else{
-          return redirect('/')->with('status', 'Erro ao fazer login!');
-      }
-
-    }*/
-
     //TODO: Verificar uma solução melhor.
     public function authenticated()
     {
       $usuario = Auth::user();
-      /*
-      if ($user_role == 'propositor' && Auth::user()->hasRole('propositor')){
-        return redirect('/propostas');
-      }
-      elseif($user_role == 'parecerista' && Auth::user()->hasRole('parecerista')){
-        return redirect('/painel-parecerista');
-      }
-      else{
-        Auth::logout();
-        return redirect('/')->withErrors('Acesso não permitido!');
-      }
-      */
+
       if ($usuario->hasRole('propositor') && $usuario->hasRole('parecerista')) {
         return redirect('/modo-acesso');
       }
@@ -92,7 +46,10 @@ class LoginController extends Controller
       elseif($usuario->hasRole('parecerista')) {
         return redirect('/painel-parecerista');
       }
-      else {
+      elseif($usuario->hasRole('admin')) {
+        return redirect('/admin/painel-administrador');
+      }
+      else{
         $usuario->logout();
         return redirect('/')->withErrors('Ocorreu um erro durante o login.');
       }

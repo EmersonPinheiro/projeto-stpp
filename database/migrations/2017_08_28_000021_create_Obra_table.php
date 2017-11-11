@@ -27,6 +27,7 @@ class CreateObraTable extends Migration
             $table->string('titulo', 100);
             $table->string('subtitulo', 100)->nullable();
             $table->string('descricao')->nullable();
+            //$table->integer('edicao')->nullable();
             $table->integer('volume')->nullable();
             $table->string('isbn', 13)->nullable();
             $table->smallInteger('ano_publicacao')->nullable();

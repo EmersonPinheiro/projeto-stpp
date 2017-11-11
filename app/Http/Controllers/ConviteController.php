@@ -8,6 +8,7 @@ use App\User;
 use App\UsuarioParecerista;
 use App\UsuarioPropositor;
 use App\Proposta;
+use App\Parecer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Mail\PareceristaConvidado;
@@ -58,7 +59,7 @@ class ConviteController extends Controller
         if($usuarioParecerista = usuarioParecerista::where('Usuario_cod_usuario', '=', $usuario['cod_usuario'])->first()){
 
           $parecer = Parecer::create([
-            'prazo_envio'=>Carbon::now('America/Sao_Paulo')->format(Y-m-d)->addDays(60),
+            'prazo_envio'=>Carbon::now('America/Sao_Paulo')->addDays(61)->format('Y-m-d'),
             'Proposta_cod_proposta'=>$proposta->cod_proposta,
             'Usuario_Parecerista_cod_parecerista'=>$usuarioParecerista->cod_parecerista,
           ]);

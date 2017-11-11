@@ -48,7 +48,6 @@
                 </div>
               </fieldset>
 
-
               <!--AUTOR/PESSOA-->
               <fieldset>
                 <legend>Informações Pessoais do Autor</legend>
