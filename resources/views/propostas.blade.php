@@ -31,13 +31,13 @@
                 <!-- List group -->
                 <ul class="list-group">
                   <li class="list-group-item titulo-lista">
-                    <span class="glyphicon glyphicon-book glyphicon-space"></span>Proposta
+                    <span class="glyphicon glyphicon-book glyphicon-space"></span>{!! $proposta->titulo !!}
                     <div class="pull-right">
                       <a href="{!! action('PropostasController@show', $proposta->cod_proposta) !!}">Mais Informações</a>
                     </div>
                   </li>
                   <li class="list-group-item">
-                    <p class="text-warning"><strong>Situação: </strong>COLOCAR AQUI A SITUAÇÃO DA PROPOSTA</p>
+                    <p class="text-warning"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
                     <p><strong>Título da Obra: </strong>{!! $proposta->titulo !!}</p>
                     <p><strong>Subtítulo da Obra: </strong>{!! $proposta->subtitulo !!}</p>
                     <p><strong>Descrição: </strong>{!! $proposta->descricao !!}</p>
