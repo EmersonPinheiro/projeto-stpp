@@ -20,7 +20,7 @@
             <div class="panel-body">
               <!-- LISTA DE PROPOSTAS -->
 
-              @if(!$propostas->isEmpty())
+              @if($propostas->isEmpty())
               <div class="alert alert-info" role="alert">
                 <p>Você ainda não cadastrou propostas! Clique no botão abaixo para submeter uma nova proposta.</p>
               </div>
