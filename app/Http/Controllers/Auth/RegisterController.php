@@ -67,7 +67,9 @@ class RegisterController extends Controller
         $messages = [
           'required'=>'O campo :attribute é obrigatório.',
           'min'=>'O campo :attribute deve ter no mínimo :min caracteres.',
-          'max'=>'O campo :attribute deve ter no máximo :max caracteres.'
+          'max'=>'O campo :attribute deve ter no máximo :max caracteres.',
+          'password.required'=>'O campo senha é obrigatório.',
+          'password_confirmation.required'=>'O campo de confirmação de senha é obrigatório.'
         ];
 
         return Validator::make($data, [

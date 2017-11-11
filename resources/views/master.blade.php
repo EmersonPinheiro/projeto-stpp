@@ -32,11 +32,7 @@
 
     @yield('content')
 
-    @if (Auth::check())
-      @include('shared.footer_logged')
-    @else
-      @include('shared.footer')
-    @endif
+    @include('shared.footer')
 
   </body>
 </html>

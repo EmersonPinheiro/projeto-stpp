@@ -19,16 +19,15 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         @role('propositor')
-        <li><a href="/propostas" class="navbar-link">Suas propostas</a></li>
+        <li><a href="/propostas" class="navbar-link">Suas Propostas</a></li>
         @endrole
         @role('parecerista')
-        <li><a href="/painel-parecerista" class="navbar-link">Seus pareceres</a></li>
+        <li><a href="/painel-parecerista" class="navbar-link">Seus Pareceres</a></li>
         @endrole
-
         <li><a href="#" class="navbar-link">Perfil</a></li>
         <li><a href="/contato" class="navbar-link">Contato</a></li>
-        <li><a href="#" class="navbar-link">Editora UEPG</a></li>
         <li><a href="/ajuda" class="navbar-link">Ajuda</a></li>
+        <li><a href="http://www.uepg.br/editora/" target="_blank" class="navbar-link">Editora UEPG</a></li>
         @if (Auth::check())
         <li>
           <form class=" navbar-link" id="logout-form" action="{{ route('logout') }}" method="POST">

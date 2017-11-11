@@ -29,7 +29,6 @@ class PropostaFormRequest extends FormRequest
             'titulo'=>'required|min:3|max:100',
             'subtitulo'=>'required|max:100',
             'descricao'=>'required|min:3|max:100',
-            'resumo'=>'required|min:3|max:100',
             'nome'=>'required|min:3|max:50',
             'sobrenome'=>'required|min:3|max:100',
             'CPF'=>'required|min:11|max:11',
