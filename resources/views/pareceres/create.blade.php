@@ -37,7 +37,11 @@
               <p><strong>Subtítulo da Obra: </strong>{!! $obraParecer->subtitulo !!}</p>
               <p><strong>Descrição: </strong>{!! $obraParecer->descricao !!}</p>
               <p><strong>Documento: </strong>documento.doc<a href="{!! action('MaterialController@downloadMaterial', $idMaterial) !!}">&nbsp;&nbsp;&nbsp;Baixar </a>| <a href="{!! action('MaterialController@showMaterial', $idMaterial) !!}">Visualizar PDF</a></p><br>
-              <p><strong class="alert alert-danger">Dias restantes: {!! $obraParecer->prazo_restante !!}</strong></p>
+              @if(!$obraParecer->envio)
+                <p><strong class="alert alert-danger">Dias restantes: {!! $obraParecer->prazo_restante !!}</strong></p>
+              @else
+                <p><strong class="alert alert-success">Parecer enviado!</strong></p>
+              @endif
               <h4 class="titulo">Parecer</h4>
               <form method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">

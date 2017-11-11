@@ -29,15 +29,17 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/propostas/{id?}/showMaterial', 'MaterialController@showMaterial');
   Route::get('/propostas/{id?}/convidar-parecerista', 'ConviteController@invite')->name('invite');
   Route::post('/propostas/{id?}/convidar-parecerista', 'ConviteController@process')->name('process');
-  Route::get('/accept/{token}', 'ConviteController@accept')->name('accept');
   Route::get('/painel-parecerista', 'ParecerController@index');
   Route::get('/modo-acesso', 'PagesController@modoAcesso');
   Route::get('/enviar-parecer/{parecer?}', 'ParecerController@create');
   Route::post('/enviar-parecer/{parecer?}', 'ParecerController@store');
   Route::get('/admin/painel-administrador', 'AdminController@index');
   Route::get('/admin/painel-administrador/{id?}', 'AdminController@show');
+  Route::get('/admin/painel-administrador/{id?}/edit', 'AdminController@edit');
+  Route::post('/admin/painel-administrador/{id?}/edit', 'AdminController@update');
 });
 
+Route::get('/accept/{token}', 'ConviteController@accept')->name('accept');
 
 Route::get('/acesso-restrito', 'PagesController@restrito');
 

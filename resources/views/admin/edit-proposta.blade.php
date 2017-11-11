@@ -15,7 +15,7 @@
             </div>
 
             <div class="panel-body text-justify">
-              <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
+              <a href="/admin/painel-administrador"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
               <form method="post">
 
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
@@ -54,6 +54,8 @@
                   @endforeach
                 </div>
                 <div class="form-group col-md-6">
+
+                  <!--TODO: Verificar envio de array pela request. -->
                   <label for="cad5">Autor</label>
                   @foreach($autores as $autor)
                   <label>Nome</label>
@@ -63,13 +65,69 @@
                   @endforeach
                 </div>
 
+                <div class="form-group col-md-6">
+                  <label for="cad6">ISBN</label>
+                  <input type="text" class="form-control" id="cad6" name="isbn" placeholder="ISBN">
+                </div>
+                <h4 class="titulo">Informações Adicionais</h4>
+                <div class="form-group col-md-3">
+                  <label>Edição</label>
+                  <input type="text" class="form-control" name="edicao" placeholder="Edição">
+                </div>
+                <div class="form-group col-md-3">
+                  <label>Volume</label>
+                  <input type="text" class="form-control" name="volume" placeholder="Volume">
+                </div>
+                <div class="form-group col-md-3">
+                  <label>Ano</label>
+                  <input type="text" class="form-control" name="ano" placeholder="Ano">
+                </div>
+                <div class="form-group col-md-3">
+                  <label>Número de Páginas</label>
+                  <input type="text" class="form-control" name="num_paginas" placeholder="Número de Páginas">
+                </div>
+
+
+                <!--TODO: Verificar envio de array pela request. -->
+                <div class="form-group col-md-6">
+                  <label>Parecerista</label>
+                  <input type="text" class="form-control" placeholder="Parecerista">
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Revisor Ortográfico</label>
+                  <input type="text" class="form-control" placeholder="Revisor Ortográfico">
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Revisor de Idioma (Inglês)</label>
+                  <input type="text" class="form-control" placeholder="Revisor de Idioma (Inglês)">
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Revisor de Idioma (Espanhol)</label>
+                  <input type="text" class="form-control" placeholder="Revisor de Idioma (Espanhol)">
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Diagramador</label>
+                  <input type="text" class="form-control" placeholder="Diagramador">
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Criador Capa</label>
+                  <input type="text" class="form-control" placeholder="Criador Capa">
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Projetista Gráfico</label>
+                  <input type="text" class="form-control" placeholder="Projetista Gráfico">
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Coordenação Editorial</label>
+                  <input type="text" class="form-control" placeholder="Coordenação Editorial">
+                </div>
                 <div class="col-md-12">
                   <button type="submit" class="btn btn-primary btn-block">Salvar</button>
                 </div>
               </form>
             </div>
             <div class="panel-footer">
-              <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
+              <a href="/admin/painel-administrador"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
             </div>
           </div> <!-- painel -->
         </div> <!-- /quadro-painel /painel-info-propostas -->

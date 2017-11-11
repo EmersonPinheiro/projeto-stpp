@@ -25,6 +25,7 @@ class CreateObraTecnicoCatalografiaTable extends Migration
             $table->engine = 'InnoDB';
             $table->integer('Obra_cod_obra')->unsigned();
             $table->integer('Tecnico_Catalografia_cod_tec_catalog')->unsigned();
+            $table->timestamps();
 
             $table->index(["Obra_cod_obra"], 'fk_Obra_has_Tecnico_Catalografia_Obra1_idx');
 

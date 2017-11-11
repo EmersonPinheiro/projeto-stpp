@@ -27,6 +27,7 @@ class CreateTelefoneTable extends Migration
             $table->string('numero', 14)->nullable();
             $table->integer('tipo')->nullable();
             $table->integer('Pessoa_cod_pessoa')->unsigned();
+            $table->timestamps();
 
             $table->index(["Pessoa_cod_pessoa"], 'fk_Telefone_Pessoa_idx');
         });

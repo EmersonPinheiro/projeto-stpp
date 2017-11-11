@@ -23,30 +23,8 @@
 
             <div class="panel-body text-justify">
               <div class="pull-right">
-                <a class="btn btn-primary" href="{!! action('PropostasController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;Editar Proposta</a>
-                <a href="" role="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal2"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Solicitar Cancelamento da Proposta</a>
-                <div class="modal fade" id="myModal2">
-                  <div class="modal-dialog"> <!-- modal-sm, modal-lg -->
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span arua-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Solicitar Cancelamento da Proposta</h4>
-                      </div>
-                      <div class="modal-body">
-                        <div class="form-group">
-                          <label for="cad3">Conte-nos o motivo do cancelamento. <span style="color:red;">*</span> </label>
-                          <textarea type="textarea" class="form-control" id="cad3" placeholder="Obrigatório"></textarea>
-                        </div>
-                        <p>Esta ação enviará uma solicitação de cancelamento da Proposta para o Administrador do sistema. Uma vez solicidada, não poderá ser desfeita.</p>
-                        <p>Deseja continuar?</p>
-                      </div>
-                      <div class="modal-footer">
-                        <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button class="btn btn-primary" data-dismiss="modal">Enviar</button>
-                      </div>
-                    </div> <!-- modal-content -->
-                  </div> <!-- modal-dialog -->
-                </div>
+                <a class="btn btn-primary" href="{!! action('AdminController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;Editar Proposta</a>
+                <a href="" role="button" class="btn btn-danger" ><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Excluir proposta</a>
               </div>
 
               @foreach ($errors->all() as $error)

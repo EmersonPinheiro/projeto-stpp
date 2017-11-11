@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Pais;
+use App\EstadoProvincia;
+use App\Cidade;
 use App\Role;
 use App\Permission;
 use App\User;
@@ -9,7 +12,17 @@ use App\Obra;
 use App\Proposta;
 use App\Autor;
 use App\Pessoa;
+use App\Instituicao;
+use App\Setor;
+use App\Departamento;
+use App\GrandeArea;
+use App\AreaConhecimento;
+use App\Subarea;
+use App\Especialidade;
+use App\AutorEspecialidade;
 use App\Material;
+use App\Telefone;
+use App\Email;
 use App\UsuarioPropositor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -61,10 +74,17 @@ class PropostasController extends Controller
      */
     public function create()
     {
-        if (!Auth::user()->can('enviar-proposta')) {
+        $usuario = Auth::user();
+
+        if (!$usuario->can('enviar-proposta')) {
           return redirect()->back()->withErrors('Ação não permitida.');
         }
-        return view('propostas.create');
+
+
+        $autor = User::join('Pessoa', 'Usuario.Pessoa_cod_pessoa', '=', 'Pessoa.cod_pessoa')
+                      ->where('cod_usuario', $usuario->cod_usuario)->first();
+
+        return view('propostas.create', compact('autor'));
     }
 
     /**
@@ -76,111 +96,113 @@ class PropostasController extends Controller
     public function store(PropostaFormRequest $request)
     {
 
-        $usuario = Auth::user()->getAttributes();
-        $idUsuario = $usuario['cod_usuario'];
+        $usuario = Auth::user();
 
         $propositor = DB::table('Usuario_Propositor')->join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
-                              ->where('Usuario.cod_usuario', $idUsuario)
+                              ->where('Usuario.cod_usuario', $usuario->cod_usuario)
                               ->select('Usuario_Propositor.cod_propositor')
                               ->first();
 
-        $idProposta = DB::table('Proposta')->insertGetID([
+        $proposta = Proposta::create([
           'data_envio'=>Carbon::now('America/Sao_Paulo')->format('Y-m-d'),
           'Usuario_Propositor_cod_propositor'=>$propositor->cod_propositor,
         ]);
 
-
         //VERIFICAR INSERSÃO DE VALORES IGUAIS
 
-        $idPais = DB::table('Pais')->insertGetID([
+        $pais = Pais::firstOrCreate([
           'nome'=>$request->get('pais'),
         ]);
 
-        $idEstProv = DB::table('Estado_provincia')->insertGetID([
+        $estProv = EstadoProvincia::firstOrCreate([
          'nome'=>$request->get('estado'),
          //falta uf
-         'Pais_cod_pais'=>$idPais,
+         'Pais_cod_pais'=>$pais->cod_pais,
         ]);
 
-         $idCidade = DB::table('Cidade')->insertGetID([
+         $cidade = Cidade::firstOrCreate([
           'nome'=>$request->get('cidade'),
-          'Estado_provincia_cod_est_prov'=>$idEstProv,
+          'Estado_provincia_cod_est_prov'=>$estProv->cod_est_prov,
         ]);
 
-        $idPessoa = DB::table('Pessoa')->insertGetID([
-          'cpf'=>$request->get('CPF'),
-          'nome'=>$request->get('nome'),
-          'sobrenome'=>$request->get('sobrenome'),
-          'sexo'=>$request->get('sexo'),
-          'Cidade_cod_cidade'=>$idCidade,
-        ]);
 
-        $idInstituicao = DB::table('Instituicao')->insertGetID([
+        if (!$pessoa = Pessoa::where('cpf', '=', $request->get('CPF'))->first()) {  // Verifica cpf duplicado.
+          $pessoa = Pessoa::create([
+            'cpf'=>$request->get('CPF'),
+            'nome'=>$request->get('nome'),
+            'sobrenome'=>$request->get('sobrenome'),
+            'sexo'=>$request->get('sexo'),
+            'Cidade_cod_cidade'=>$cidade->cod_cidade,
+          ]);
+        }
+
+        $instituicao = Instituicao::firstOrCreate([
           'nome'=>$request->get('instituicao'),
         ]);
 
-        $idSetor = DB::table('Setor')->insertGetID([
+        $setor = Setor::firstOrCreate([
           'nome'=>$request->get('setor'),
           //falta sigla
-          'Instituicao_cod_instituicao'=>$idInstituicao,
+          'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao,
         ]);
 
-        $idDepartamento = DB::table('Departamento')->insertGetID([
+        $departamento = Departamento::firstOrCreate([
           'nome'=>$request->get('departamento'),
-          'Setor_cod_setor'=>$idSetor,
+          'Setor_cod_setor'=>$setor->cod_setor,
         ]);
 
-        $idGrandeArea = DB::table('Grande_Area')->insertGetID([
+        $grandeArea = GrandeArea::firstOrCreate([
           'nome'=>$request->get('grande_area'),
         ]);
 
-        $idAreaConhecimento = DB::table('Area_Conhecimento')->insertGetID([
+        $areaConhecimento = AreaConhecimento::firstOrCreate([
           'nome'=>$request->get('area_conhecimento'),
-          'Grande_Area_cod_grande_area'=>$idGrandeArea,
+          'Grande_Area_cod_grande_area'=>$grandeArea->cod_grande_area,
         ]);
 
-        $idSubarea = DB::table('Subarea')->insertGetID([
+        $subarea = Subarea::firstOrCreate([
           'nome'=>$request->get('subarea'),
-          'Area_Conhecimento_cod_area_conhec'=>$idAreaConhecimento,
+          'Area_Conhecimento_cod_area_conhec'=>$areaConhecimento->cod_area_conhec,
         ]);
 
-        $idEspecialidade = DB::table('Especialidade')->insertGetID([
+        $especialidade = Especialidade::firstOrCreate([
           'nome'=>$request->get('especialidade'),
-          'Subarea_cod_subarea'=>$idSubarea,
+          'Subarea_cod_subarea'=>$subarea->cod_subarea,
         ]);
 
-        $idAutor = DB::table('Autor')->insertGetID([
+        $autor = Autor::firstOrCreate([
           'categoria'=>'1',
           //'categoria'=>$request->get('categoria'),
-          'Departamento_cod_departamento'=>$idDepartamento,
-          'Pessoa_cod_pessoa'=>$idPessoa,
+          'Departamento_cod_departamento'=>$departamento->cod_departamento,
+          'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
 
-        DB::table('Autor_Especialidade')->insert([
-          'Autor_cod_autor'=>$idAutor,
-          'Especialidade_cod_especialidade'=>$idEspecialidade,
+        //TODO: Inserir um array de autores.
+
+        AutorEspecialidade::firstOrCreate([
+          'Autor_cod_autor'=>$autor->cod_autor,
+          'Especialidade_cod_especialidade'=>$especialidade->cod_especialidade,
         ]);
 
-        $idObra = DB::table('Obra')->insertGetID([
+        $obra = Obra::create([
           'titulo'=>$request->get('titulo'),
           'subtitulo'=>$request->get('subtitulo'),
           'descricao'=>$request->get('descricao'),
           'resumo'=>$request->get('resumo'),
-          'Proposta_cod_proposta'=>$idProposta,
-          'Autor_cod_autor'=>$idAutor,
+          'Proposta_cod_proposta'=>$proposta->cod_proposta,
+          'Autor_cod_autor'=>$autor->cod_autor,
         ]);
 
         $docpath = Storage::putFile('documentos', $request->file('documento'), 'private');
         //$imgpath = Storage::putFile('imagens', $request->file('imagens'), 'public');
         $url_documento = Storage::url($docpath);
         //$url_imagens = Storage::url($imgpath);
-        DB::table('Material')->insert([
-
+        Material::create([
           'url_documento'=>$docpath,
           //'url_imagens'=>$url_imagens,
-          'Obra_cod_obra'=>$idObra,
+          'Obra_cod_obra'=>$obra->cod_obra,
         ]);
-
+/*
         $idPalavraChave = DB::table('Palavras_Chave')->insertGetID([
           'palavra'=>$request->get('palavra'),
         ]);
@@ -189,23 +211,24 @@ class PropostasController extends Controller
           'Obra_cod_obra'=>$idObra,
           'Palavras_Chave_cod_pchave'=>$idPalavraChave,
         ]);
+*/
 
-        DB::table('Telefone')->insert([
+        Telefone::create([
           'numero'=>$request->get('telefone'),
           'tipo'=>'1',
-          'Pessoa_cod_pessoa'=>$idPessoa,
+          'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
 
-        DB::table('Email')->insert([
+        Email::create([
           'endereco'=>$request->get('email'),
           'tipo'=>'1',
-          'Pessoa_cod_pessoa'=>$idPessoa,
+          'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
 
         $emailAdmin = 'exemploadmin@email.com';
         Mail::to($emailAdmin)->send(new PropostaEnviada($request));
 
-        return redirect('/enviar-proposta')->with('status', 'Proposta enviada! Sua identificação única é '.$idProposta);
+        return redirect('/enviar-proposta')->with('status', 'Proposta enviada! Sua identificação única é '.$proposta->cod_proposta);
     }
 
     /**
@@ -327,6 +350,8 @@ class PropostasController extends Controller
           ->update([
             'palavra' => $request->get('palavra'),
           ]);
+
+        //TODO: Atualizar um array de autores.
 
         return redirect(action('PropostasController@show', $id))->with('status', 'A proposta '.$id.' foi atualizada!');
     }

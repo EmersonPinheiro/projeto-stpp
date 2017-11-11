@@ -26,6 +26,4 @@ class Obra extends Model
       return $this->hasMany('App\Models\Material', 'Obra_cod_obra');
     }
 
-    //obra_palavra_chave
-
 }
