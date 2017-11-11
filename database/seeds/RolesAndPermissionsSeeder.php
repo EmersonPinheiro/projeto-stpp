@@ -25,11 +25,11 @@ class RolesAndPermissionsSeeder extends Seeder
         'name'=>'parecerista'
       ]);
 
-      $enviarProposta       = Permission::firstOrCreate([
+      $enviarProposta   = Permission::firstOrCreate([
         'name'=>'enviar-proposta'
       ]);
 
-      $avaliarProposta       = Permission::firstOrCreate([
+      $avaliarProposta  = Permission::firstOrCreate([
         'name'=>'avaliar-proposta'
       ]);
 

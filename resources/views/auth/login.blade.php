@@ -9,11 +9,11 @@
     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
 
 
-    <!--TIPO DO USUÁRIO-->
+    <!--TIPO DO USUÁRIO
     <div class="form-group">
       <input type="radio" name="user_role" checked value="propositor"/> Propositor
       <input type="radio" name="user_role" value="parecerista"/> Avaliador
-    </div>
+    </div>-->
 
 
     <div class="form-group">

@@ -18,7 +18,16 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
+        @role('propositor')
         <li><a href="/propostas" class="navbar-link">Suas propostas</a></li>
+        @endrole
+        @role('parecerista')
+        <li><a href="/painel-parecerista" class="navbar-link">Seus pareceres</a></li>
+        @endrole
+        @role('admin')
+        <li><a href="/admin/painel-administrador" class="navbar-link">Propostas</a></li>
+        @endrole
+
         <li><a href="#" class="navbar-link">Perfil</a></li>
         <li><a href="/contato" class="navbar-link">Contato</a></li>
         <li><a href="#" class="navbar-link">Editora UEPG</a></li>

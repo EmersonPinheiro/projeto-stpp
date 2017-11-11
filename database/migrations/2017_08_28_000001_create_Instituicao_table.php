@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubareaTable extends Migration
+class CreateInstituicaoTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'Subarea';
+    public $set_schema_table = 'Instituicao';
 
     /**
      * Run the migrations.
-     * @table Subarea
+     * @table Instituicao
      *
      * @return void
      */
@@ -23,17 +23,9 @@ class CreateSubareaTable extends Migration
         if (Schema::hasTable($this->set_schema_table)) return;
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('cod_subarea');
+            $table->increments('cod_instituicao');
             $table->string('nome', 100)->nullable();
-            $table->integer('Area_Conhecimento_cod_area_conhec')->unsigned();
-
-            $table->index(["Area_Conhecimento_cod_area_conhec"], 'fk_Subarea_Area_Conhecimento1_idx');
-        });
-        Schema::table($this->set_schema_table, function (Blueprint $table) {
-            $table->foreign('Area_Conhecimento_cod_area_conhec', 'fk_Subarea_Area_Conhecimento1_idx')
-                ->references('cod_area_conhec')->on('Area_Conhecimento')
-                ->onDelete('no action')
-                ->onUpdate('no action');
+            $table->timestamps();
         });
     }
 

@@ -5,6 +5,12 @@
 
 <!-- CONTENT -->
 <div class="content">
+
+<div class="">
+  <span><strong><h2>&nbsp;&nbsp;&nbsp;ÁREA DO ADMINISTRADOR</h2></strong></span>
+</div>
+
+
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
@@ -53,7 +59,7 @@
                   </div>
               @endif
 
-              <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
+              <a href="/admin/painel-administrador"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
               <h4 class="titulo">Informações da Obra</h4>
               <p><strong>Título da Obra: </strong>{!! $obra->titulo !!}</p>
               <p><strong>Subtítulo da Obra: </strong>{!! $obra->subtitulo !!}</p>
@@ -72,6 +78,25 @@
 
               <h2>Situação: {!! $proposta->situacao !!}</h2>
 
+              <h4 class="titulo">Informações Adicionais</h4>
+              <p><strong>ISBN: </strong>{!! $obra->isbn !!}</p>
+              <p><strong>Edição: </strong>1ª</p><!--VEM DO MATERIAL-->
+              <p><strong>Volume: </strong>{!! $obra->volume !!}</p>
+              <p><strong>Ano: </strong>{!! $obra->ano_publicacao !!}</p>
+              <p><strong>Número de Páginas: </strong>{!! $obra->num_paginas !!}</p>
+
+              @if($funcoes['diagramador'] != null)<!--TODO: Retirar. Está aqui só para evitar erro-->
+
+              <p><strong>Diagramador: </strong>{!! $funcoes['diagramador']->nome !!}</p>
+              <p><strong>Revisor Ortográfico: </strong>{!! $funcoes['revisor_ortografico']->nome !!}</p>
+              <p><strong>Revisor de Idioma (Inglês): </strong>{!! $funcoes['revisor_ingles']->nome !!}</p>
+              <p><strong>Revisor de Idioma (Espanhol): </strong>{!! $funcoes['revisor_espanhol']->nome !!}</p>
+              <p><strong>Criador Capa: </strong>{!! $funcoes['cricador_capa']->nome !!}</p>
+              <p><strong>Projetista Gráfico: </strong>{!! $funcoes['projetista_grafico']->nome !!}</p>
+              <p><strong>Coordenação Editorial: </strong>{!! $funcoes['coordenacao_editorial']->nome !!}</p>
+              @endif
+              <p><strong>Pareceristas: </strong>João da Silva</p>
+
               <h4 class="titulo">Arquivos</h4>
               @foreach($materiais as $material)
                 <h5><i>Versão {!! $material->versao !!}</i></h5>
@@ -79,43 +104,11 @@
                 <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
               @endforeach
 
-              <!--MODAL-->
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;&nbsp;&nbsp;Enviar Nova Versão da Obra</button>
+              <strong><a href="{!! action('ConviteController@invite', $obra->Proposta_cod_proposta) !!}">Clique aqui para convidar um avaliador para esta obra.</a></strong>
 
-              <div class="modal fade" id="myModal">
-                <div class="modal-dialog"> <!-- modal-sm, modal-lg -->
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal"><span arua-hidden="true">&times;</span></button>
-                      <h4 class="modal-title">Enviar Nova Versão da Obra</h4>
-                    </div>
-                    <div class="modal-body">
-                      <form action="/propostas/{!! $obra->Proposta_cod_proposta !!}" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                        <div class="form-group">
-                          <label for="novoDoc">Documento (.doc)</label>
-                          <input type="file" class="form-control" id="novoDoc" name="novoDoc">
-
-                          <input type="hidden" name="cod_obra" value="{!! $obra->cod_obra !!}">
-                          <input type="hidden" name="cod_proposta" value="{!! $proposta->cod_proposta !!}">
-                        </div>
-                        <div class="form-group">
-                          <label for="oficio">Ofício de Alterações (.doc)</label>
-                          <input type="file" class="form-control" id="oficio" name="oficio">
-                        </div>
-                        <div class="modal-footer">
-                          <button class="btn btn-default" type="button" data-dismiss="modal">Cancelar</button>
-                          <input type="submit" class="btn btn-info" value="Enviar">
-                        </div>
-                      </form>
-                    </div>
-
-                  </div> <!-- modal-content -->
-                </div> <!-- modal-dialog -->
-              </div>
             </div>
             <div class="panel-footer">
-              <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
+              <a href="/admin/painel-administrador"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
             </div>
           </div> <!-- painel -->
         </div> <!-- /quadro-painel /painel-info-propostas -->

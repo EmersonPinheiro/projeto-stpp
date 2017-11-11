@@ -25,6 +25,7 @@ class CreatePaisTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_pais');
             $table->string('nome', 50)->nullable();
+            $table->timestamps();
         });
     }
 

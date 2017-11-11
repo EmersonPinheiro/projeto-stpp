@@ -48,7 +48,7 @@ class PropostasController extends Controller
 
       $propostas = Proposta::join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
                         ->where('Usuario_Propositor_cod_propositor', $propositor->cod_propositor)
-                        ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.descricao', 'Obra.cod_obra', 'Proposta.data_envio', 'Proposta.cod_proposta')
+                        ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.descricao', 'Obra.cod_obra', 'Proposta.data_envio', 'Proposta.cod_proposta', 'Proposta.situacao')
                         ->get();
 
       return view('propostas', compact('propostas'));
@@ -61,6 +61,9 @@ class PropostasController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()->can('enviar-proposta')) {
+          return redirect()->back()->withErrors('Ação não permitida.');
+        }
         return view('propostas.create');
     }
 
@@ -214,34 +217,45 @@ class PropostasController extends Controller
     public function show($id)
     {
 
-      //UTILIZANDO MODELS
+        $usuario = Auth::user()->getAttributes();
+        $idUsuario = $usuario['cod_usuario'];
 
-      $obra = Obra::where('Proposta_cod_proposta', $id)->first();
-      $proposta = Proposta::where('cod_proposta', $id)->first();
+        $propositor = DB::table('Usuario_Propositor')->join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+                              ->where('Usuario.cod_usuario', $idUsuario)
+                              ->select('Usuario_Propositor.cod_propositor')
+                              ->first();
 
-      $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
+        if(($proposta = Proposta::where('cod_proposta', '=', $id)->select('Proposta.*')->first()) != null){
+          if(!$proposta->Usuario_Propositor_cod_propositor || $proposta->Usuario_Propositor_cod_propositor != $propositor->cod_propositor){
+            abort(404);
+          }
+        }
+        else {
+          abort(404);
+        }
+
+        $obra = Obra::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->first();
+
+        $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
                    ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
-                   ->where('cod_obra', $id)
+                   ->where('cod_obra', $obra->cod_obra)
                    ->select('Pessoa.*')
                    ->get();
 
-        //EXCLUIR PALAVRAS CHAVE
+        //TODO: EXCLUIR PALAVRAS CHAVE
         $palavrasChave = DB::table('Palavras_Chave')
                     ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
                     ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
-                    ->where('cod_obra', $id)
+                    ->where('cod_obra', $obra->cod_obra)
                     ->select('Palavras_Chave.palavra')
                     ->get();
 
         $materiais = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
-                    ->where('cod_obra', $id)
+                    ->where('cod_obra', $obra->cod_obra)
                     ->select('Material.*')
                     ->get();
 
         return view('propostas.show', compact('obra', 'autores', 'palavrasChave', 'materiais', 'proposta'));
-
-
-
     }
 
     /**
@@ -252,6 +266,24 @@ class PropostasController extends Controller
      */
     public function edit($id)
     {
+      $usuario = Auth::user()->getAttributes();
+      $idUsuario = $usuario['cod_usuario'];
+
+      $propositor = DB::table('Usuario_Propositor')->join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+                            ->where('Usuario.cod_usuario', $idUsuario)
+                            ->select('Usuario_Propositor.cod_propositor')
+                            ->first();
+
+      if(($proposta = Proposta::where('cod_proposta', '=', $id)->select('Proposta.*')->first()) != null){
+        $propostaAttributes = $proposta->getAttributes();
+        if(!$propostaAttributes['Usuario_Propositor_cod_propositor'] || $propostaAttributes['Usuario_Propositor_cod_propositor'] != $propositor->cod_propositor){
+          abort(404);
+        }
+      }
+      else {
+        abort(404);
+      }
+
       $obra = DB::table('Obra')->where('Proposta_cod_proposta', $id)->first();
 
       $autores = DB::table('Pessoa')
@@ -295,18 +327,6 @@ class PropostasController extends Controller
           ->update([
             'palavra' => $request->get('palavra'),
           ]);
-/*
-        $autores = DB::table('Pessoa')
-                    ->join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
-                    ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
-                    ->where('cod_obra', $id)
-                    ->select('Pessoa.*')
-                    ->get();
-        $palavrasChave = DB::table('Palavras_Chave')
-                    ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
-                    ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
-                    ->select('Palavras_Chave.palavra')
-                    ->get();*/
 
         return redirect(action('PropostasController@show', $id))->with('status', 'A proposta '.$id.' foi atualizada!');
     }
