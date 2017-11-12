@@ -13,146 +13,191 @@
 
             <h3><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Submissão de Proposta</h3>
 
+            @if (!$errors->isEmpty())
+              <div class="alert alert-danger">
+                <p><strong>Ops! Algo deu errado.</strong></p>
+                @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+                @endforeach
+              </div>
+            @endif
+            @if (session('status'))
+                <div class="alert alert-info">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            <div class="alert alert-info alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <span class="glyphicon glyphicon-info-sign glyphicon-space" aria-hidden="true"></span>
+              Preencha o formulário abaixo com os dados de sua obra. Os campos com asterisco (*) são obrigatórios.
+            </div>
+
             <!--FORMULÁRIO-->
             <form method="post" enctype="multipart/form-data">
-
-              @foreach ($errors->all() as $error)
-              <p class="alert alert-danger">{{ $error }}</p>
-              @endforeach
-
-              @if (session('status'))
-              <div class="alert alert-success">
-                {{ session('status') }}
-              </div>
-              @endif
-
               <input type="hidden" name="_token" value="{!! csrf_token() !!}">
               <!--PROPOSTA-->
               <fieldset>
                 <legend>Informações da Obra</legend>
                 <div class="row">
                   <div class="form-group col-md-6">
-                    <label>Título</label>
+                    <label for="titulo">Título *</label>
                     <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" value="{{old('titulo')}}">
                   </div>
                   <div class="form-group col-md-6">
-                    <label>Subtítulo</label>
+                    <label for="subtitulo">Subtítulo *</label>
                     <input type="text" class="form-control" id="subtitulo" name="subtitulo" placeholder="Subtítulo" value="{{old('subtitulo')}}">
                   </div>
                 </div>
                 <div class="row">
                   <div class="form-group col-md-12">
-                    <label>Descrição</label>
+                    <label for="descricao">Descrição *</label>
                     <textarea type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição" value="{{old('descricao')}}"></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="grande_area_obra">Grande Área da Obra *</label>
+                    <input type="text" id="grande_area_obra" name="grande_area_obra" class="form-control" placeholder="Grande Área" value="{{old('grande_area_obra')}}">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="area_conhecimento_obra">Área de Conhecimento da Obra *</label>
+                    <input type="text" id="area_conhecimento_obra" name="area_conhecimento_obra" class="form-control" placeholder="Área de Conhecimento" value="{{old('area_conhecimento_obra')}}">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="subarea_obra">Subárea da Obra</label>
+                    <input type="text" id="subarea_obra" name="subarea_obra" class="form-control" placeholder="Subárea" value="{{old('subarea_obra')}}">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="especialidade_obra">Especialidade da Obra</label>
+                    <input type="text" id="especialidade_obra" name="especialidade_obra" class="form-control" placeholder="Especialidade" value="{{old('especialidade_obra')}}">
                   </div>
                 </div>
               </fieldset>
 
               <!--AUTOR/PESSOA-->
               <fieldset>
-                <legend>Informações Pessoais do Autor</legend>
-                <div class="form-group col-md-4">
-                  <label>Nome</label>
-                  <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" value="{!! $autor->nome !!}">
+                <legend>Informações de Autor</legend>
+                <div class="row">
+                  <div class="form-group col-md-2">
+                    <label for="categoria">Categoria *</label>
+                    <select class="form-control" name="categoria" id="categoria">
+                      <option value="1">Autor</option>
+                      <option value="2">Co-Autor</option>
+                      <option value="3">Organizador</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="nome">Nome *</label>
+                    <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" value="{!! $autor->nome !!}">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="sobrenome">Sobrenome *</label>
+                    <input type="text" id="sobrenome" name="sobrenome" class="form-control" placeholder="Sobrenome" value="{!! $autor->sobrenome !!}">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="sexo">Sexo *</label><br/>
+                    <!--VERIFICAR RECUPERAÇÃO DO VALOR ANTIGO EM CASO DE ERRO NO CADASTRO-->
+                    <input type="radio" name="sexo" value="M"/> M&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="sexo" value="F"/> F
+                  </div>
                 </div>
-                <div class="form-group col-md-8">
-                  <label>Sobrenome</label>
-                  <input type="text" id="sobrenome" name="sobrenome" class="form-control" placeholder="Sobrenome" value="{!! $autor->sobrenome !!}">
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label for="cpf">CPF *</label>
+                    <input type="text" id="CPF" name="CPF" class="form-control" placeholder="CPF" value="{!! $autor->cpf !!}">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="rg">RG *</label>
+                    <input type="text" id="rg" name="rg" class="form-control" placeholder="RG" value="{{old('rg')}}">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="estado_civil">Estado Civil *</label>
+                    <input type="text" id="estado_civil" name="estado_civil" class="form-control" placeholder="Estado Civil" value="{{old('estado_civil')}}">
+                  </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>CPF</label>
-                  <input type="text" id="CPF" name="CPF" class="form-control" placeholder="CPF" value="{!! $autor->cpf !!}">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="email">E-mail *</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="E-mail" value="{{old('email')}}">
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="telefone">Telefone *</label>
+                    <input type="text" id="telefone" name="telefone" class="form-control" placeholder="Telefone" value="{{old('telefone')}}">
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="telefone_secundario">Telefone secundário</label>
+                    <input type="text" id="telefone_secundario" name="telefone_sencundario" class="form-control" placeholder="Telefone secundário" value="{{old('telefone_secundario')}}">
+                  </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Sexo</label><br/>
-
-                  <!--VERIFICAR RECUPERAÇÃO DO VALOR ANTIGO EM CASO DE ERRO NO CADASTRO-->
-                  <input type="radio" name="sexo" value="M"/> M&nbsp;&nbsp;&nbsp;
-                  <input type="radio" name="sexo" value="F"/> F
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label for="instituicao">Instituição *</label>
+                    <input type="text" id="instituicao" name="instituicao" class="form-control" placeholder="Instituição" value="{{old('instituicao')}}">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="setor">Setor</label>
+                    <input type="text" id="setor" name="setor" class="form-control" placeholder="Setor" value="{{old('setor')}}">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="departamento">Departamento</label>
+                    <input type="text" id="departamento" name="departamento" class="form-control" placeholder="Departamento" value="{{old('departamento')}}">
+                  </div>
                 </div>
-              </fieldset>
-
-              <!--INSTITUIÇÃO/DEPARTAMENTO/SETOR...-->
-              <fieldset>
-                <legend>Informações Profissionais do Autor</legend>
-                <div class="form-group col-md-4">
-                  <label>Instituição</label>
-                  <input type="text" id="instituicao" name="instituicao" class="form-control" placeholder="Instituição" value="{{old('instituicao')}}">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="grande_area_autor">Grande Área do Autor *</label>
+                    <input type="text" id="grande_area_autor" name="grande_area_autor" class="form-control" placeholder="Grande Área" value="{{old('grande_area_autor')}}">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="area_conhecimento_autor">Área de Conhecimento do Autor *</label>
+                    <input type="text" id="area_conhecimento_autor" name="area_conhecimento_autor" class="form-control" placeholder="Área de Conhecimento" value="{{old('area_conhecimento_autor')}}">
+                  </div>
                 </div>
-                <div class="form-group col-md-4">
-                  <label>Setor</label>
-                  <input type="text" id="setor" name="setor" class="form-control" placeholder="Setor" value="{{old('setor')}}">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="subarea_autor">Subárea do Autor</label>
+                    <input type="text" id="subarea_autor" name="subarea_autor" class="form-control" placeholder="Subárea" value="{{old('subarea_autor')}}">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="especialidade_autor">Especialidade do Autor</label>
+                    <input type="text" id="especialidade_autor" name="especialidade_autor" class="form-control" placeholder="Especialidade" value="{{old('especialidade_autor')}}">
+                  </div>
                 </div>
-                <div class="form-group col-md-4">
-                  <label>Departamento</label>
-                  <input type="text" id="departamento" name="departamento" class="form-control" placeholder="Departamento" value="{{old('departamento')}}">
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Grande Área</label>
-                  <input type="text" id="grande_area" name="grande_area" class="form-control" placeholder="Grande Área" value="{{old('grande_area')}}">
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Área de Conhecimento</label>
-                  <input type="text" id="area_de_conhecimento" name="area_de_conhecimento" class="form-control" placeholder="Área de Conhecimento" value="{{old('area_de_conhecimento')}}">
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Subárea</label>
-                  <input type="text" id="subarea" name="subarea" class="form-control" placeholder="Subárea" value="{{old('subarea')}}">
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Especialidade</label>
-                  <input type="text" id="especialidade" name="especialidade" class="form-control" placeholder="Especialidade" value="{{old('especialidade')}}">
-                </div>
-              </fieldset>
-
-              <!--CONTATO-->
-              <fieldset>
-                <legend>Informações de Contato do Autor</legend>
-                <div class="form-group col-md-6">
-                  <label>E-mail</label>
-                  <input type="text" id="email" name="email" class="form-control" placeholder="E-mail" value="{{old('email')}}">
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Telefone</label>
-                  <input type="text" id="telefone" name="telefone" class="form-control" placeholder="Telefone" value="{{old('telefone')}}">
-                </div>
-
-                <!--LOCALIDADE-->
-                <div class="form-group col-md-4">
-                  <label>Cidade</label>
-                  <input type="text" id="cidade" name="cidade" class="form-control" placeholder="Cidade" value="{{old('cidade')}}">
-                </div>
-                <div class="form-group col-md-4">
-                  <label>Estado</label>
-                  <input type="text" id="estado" name="estado" class="form-control" placeholder="Estado" value="{{old('estado')}}">
-                </div>
-                <div class="form-group col-md-4">
-                  <label>País</label>
-                  <input type="text" id="pais" name="pais" class="form-control" placeholder="País" value="{{old('pais')}}">
+                <div class="row">
+                  <div class="col-md-12">
+                    <button type="button" name="button" class="btn btn-success"><span class="glyphicon glyphicon-plus glyphicon-space"></span>Adicionar Autor</button>
+                  </div>
                 </div>
               </fieldset>
 
               <!--ARQUIVOS-->
               <fieldset>
                 <legend>Arquivos</legend>
-                <div class="form-group col-md-6">
-                  <label>Documento (.doc ou .docx)</label>
-                  <input type="file" id="documento" name="documento" class="form-control">
+                <div class="form-group col-md-4">
+                  <label for="doc_s_identificacao">Documento sem Identificação *<br/>(.doc, .docx ou .odt)</label>
+                  <input type="file" id="documento_s_identificacao" name="documento_s_identficacao" class="form-control">
                 </div>
-                <div class="form-group col-md-6">
-                  <label for="cad7">Imagens (.rar ou .zip)</label>
+                <div class="form-group col-md-4">
+                  <label for="doc_c_identificacao">Documento com Identificação *<br/>(.doc, .docx ou .odt)</label>
+                  <input type="file" id="documento_c_identificacao" name="documento_c_identificacao" class="form-control">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="imagens">Imagens *<br/>(.rar ou .zip)</label>
                   <input type="file" id="imagens" name="imagens" class="form-control">
                 </div>
               </fieldset>
               <hr>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary" style="width:30%;">Submeter proposta</button>
+              <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                  <button type="submit" class="btn btn-primary btn-block">Submeter proposta</button>
+                </div>
               </div>
             </form>
-          </div>
-          <div class="panel-footer">
             <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
-          </div>
+        </div>
       </div> <!-- quadro -->
     </div>
   </div> <!--container -->

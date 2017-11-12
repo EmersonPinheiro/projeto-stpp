@@ -31,7 +31,7 @@
                 <!-- List group -->
                 <ul class="list-group">
                   <li class="list-group-item titulo-lista">
-                    <span class="glyphicon glyphicon-book glyphicon-space"></span>Proposta
+                    <span class="glyphicon glyphicon-book glyphicon-space"></span>{!! $proposta->titulo !!}
                     <div class="pull-right">
                       <a href="{!! action('PropostasController@show', $proposta->cod_proposta) !!}">Mais Informações</a>
                     </div>
