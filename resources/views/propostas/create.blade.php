@@ -53,15 +53,15 @@
                 <legend>Informações Pessoais do Autor</legend>
                 <div class="form-group col-md-4">
                   <label>Nome</label>
-                  <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" value="{{old('nome')}}">
+                  <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" value="{!! $autor->nome !!}">
                 </div>
                 <div class="form-group col-md-8">
                   <label>Sobrenome</label>
-                  <input type="text" id="sobrenome" name="sobrenome" class="form-control" placeholder="Sobrenome" value="{{old('sobrenome')}}">
+                  <input type="text" id="sobrenome" name="sobrenome" class="form-control" placeholder="Sobrenome" value="{!! $autor->sobrenome !!}">
                 </div>
                 <div class="form-group col-md-6">
                   <label>CPF</label>
-                  <input type="text" id="CPF" name="CPF" class="form-control" placeholder="CPF" value="{{old('CPF')}}">
+                  <input type="text" id="CPF" name="CPF" class="form-control" placeholder="CPF" value="{!! $autor->cpf !!}">
                 </div>
                 <div class="form-group col-md-6">
                   <label>Sexo</label><br/>
