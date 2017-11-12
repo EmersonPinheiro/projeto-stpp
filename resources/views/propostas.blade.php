@@ -20,7 +20,7 @@
             <div class="panel-body">
               <!-- LISTA DE PROPOSTAS -->
 
-              @if(!$propostas->isEmpty())
+              @if($propostas->isEmpty())
               <div class="alert alert-info" role="alert">
                 <p>Você ainda não cadastrou propostas! Clique no botão abaixo para submeter uma nova proposta.</p>
               </div>
@@ -37,7 +37,7 @@
                     </div>
                   </li>
                   <li class="list-group-item">
-                    <p class="text-warning"><strong>Situação: </strong>COLOCAR AQUI A SITUAÇÃO DA PROPOSTA</p>
+                    <p class="text-warning"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
                     <p><strong>Título da Obra: </strong>{!! $proposta->titulo !!}</p>
                     <p><strong>Subtítulo da Obra: </strong>{!! $proposta->subtitulo !!}</p>
                     <p><strong>Descrição: </strong>{!! $proposta->descricao !!}</p>

@@ -47,14 +47,9 @@
                   <label>Resumo</label>
                   <textarea type="text" id="resumo" name="resumo" class="form-control" >{!! $obra->resumo !!}</textarea>
                 </div>
-                <div class="form-group col-md-12">
-                  <label>Palavras-chave</label>
-                  @foreach($palavrasChave as $palavraChave)
-                    <textarea type="text" id="palavra" name="palavra" class="form-control" >{!! $palavraChave->palavra !!}</textarea>
-                  @endforeach
-                </div>
-                <div class="form-group col-md-6">
 
+                <div class="form-group col-md-6">
+                  
                   <!--TODO: Verificar envio de array pela request. -->
                   <label for="cad5">Autor</label>
                   @foreach($autores as $autor)

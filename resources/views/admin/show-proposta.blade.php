@@ -48,11 +48,6 @@
               @endforeach
               <p><strong>Descrição: </strong>{!! $obra->descricao !!}</p>
               <p><strong>Resumo: </strong>{!! $obra->resumo !!}</p>
-              <p><strong>Palavras-chave:
-
-              @foreach($palavrasChave as $palavraChave)
-                </strong>{!! $palavraChave->palavra !!}</p>
-              @endforeach
 
               <h2>Situação: {!! $proposta->situacao !!}</h2>
 

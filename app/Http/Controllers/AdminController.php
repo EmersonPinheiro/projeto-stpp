@@ -27,12 +27,15 @@ class AdminController extends Controller
      */
     public function index()
     {
-        if (!Auth::user()->hasRole('admin')) {
+        $admin = Auth::user();
+        if (!$admin->hasRole('admin')) {
           abort(404);
         }
+
         $propostas = Proposta::join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')->get();
 
-        return view('admin.painel-administrador', compact('propostas'));
+
+        return view('admin.painel-administrador', compact('propostas', 'admin'));
     }
 
     /**
@@ -126,17 +129,9 @@ class AdminController extends Controller
       $obra = Obra::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->first();
 
       $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
-                 ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
-                 ->where('cod_obra', $obra->cod_obra)
-                 ->select('Pessoa.*')
-                 ->get();
-
-      //TODO: EXCLUIR PALAVRAS CHAVE
-      $palavrasChave = DB::table('Palavras_Chave')
-                  ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
-                  ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
+                  ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
                   ->where('cod_obra', $obra->cod_obra)
-                  ->select('Palavras_Chave.palavra')
+                  ->select('Pessoa.*')
                   ->get();
 
       $materiais = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
@@ -145,10 +140,11 @@ class AdminController extends Controller
                   ->get();
 
       $tecnicos = Pessoa::join('Tecnico_Catalografia', 'Tecnico_Catalografia.Pessoa_cod_pessoa', '=', 'Pessoa.cod_pessoa')
-                        ->join('Obra_Tecnico_Catalografia', 'Obra_Tecnico_Catalografia.Tecnico_Catalografia_cod_tec_catalog', '=', 'Tecnico_Catalografia.cod_tec_catalog')
-                        ->join('Obra', 'Obra_Tecnico_Catalografia.Obra_cod_obra', '=', 'Obra.cod_obra')
-                        ->where('Obra.cod_obra', '=', $obra->cod_obra)
-                        ->get();
+                  ->join('Obra_Tecnico_Catalografia', 'Obra_Tecnico_Catalografia.Tecnico_Catalografia_cod_tec_catalog', '=', 'Tecnico_Catalografia.cod_tec_catalog')
+                  ->join('Obra', 'Obra_Tecnico_Catalografia.Obra_cod_obra', '=', 'Obra.cod_obra')
+                  ->where('Obra.cod_obra', '=', $obra->cod_obra)
+                  ->get();
+
       $funcoes = array(
         'revisor_ortografico' => $tecnicos->where('funcao', '1')->first(),
         'revisor_ingles' => $tecnicos->where('funcao', '2')->first(),
