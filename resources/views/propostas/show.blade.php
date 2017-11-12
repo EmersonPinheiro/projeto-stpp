@@ -37,7 +37,7 @@
           @endforeach
           <p><strong>Descrição: </strong>{!! $obra->descricao !!}</p>
           <button type="button" name="button" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down glyphicon-space"></span> Informações Adicionais</button>
-
+          
           <h4 class="titulo">Arquivos</h4>
           @foreach($materiais as $material)
           <p><i>Versão {!! $material->versao !!}</i></p>
@@ -55,6 +55,7 @@
               </div>
             </div>
           </div>
+
 
           <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
 

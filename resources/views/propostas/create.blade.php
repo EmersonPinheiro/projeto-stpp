@@ -91,11 +91,11 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label for="nome">Nome *</label>
-                    <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" value="{{old('nome')}}">
+                    <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" value="{!! $autor->nome !!}">
                   </div>
                   <div class="form-group col-md-4">
                     <label for="sobrenome">Sobrenome *</label>
-                    <input type="text" id="sobrenome" name="sobrenome" class="form-control" placeholder="Sobrenome" value="{{old('sobrenome')}}">
+                    <input type="text" id="sobrenome" name="sobrenome" class="form-control" placeholder="Sobrenome" value="{!! $autor->sobrenome !!}">
                   </div>
                   <div class="form-group col-md-2">
                     <label for="sexo">Sexo *</label><br/>
@@ -107,7 +107,7 @@
                 <div class="row">
                   <div class="form-group col-md-4">
                     <label for="cpf">CPF *</label>
-                    <input type="text" id="cpf" name="cpf" class="form-control" placeholder="CPF" value="{{old('cpf')}}">
+                    <input type="text" id="CPF" name="CPF" class="form-control" placeholder="CPF" value="{!! $autor->cpf !!}">
                   </div>
                   <div class="form-group col-md-4">
                     <label for="rg">RG *</label>

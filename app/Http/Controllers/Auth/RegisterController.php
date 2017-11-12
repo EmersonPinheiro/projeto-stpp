@@ -68,6 +68,7 @@ class RegisterController extends Controller
           'required'=>'O campo :attribute é obrigatório.',
           'min'=>'O campo :attribute deve ter no mínimo :min caracteres.',
           'max'=>'O campo :attribute deve ter no máximo :max caracteres.',
+          'numeric'=>'O campo :attribute deve conter apenas números.',
           'password.required'=>'O campo senha é obrigatório.',
           'password_confirmation.required'=>'O campo de confirmação de senha é obrigatório.'
         ];
@@ -76,14 +77,22 @@ class RegisterController extends Controller
             'nome'=>'required|min:3|max:50',
             'sobrenome'=>'required|min:3|max:100',
             'cpf'=>'required|min:11|max:11',
+            'rg'=>'required|max:14',
+            'estado_civil' =>'required',
             'sexo'=>'required',
             'email'=>'required|email|string|max:255',
-
-            //TODO: Departamento, etc.
-
+            'email_secundario'=>'email|nullable',
+            'telefone'=>'required|numeric',
+            'telefone_secundario'=>'numeric|nullable',
+            'instituicao'=>'required|string',
+            'grande_area'=>'required|string',
+            'area_conhecimento'=>'required|string',
             'cidade'=>'required|min:3',
             'estado'=>'required|min:3',
             'pais'=>'required|min:3',
+            'logradouro'=>'required',
+            'bairro'=>'required',
+            'cep'=>'required|numeric',
             'password'=>'required|string|min:6|confirmed',
             'password_confirmation'=>'required|string|min:6'
         ], $messages);
@@ -116,20 +125,44 @@ class RegisterController extends Controller
 
         $pessoa = Pessoa::create([
           'cpf'=>$data['cpf'],
+          'rg'=>$data['rg'],
           'nome'=>$data['nome'],
           'sobrenome'=>$data['sobrenome'],
           'sexo'=>$data['sexo'],
+          'estado_civil'=>$data['estado_civil'],
+          'logradouro'=>$data['logradouro'],
+          'bairro'=>$data['bairro'],
+          'CEP'=>$data['cep'],
           'Cidade_cod_cidade'=>$cidade->cod_cidade,
         ]);
-/*
+
         DB::table('Email')->insert([
           'endereco'=>$data['email'],
           'tipo'=>'1',
-          'Pessoa_cod_pessoa'=>$idPessoa,
+          'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
 
-        //TODO: Adicionar telefone.
-*/
+        if($data['email_secundario'] != null){
+          DB::table('Email')->insert([
+            'endereco'=>$data['email_secundario'],
+            'tipo'=>'2',
+            'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
+          ]);
+        }
+
+        DB::table('Telefone')->insert([
+          'numero'=>$data['telefone'],
+          'tipo'=>'1',
+          'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
+        ]);
+
+        if ($data['telefone_secundario'] != null) {
+          DB::table('Telefone')->insert([
+            'numero'=>$data['telefone_secundario'],
+            'tipo'=>'2',
+            'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
+          ]);
+        }
 
         $instituicao = Instituicao::firstOrCreate([
           'nome'=>$data['instituicao'],
@@ -142,7 +175,6 @@ class RegisterController extends Controller
 
         $departamento = Departamento::firstOrCreate([
             'nome'=>$data['departamento'],
-            //'sigla'=>$data['sigla-departamento'],
             'Setor_cod_setor'=>$setor->cod_setor
         ]);
 

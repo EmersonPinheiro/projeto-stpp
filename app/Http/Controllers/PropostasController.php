@@ -24,15 +24,16 @@ use App\Material;
 use App\Telefone;
 use App\Email;
 use App\UsuarioPropositor;
+use App\UsuarioAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PropostaFormRequest;
 use App\Http\Requests\PropostaEditFormRequest;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\PropostaEnviada;
+use App\Notifications\PropostaEnviada;
 
 class PropostasController extends Controller
 {
@@ -125,17 +126,20 @@ class PropostasController extends Controller
           'Estado_provincia_cod_est_prov'=>$estProv->cod_est_prov,
         ]);
 
-
-        if (!$pessoa = Pessoa::where('cpf', '=', $request->get('CPF'))->first()) {  // Verifica cpf duplicado.
+       if (!$pessoa = Pessoa::where('cpf', '=', $request->get('CPF'))->first()) {  // Verifica cpf duplicado.
           $pessoa = Pessoa::create([
             'cpf'=>$request->get('CPF'),
+            'rg'=>$request->get('rg'),
             'nome'=>$request->get('nome'),
             'sobrenome'=>$request->get('sobrenome'),
             'sexo'=>$request->get('sexo'),
+            'estado_civil'=>$request->get('estado_civil'),
+            'logradouro'=>$request->get('logradouro'),
+            'bairro'=>$request->get('bairro'),
+            'CEP'=>$request->get('cep'),
             'Cidade_cod_cidade'=>$cidade->cod_cidade,
           ]);
-        }
-
+      }
         $instituicao = Instituicao::firstOrCreate([
           'nome'=>$request->get('instituicao'),
         ]);
@@ -225,8 +229,11 @@ class PropostasController extends Controller
           'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
 
-        $emailAdmin = 'exemploadmin@email.com';
-        Mail::to($emailAdmin)->send(new PropostaEnviada($request));
+
+        $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')
+                             ->get();
+
+        Notification::send($admin->all(), new PropostaEnviada($proposta));
 
         return redirect('/enviar-proposta')->with('status', 'Proposta enviada! Sua identificação única é '.$proposta->cod_proposta);
     }

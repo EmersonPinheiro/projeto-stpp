@@ -56,15 +56,22 @@
               <div class="row">
                 <div class="form-group col-md-4">
                   <label for="cpf">CPF *</label>
-                  <input type="text" id="cpf" name="cpf" class="form-control" placeholder="CPF (somente números)" value="{{old('cpf')}}" pattern="[0-9]{11}" maxlength="11">
+                  <input type="text" id="cpf" name="cpf" class="form-control" placeholder="CPF (somente números)" value="{{old('cpf')}}" >
                 </div>
                 <div class="form-group col-md-4">
                   <label for="rg">RG *</label>
-                  <input type="text" id="rg" name="rg" class="form-control" placeholder="RG (somente números)" value="{{old('rg')}}">
+                  <input type="text" id="rg" name="rg" class="form-control" placeholder="RG (somente números)" value="{{old('rg')}}" maxlength="14">
                 </div>
                 <div class="col-md-4">
                   <label for="estado_civil">Estado Civil *</label>
-                  <input type="text" class="form-control" id="estado_civil" name="estado_civil" placeholder="Estado Civil" value="{{old('estado_civil')}}">
+                  <select name="estado_civil" class="form-control" id="estado_civil">
+                      <option value="Solteiro">Solteiro(a)</option>
+                      <option value="Casado">Casado(a)</option>
+                      <option value="Separado">Separado(a)</option>
+                      <option value="Divorciado">Divorciado(a)</option>
+                      <option value="Viúvo">Viúvo(a)</option>
+                      <option value="Amasiado">Amasiado(a)</option>
+                  </select>
                 </div>
               </div>
             </fieldset>
@@ -104,7 +111,6 @@
                 <div class="form-group col-md-6">
                   <label for="especialidade">Especialidade</label>
                   <input type="text" class="form-control" id="especialidade" name="especialidade" placeholder="Especialidade" value="{{old('especialidade')}}">
-
                 </div>
               </div>
             </fieldset>
