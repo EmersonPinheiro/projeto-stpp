@@ -25,6 +25,7 @@ class CreateDocSugestaoAlteracoesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_sug_alteracoes');
             $table->string('url_documento', 150)->nullable();
+            $table->integer('versao')->default(1);
             $table->integer('Proposta_cod_proposta')->unsigned();
             $table->timestamps();
 

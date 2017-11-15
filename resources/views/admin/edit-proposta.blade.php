@@ -43,13 +43,18 @@
                   <label>Descrição</label>
                   <textarea type="text" id="descricao" name="descricao" class="form-control" >{!! $obra->descricao !!}</textarea>
                 </div>
+
                 <div class="form-group col-md-12">
-                  <label>Resumo</label>
-                  <textarea type="text" id="resumo" name="resumo" class="form-control" >{!! $obra->resumo !!}</textarea>
+                  <h4><label for="situacao">Situação</label></h4>
+                  <select class="" name="situacao">
+                    @foreach($situacoes as $situacao)
+                      <option value="{{$situacao}}" {{(old("situacao") == $situacao ? "selected":"")}} >{{$situacao}}</option>
+                    @endforeach
+                  </select>
                 </div>
 
                 <div class="form-group col-md-6">
-                  
+
                   <!--TODO: Verificar envio de array pela request. -->
                   <label for="cad5">Autor</label>
                   @foreach($autores as $autor)
@@ -65,10 +70,6 @@
                   <input type="text" class="form-control" id="cad6" name="isbn" placeholder="ISBN">
                 </div>
                 <h4 class="titulo">Informações Adicionais</h4>
-                <div class="form-group col-md-3">
-                  <label>Edição</label>
-                  <input type="text" class="form-control" name="edicao" placeholder="Edição">
-                </div>
                 <div class="form-group col-md-3">
                   <label>Volume</label>
                   <input type="text" class="form-control" name="volume" placeholder="Volume">

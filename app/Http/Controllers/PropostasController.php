@@ -31,9 +31,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PropostaFormRequest;
 use App\Http\Requests\PropostaEditFormRequest;
+use App\Http\Requests\CancelamentoFormRequest;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\PropostaEnviada;
+use App\Notifications\CancelamentoSolicitado;
 
 class PropostasController extends Controller
 {
@@ -109,23 +111,6 @@ class PropostasController extends Controller
           'Usuario_Propositor_cod_propositor'=>$propositor->cod_propositor,
         ]);
 
-        //VERIFICAR INSERSÃO DE VALORES IGUAIS
-
-        $pais = Pais::firstOrCreate([
-          'nome'=>$request->get('pais'),
-        ]);
-
-        $estProv = EstadoProvincia::firstOrCreate([
-         'nome'=>$request->get('estado'),
-         //falta uf
-         'Pais_cod_pais'=>$pais->cod_pais,
-        ]);
-
-         $cidade = Cidade::firstOrCreate([
-          'nome'=>$request->get('cidade'),
-          'Estado_provincia_cod_est_prov'=>$estProv->cod_est_prov,
-        ]);
-
        if (!$pessoa = Pessoa::where('cpf', '=', $request->get('CPF'))->first()) {  // Verifica cpf duplicado.
           $pessoa = Pessoa::create([
             'cpf'=>$request->get('CPF'),
@@ -140,54 +125,96 @@ class PropostasController extends Controller
             'Cidade_cod_cidade'=>$cidade->cod_cidade,
           ]);
       }
+
+
+        //Áreas de conhecimento da obra
+        $grandeAreaObra = GrandeArea::firstOrCreate([
+          'nome'=>$request->get('grande_area_obra'),
+        ]);
+
+        $areaConhecimentoObra = AreaConhecimento::firstOrCreate([
+          'nome'=>$request->get('area_conhecimento_obra'),
+          'Grande_Area_cod_grande_area'=>$grandeAreaObra->cod_grande_area,
+        ]);
+
+
+        if ($request->get('subarea_obra') != null) {
+          $subareaObra = Subarea::firstOrCreate([
+            'nome'=>$request->get('subarea_obra'),
+            'Area_Conhecimento_cod_area_conhec'=>$areaConhecimentoObra->cod_area_conhec,
+          ]);
+        }
+
+        if ($request->get('especialidade_obra') != null) {
+          $especialidadeObra = Especialidade::firstOrCreate([
+            'nome'=>$request->get('especialidade_obra'),
+            'Subarea_cod_subarea'=>$subareaObra->cod_subarea,
+          ]);
+        }
+
+        //Areas de conhecimento do autor
+        $grandeAreaAutor = GrandeArea::firstOrCreate([
+          'nome'=>$request->get('grande_area_autor'),
+        ]);
+
+        $areaConhecimentoAutor = AreaConhecimento::firstOrCreate([
+          'nome'=>$request->get('area_conhecimento_autor'),
+          'Grande_Area_cod_grande_area'=>$grandeAreaAutor->cod_grande_area,
+        ]);
+
+        if ($request->get('subarea_autor') != null) {
+          $subareaAutor = Subarea::firstOrCreate([
+            'nome'=>$request->get('subarea_autor'),
+            'Area_Conhecimento_cod_area_conhec'=>$areaConhecimentoAutor->cod_area_conhec,
+          ]);
+        }
+
         $instituicao = Instituicao::firstOrCreate([
           'nome'=>$request->get('instituicao'),
         ]);
 
-        $setor = Setor::firstOrCreate([
-          'nome'=>$request->get('setor'),
-          //falta sigla
-          'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao,
-        ]);
+        if ($request->get('setor') != null) {
+          $setor = Setor::firstOrCreate([
+            'nome'=>$request->get('setor'),
+            //falta sigla
+            'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao,
+          ]);
+        }
 
-        $departamento = Departamento::firstOrCreate([
-          'nome'=>$request->get('departamento'),
-          'Setor_cod_setor'=>$setor->cod_setor,
-        ]);
-
-        $grandeArea = GrandeArea::firstOrCreate([
-          'nome'=>$request->get('grande_area'),
-        ]);
-
-        $areaConhecimento = AreaConhecimento::firstOrCreate([
-          'nome'=>$request->get('area_conhecimento'),
-          'Grande_Area_cod_grande_area'=>$grandeArea->cod_grande_area,
-        ]);
-
-        $subarea = Subarea::firstOrCreate([
-          'nome'=>$request->get('subarea'),
-          'Area_Conhecimento_cod_area_conhec'=>$areaConhecimento->cod_area_conhec,
-        ]);
-
-        $especialidade = Especialidade::firstOrCreate([
-          'nome'=>$request->get('especialidade'),
-          'Subarea_cod_subarea'=>$subarea->cod_subarea,
-        ]);
+        if ($request->get('departamento') != null) {
+          $departamento = Departamento::firstOrCreate([
+            'nome'=>$request->get('departamento'),
+            'Setor_cod_setor'=>$setor->cod_setor,
+          ]);
 
         $autor = Autor::firstOrCreate([
-          'categoria'=>'1',
-          //'categoria'=>$request->get('categoria'),
+          'categoria'=>$request->get('categoria'),
           'Departamento_cod_departamento'=>$departamento->cod_departamento,
           'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
+        }
+        else{
+          $autor = Autor::firstOrCreate([
+            'categoria'=>$request->get('categoria'),
+            'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
+          ]);
+        }
+
+        if ($request->get('especialidade_autor') != null) {
+          $especialidadeAutor = Especialidade::firstOrCreate([
+            'nome'=>$request->get('especialidade_autor'),
+            'Subarea_cod_subarea'=>$subareaAutor->cod_subarea,
+          ]);
+        }
+
 
         //TODO: Inserir um array de autores.
-
+/*
         AutorEspecialidade::firstOrCreate([
           'Autor_cod_autor'=>$autor->cod_autor,
-          'Especialidade_cod_especialidade'=>$especialidade->cod_especialidade,
+          'Especialidade_cod_especialidade'=>$especialidadeAutor->cod_especialidade,
         ]);
-
+*/
         $obra = Obra::create([
           'titulo'=>$request->get('titulo'),
           'subtitulo'=>$request->get('subtitulo'),
@@ -197,25 +224,26 @@ class PropostasController extends Controller
           'Autor_cod_autor'=>$autor->cod_autor,
         ]);
 
-        $docpath = Storage::putFile('documentos', $request->file('documento'), 'private');
+
+        //TODO: Criar Model e migration de ObraGrandeArea.
+/*
+
+        ObraGrandeArea::firstOrCreate([
+          'Obra_cod_obra'=>$obra->cod_obra,
+          'Grande_Area_cod_grande_area'=>$grandeAreaObra->cod_grande_area,
+        ]);
+*/
+        $docpathident = Storage::putFile('documentos', $request->file('documento_c_identificacao'), 'private');
+        $docpathnaoident = Storage::putFile('documentos', $request->file('documento_s_identificacao'), 'private');
+
         //$imgpath = Storage::putFile('imagens', $request->file('imagens'), 'public');
-        $url_documento = Storage::url($docpath);
-        //$url_imagens = Storage::url($imgpath);
+
         Material::create([
-          'url_documento'=>$docpath,
+          'url_documento'=>$docpathident,
+          'url_documento_nao_ident'=>$docpathnaoident,
           //'url_imagens'=>$url_imagens,
           'Obra_cod_obra'=>$obra->cod_obra,
         ]);
-/*
-        $idPalavraChave = DB::table('Palavras_Chave')->insertGetID([
-          'palavra'=>$request->get('palavra'),
-        ]);
-
-        DB::table('Obra_Palavras_Chave')->insert([
-          'Obra_cod_obra'=>$idObra,
-          'Palavras_Chave_cod_pchave'=>$idPalavraChave,
-        ]);
-*/
 
         Telefone::create([
           'numero'=>$request->get('telefone'),
@@ -369,8 +397,14 @@ class PropostasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function solicitarCancelamento(CancelamentoFormRequest $request, $id)
     {
-        //CRIAR FUNÇÃO DE PERMISSÃO
+
+        $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')
+                             ->get();
+
+        Notification::send($admin->all(), new CancelamentoSolicitado($id, $request->get('justificativa')));
+
+        return redirect()->back()->with('status', 'Sua solicitação foi enviada. Aguarde até que o administrador cancele sua proposta.');
     }
 }

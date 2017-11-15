@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Proposta;
 use App\Obra;
 use App\Autor;
 use App\Material;
 use App\Pessoa;
+use App\Parecer;
+use App\DocSugestaoAlteracoes;
 use Illuminate\Http\Request;
+use App\Http\Requests\PropostaEditFormRequest;
+use App\Http\Requests\SolicitarNovaVersaoFormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NovaVersaoSolicitada;
+use App\Notifications\PropostaCancelada;
+use App\Notifications\SituacaoAlterada;
 
 class AdminController extends Controller
 {
@@ -17,6 +27,11 @@ class AdminController extends Controller
   {
     if (!Auth::check()) {
       return redirect('/');
+    }
+
+    $admin = Auth::user();
+    if (!$admin->hasRole('admin')) {
+      abort(404);
     }
 
   }
@@ -28,12 +43,8 @@ class AdminController extends Controller
     public function index()
     {
         $admin = Auth::user();
-        if (!$admin->hasRole('admin')) {
-          abort(404);
-        }
 
         $propostas = Proposta::join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')->get();
-
 
         return view('admin.painel-administrador', compact('propostas', 'admin'));
     }
@@ -67,11 +78,16 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        $proposta = Proposta::where('cod_proposta', '=', $id)->select('Proposta.*')->first();
-
-        if (!Auth::user()->hasRole('admin') OR $proposta == null) {
+        if (($proposta = Proposta::where('cod_proposta', '=', $id)->first()) == null) {
           abort(404);
         }
+/*
+        $propositor = UsuarioPropositor::join('Proposta', 'Proposta.Usuario_Propositor_cod_propositor', '=', 'cod_propositor')
+                    ->where('Proposta.cod_proposta', '=', $proposta->cod_proposta)
+                    ->select('Usuario_Propositor.*')
+                    ->first();
+*/
+
 
         $obra = Obra::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->first();
 
@@ -80,25 +96,34 @@ class AdminController extends Controller
                    ->where('cod_obra', $obra->cod_obra)
                    ->select('Pessoa.*')
                    ->get();
-
-        //TODO: EXCLUIR PALAVRAS CHAVE
-        $palavrasChave = DB::table('Palavras_Chave')
-                    ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
-                    ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
-                    ->where('cod_obra', $obra->cod_obra)
-                    ->select('Palavras_Chave.palavra')
-                    ->get();
+/*
+        $pareceristasPareceres = Pessoa::join('Usuario', 'Pessoa.cod_pessoa', '=', 'Usuario.Pessoa_cod_pessoa')
+                   ->join('Usuario_Parecerista', 'Usuario.cod_usuario', '=', 'Usuario_Parecerista.Usuario_cod_usuario')
+                   ->join('Parecer', 'Usuario_Parecerista.cod_parecerista', '=', 'Parecer.Usuario_Parecerista_cod_parecerista')
+                   ->join('Proposta', 'Proposta.cod_proposta', 'Parecer.Proposta_cod_proposta')
+                   ->where('cod_proposta', $proposta->cod_proposta)
+                   ->select('Pessoa.*', 'Parecer.*')
+                   ->get();
+*/
+        $pareceristasPareceres = Parecer::join('Usuario_Parecerista', 'Usuario_Parecerista.cod_parecerista', '=', 'Parecer.Usuario_Parecerista_cod_parecerista')
+                  ->join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Parecerista.Usuario_cod_usuario')
+                  ->join('Pessoa', 'Pessoa.cod_pessoa', '=', 'Usuario.Pessoa_cod_pessoa')
+                  ->join('Proposta', 'Proposta.cod_proposta', 'Parecer.Proposta_cod_proposta')
+                  ->where('cod_proposta', $proposta->cod_proposta)
+                  ->select('Pessoa.*', 'Parecer.*')
+                  ->get();
 
         $materiais = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
-                    ->where('cod_obra', $obra->cod_obra)
-                    ->select('Material.*')
-                    ->get();
+                  ->where('cod_obra', $obra->cod_obra)
+                  ->select('Material.*')
+                  ->get();
 
         $tecnicos = Pessoa::join('Tecnico_Catalografia', 'Tecnico_Catalografia.Pessoa_cod_pessoa', '=', 'Pessoa.cod_pessoa')
-                          ->join('Obra_Tecnico_Catalografia', 'Obra_Tecnico_Catalografia.Tecnico_Catalografia_cod_tec_catalog', '=', 'Tecnico_Catalografia.cod_tec_catalog')
-                          ->join('Obra', 'Obra_Tecnico_Catalografia.Obra_cod_obra', '=', 'Obra.cod_obra')
-                          ->where('Obra.cod_obra', '=', $obra->cod_obra)
-                          ->get();
+                  ->join('Obra_Tecnico_Catalografia', 'Obra_Tecnico_Catalografia.Tecnico_Catalografia_cod_tec_catalog', '=', 'Tecnico_Catalografia.cod_tec_catalog')
+                  ->join('Obra', 'Obra_Tecnico_Catalografia.Obra_cod_obra', '=', 'Obra.cod_obra')
+                  ->where('Obra.cod_obra', '=', $obra->cod_obra)
+                  ->get();
+
         $funcoes = array(
           'revisor_ortografico' => $tecnicos->where('funcao', '1')->first(),
           'revisor_ingles' => $tecnicos->where('funcao', '2')->first(),
@@ -109,7 +134,7 @@ class AdminController extends Controller
           'projetista_grafico' => $tecnicos->where('funcao', '7')->first(),
         );
 
-        return view('admin.show-proposta', compact('proposta', 'obra', 'autores', 'palavrasChave', 'materiais', 'funcoes'));
+        return view('admin.show-proposta', compact('proposta', 'obra', 'autores', 'pareceristasPareceres', 'materiais', 'funcoes'));
     }
 
     /**
@@ -120,9 +145,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-      $proposta = Proposta::where('cod_proposta', '=', $id)->select('Proposta.*')->first();
-
-      if (!Auth::user()->hasRole('admin') OR $proposta == null) {
+      if (($proposta = Proposta::where('cod_proposta', '=', $id)->first()) == null) {
         abort(404);
       }
 
@@ -155,7 +178,9 @@ class AdminController extends Controller
         'projetista_grafico' => $tecnicos->where('funcao', '7')->first(),
       );
 
-      return view('admin.edit-proposta', compact('obra', 'autores', 'palavrasChave', 'materiais', 'funcoes'));
+      $situacoes = ['Submetida', 'Em avaliação', 'Aguardando parecer', 'Aguardando decisão do Conselho Editorial', 'Em trâmite', 'Finalizada'];
+
+      return view('admin.edit-proposta', compact('obra', 'autores', 'palavrasChave', 'materiais', 'funcoes', 'situacoes'));
     }
 
     /**
@@ -165,15 +190,12 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PropostaEditFormRequest $request, $id)
     {
-      $proposta = Proposta::where('cod_proposta', '=', $id)->select('Proposta.*')->first();
 
-      if (!Auth::user()->hasRole('admin') OR $proposta == null) {
+      if (($proposta = Proposta::where('cod_proposta', '=', $id)->first()) == null) {
         abort(404);
       }
-
-      var_dump($request->request);
 
       $obra = Obra::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)
                   ->update([
@@ -181,26 +203,69 @@ class AdminController extends Controller
                     'subtitulo'=>$request->get('subtitulo'),
                     'descricao'=>$request->get('descricao'),
                     'resumo'=>$request->get('resumo'),
-                    //'edicao'=>$request->get('edicao'),
                     'volume'=>$request->get('volume'),
                     'ano_publicacao'=>$request->get('ano'),
                     'num_paginas'=>$request->get('num_paginas'),
                   ]);
 
-      //TODO: Atualizar um array de autores.
+      if ($proposta->situacao != $request->get('situacao')) {
+        $proposta->situacao = $request->get('situacao');
+        $proposta->save();
+
+        $usuario = User::join('Usuario_Propositor', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+                       ->join('Proposta', 'Proposta.Usuario_Propositor_cod_propositor', 'Usuario_Propositor.cod_propositor')
+                       ->where('cod_proposta', '=', $proposta->cod_proposta)
+                       ->select('Usuario.*')
+                       ->first();
+
+        Notification::send($usuario, new SituacaoAlterada($proposta));
+      }
+
+      //TODO: Atualizar um array de autores/tecnicos.
 
       return redirect(action('AdminController@show', $id))->with('status', 'A proposta '.$id.' foi atualizada!');
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function cancelarProposta($id)
     {
-        //
+
+      if (($proposta = Proposta::where('cod_proposta', '=', $id)->first()) == null) {
+        abort(404);
+      }
+
+      $propositor = User::join('Usuario_Propositor', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+                        ->where('cod_propositor', '=', $proposta->Usuario_Propositor_cod_propositor)
+                        ->select('Usuario.*')
+                        ->first();
+
+      $proposta->ativa = 0;
+      $proposta->save();
+
+      Notification::send($propositor, new PropostaCancelada($proposta));
+
+      return redirect('/admin/painel-administrador')->with('status', 'A proposta foi cancelada com sucesso.');
     }
-}
+
+    public function solicitarNovaVersao(SolicitarNovaVersaoFormRequest $request, $id)
+    {
+      $proposta = Proposta::where('cod_proposta', '=', $id)->first();
+
+      $propositor = User::join('Usuario_Propositor', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+                        ->where('cod_propositor', '=', $proposta->Usuario_Propositor_cod_propositor)
+                        ->select('Usuario.*')
+                        ->first();
+
+      $docpath = Storage::putFile('documentos_sugestao_alteracao', $request->file('doc_sugestao'), 'private');
+
+      $docSugestao = DocSugestaoAlteracoes::create([
+          'url_documento'=>$docpath,
+          'Proposta_cod_proposta'=>$proposta->cod_proposta,
+      ]);
+
+      Notification::send($propositor, new NovaVersaoSolicitada($proposta));
+
+      return redirect()->back()->with('status', 'Sua solicitação foi enviada! Aguarde até que o propositor submeta uma nova versão da proposta.');
+
+    }
+  }

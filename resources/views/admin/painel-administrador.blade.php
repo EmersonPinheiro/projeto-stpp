@@ -12,6 +12,12 @@
           <p class="alert alert-danger">{{ $error }}</p>
       @endforeach
 
+      @if (session('status'))
+          <div class="alert alert-success">
+              {{ session('status') }}
+          </div>
+      @endif
+
       <!-- PAINEL PRINCIPAL -->
       <div class="col-md-8 col-md-offset-2">
         <div class="quadro-painel painel-propostas">

@@ -25,7 +25,8 @@ class CreatePropostaTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_proposta');
             $table->date('data_envio');
-            $table->enum('situacao', ['Submetida', 'Em avaliação', 'Aguardando parecer', 'Aguardando decisão do Conselho Editorial', 'Em trâmite'])->default('Submetida');
+            $table->enum('situacao', ['Submetida', 'Em avaliação', 'Aguardando parecer', 'Aguardando decisão do Conselho Editorial', 'Em trâmite', 'Finalizada'])->default('Submetida');
+            $table->tinyInteger('ativa')->default(1);
             $table->integer('Usuario_Propositor_cod_propositor')->unsigned();
             $table->integer('Usuario_Adm_cod_adm')->unsigned()->nullable();
             $table->timestamps();
