@@ -111,11 +111,18 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label for="rg">RG *</label>
-                    <input type="text" id="rg" name="rg" class="form-control" placeholder="RG" value="{{old('rg')}}">
+                    <input type="text" id="rg" name="rg" class="form-control" placeholder="RG" value="{!! $autor->rg !!}">
                   </div>
                   <div class="form-group col-md-4">
                     <label for="estado_civil">Estado Civil *</label>
-                    <input type="text" id="estado_civil" name="estado_civil" class="form-control" placeholder="Estado Civil" value="{{old('estado_civil')}}">
+                    <select name="estado_civil" class="form-control" id="estado_civil">
+                        <option value="Solteiro">Solteiro(a)</option>
+                        <option value="Casado">Casado(a)</option>
+                        <option value="Separado">Separado(a)</option>
+                        <option value="Divorciado">Divorciado(a)</option>
+                        <option value="Viúvo">Viúvo(a)</option>
+                        <option value="Amasiado">Amasiado(a)</option>
+                    </select>
                   </div>
                 </div>
                 <div class="row">
@@ -178,7 +185,7 @@
                 <legend>Arquivos</legend>
                 <div class="form-group col-md-4">
                   <label for="doc_s_identificacao">Documento sem Identificação *<br/>(.doc, .docx ou .odt)</label>
-                  <input type="file" id="documento_s_identificacao" name="documento_s_identficacao" class="form-control">
+                  <input type="file" id="documento_s_identificacao" name="documento_s_identificacao" class="form-control">
                 </div>
                 <div class="form-group col-md-4">
                   <label for="doc_c_identificacao">Documento com Identificação *<br/>(.doc, .docx ou .odt)</label>
