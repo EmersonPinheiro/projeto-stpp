@@ -4,12 +4,13 @@ namespace App\Notifications;
 
 use App\Obra;
 use App\Pessoa;
+use App\Proposta;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class PropostaEnviada extends Notification
+class CancelamentoSolicitado extends Notification
 {
     use Queueable;
 
@@ -18,9 +19,11 @@ class PropostaEnviada extends Notification
      *
      * @return void
      */
-    public function __construct($proposta)
+    public function __construct($idProposta, $justificativa)
     {
-        $this->proposta = $proposta;
+
+        $this->justificativa = $justificativa;
+        $this->proposta = Proposta::where('cod_proposta', '=', $idProposta)->first();
         $this->obra = Obra::where('Proposta_cod_proposta', '=', $this->proposta->cod_proposta)->first();
         $this->propositor = Pessoa::join('Usuario', 'Usuario.Pessoa_cod_pessoa', '=', 'Pessoa.cod_pessoa')
                                   ->join('Usuario_Propositor', 'Usuario_Propositor.Usuario_cod_usuario', '=', 'Usuario.cod_usuario')
@@ -48,15 +51,12 @@ class PropostaEnviada extends Notification
      */
     public function toMail($notifiable)
     {
-
         $url = url('/admin/painel-administrador/'.$this->proposta->cod_proposta);
         return (new MailMessage)
-                    ->subject('Nova proposta!')
-                    ->greeting('Olá!')
-                    ->line('Uma nova proposta foi enviada!')
-                    ->line('Título: '.$this->obra->titulo)
-                    ->line('Subtítulo: '.$this->obra->subtitulo)
-                    ->action('Veja a proposta', $url);
+                    ->subject('Cancelamento de proposta')
+                    ->line('Justificativa: '.$this->justificativa)
+                    ->line($this->propositor->nome.' '.$this->propositor->sobrenome .' solicitou que sua proposta "'.$this->obra->titulo .'" seja cancelada.')
+                    ->action('Acessar proposta', $url);
     }
 
     /**
@@ -68,10 +68,10 @@ class PropostaEnviada extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message_user' => 'A proposta de título "'.$this->obra->titulo.'" foi enviada por '.$this->propositor->nome.' '.$this->propositor->sobrenome,
-            'message_report'=>'Proposta enviada por '.$this->propositor->nome.' '.$this->propositor->sobrenome,
+            'message_user'=>$this->propositor->nome.' '.$this->propositor->sobrenome .' solicitou que sua proposta "'.$this->obra->titulo .'" seja cancelada.',
+            'message_report'=>'Cancelamento solicitado.',
+            'justificativa'=>$this->justificativa,
             'cod_proposta' => $this->proposta->cod_proposta,
-            'cod_propositor' => $this->proposta->Usuario_Propositor_cod_propositor,
         ];
     }
 }

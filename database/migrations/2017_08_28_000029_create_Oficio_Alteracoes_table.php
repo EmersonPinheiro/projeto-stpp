@@ -25,6 +25,7 @@ class CreateOficioAlteracoesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_oficio');
             $table->string('url_documento', 100)->nullable();
+            $table->integer('versao')->default(1);
             $table->integer('Proposta_cod_proposta')->unsigned();
             $table->timestamps();
 

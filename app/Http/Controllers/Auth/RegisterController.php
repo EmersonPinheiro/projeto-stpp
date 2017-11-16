@@ -206,17 +206,10 @@ class RegisterController extends Controller
           $convite = ConviteParecerista::where('token', '=', $data['convite'])->first();
 
           $proposta = Proposta::where('cod_proposta', '=', $convite->proposta)->first();
-/*
-          $material = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
-                              ->join('Proposta', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
-                              ->where('Proposta.cod_proposta', '=', $proposta->cod_proposta)
-                              ->select('Material.*')
-                              ->first();
-*/
 
           $parecer = Parecer::create([
             //TODO: Implementar prazo.
-            'prazo_envio'=>Carbon::now('America/Sao_Paulo')->addDays(61)->format('Y-m-d'),
+            'prazo_envio'=>Carbon::now('America/Sao_Paulo')->addDays(0)->format('Y-m-d'),
             'Proposta_cod_proposta'=>$proposta->cod_proposta,
             'Usuario_Parecerista_cod_parecerista'=>$usuarioParecerista->cod_parecerista,
           ]);

@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class PropostaEnviada extends Notification
+class NovaVersaoSolicitada extends Notification
 {
     use Queueable;
 
@@ -48,15 +48,13 @@ class PropostaEnviada extends Notification
      */
     public function toMail($notifiable)
     {
-
-        $url = url('/admin/painel-administrador/'.$this->proposta->cod_proposta);
+        $url = url('/propostas/'.$this->proposta->cod_proposta);
         return (new MailMessage)
-                    ->subject('Nova proposta!')
-                    ->greeting('Olá!')
-                    ->line('Uma nova proposta foi enviada!')
-                    ->line('Título: '.$this->obra->titulo)
-                    ->line('Subtítulo: '.$this->obra->subtitulo)
-                    ->action('Veja a proposta', $url);
+                    ->subject('Sua proposta necessita de atenção!')
+                    ->greeting('Olá '. $this->propositor->nome)
+                    ->line('Sua obra "'.$this->obra->titulo.'" necessita de revisão!')
+                    ->line('Clique no botão abaixo para acessar sua proposta e ter acesso ao documento de sugestão de alterações.')
+                    ->action('Acessar proposta', $url);
     }
 
     /**
@@ -68,10 +66,9 @@ class PropostaEnviada extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message_user' => 'A proposta de título "'.$this->obra->titulo.'" foi enviada por '.$this->propositor->nome.' '.$this->propositor->sobrenome,
-            'message_report'=>'Proposta enviada por '.$this->propositor->nome.' '.$this->propositor->sobrenome,
-            'cod_proposta' => $this->proposta->cod_proposta,
-            'cod_propositor' => $this->proposta->Usuario_Propositor_cod_propositor,
+            'message_user'=>'Sua obra "'.$this->obra->titulo.'" necessita de revisão! Envie uma nova versão revisada.',
+            'message_report'=>'Nova versão solicitada.',
+            'cod_proposta'=>$this->proposta->cod_proposta,
         ];
     }
 }

@@ -14,6 +14,12 @@
         @endforeach
       </div>
 
+      @if (session('status'))
+          <div class="alert alert-success">
+              {{ session('status') }}
+          </div>
+      @endif
+
       <!-- PAINEL PRINCIPAL -->
       <div class="col-md-8 col-md-offset-2">
         <div class="painel-propostas">

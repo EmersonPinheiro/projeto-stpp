@@ -58,6 +58,28 @@
         </div> <!-- quadro-painel painel-propostas -->
       </div> <!-- col -->
 
+      <!-- PAINEL DE NOTIFICAÇÕES -->
+      <div class="col-md-4">
+        <div class="quadro-painel painel-notificacoes">
+          <div class="panel panel-default">
+            <!-- CABEÇALHO PAINEL -->
+            <div class="panel-heading">
+              <span class="panel-title"><span class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;&nbsp;Notificações</span>
+            </div>
+            <!-- CORPO PAINEL -->
+            <div class="panel-body">
+              @foreach(Auth::user()->notifications as $notification)
+              <div class="alert alert-info" role="alert">
+                    {{$notification->data['message']}}
+              </div>
+              @endforeach
+
+              </div>
+            </div> <!-- panel-body -->
+          </div> <!-- panel -->
+        </div> <!-- quadro-painel painel-notificacoes -->
+      </div> <!-- col -->
+
     </div> <!-- row -->
   </div> <!--container -->
 </div> <!-- content -->
