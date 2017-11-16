@@ -128,7 +128,7 @@ class AdminController extends Controller
           'revisor_ortografico' => $tecnicos->where('funcao', '1')->first(),
           'revisor_ingles' => $tecnicos->where('funcao', '2')->first(),
           'revisor_espanhol' => $tecnicos->where('funcao', '3')->first(),
-          'criador_capa' => $tecnicos->where('funcao', '4')->first(),
+          'cricador_capa' => $tecnicos->where('funcao', '4')->first(),
           'diagramador' => $tecnicos->where('funcao', '5')->first(),
           'coordenacao_editorial' => $tecnicos->where('funcao', '6')->first(),
           'projetista_grafico' => $tecnicos->where('funcao', '7')->first(),
