@@ -77,8 +77,7 @@
               @endif
             </div>
         </div>
-
-
+        
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Enviar nova nersão da Obra</button>
           <hr/>
           <div class="row">

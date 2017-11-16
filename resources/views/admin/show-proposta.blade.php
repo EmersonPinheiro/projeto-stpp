@@ -145,8 +145,6 @@
                 </div>
               </div>
 
-
-
               <strong><a href="{!! action('ConviteController@invite', $obra->Proposta_cod_proposta) !!}">Clique aqui para convidar um avaliador para esta obra.</a></strong>
 
             </div>
