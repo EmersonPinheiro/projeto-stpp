@@ -14,7 +14,7 @@ class MaterialController extends Controller
         $url = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento')->first();
         $pathToFile = storage_path()."/app/".$url->url_documento;
         return response()->download($pathToFile);
- 
+
       //IMPLEMENTAR DOWNLOAD DO ZIP DAS IMAGENS
     }
 
@@ -30,7 +30,7 @@ class MaterialController extends Controller
     */
     public function newVersion(MaterialVersionFormRequest $request)
     {
-      $docpath = Storage::putFile('documentos', $request->file('novoDoc'), 'public');
+      $docpath = Storage::putFile('documentos', $request->file('novo_documento'), 'public');
       $ofcpath = Storage::putFile('oficios-de-alteracao', $request->file('oficio'), 'public');
 
       $versao = DB::table('Material')

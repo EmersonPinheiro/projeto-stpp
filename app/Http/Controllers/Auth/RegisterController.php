@@ -65,27 +65,39 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $messages = [
-          'required'=>'O campo :attribute é obrigatório.',
-          'min'=>'O campo :attribute deve ter no mínimo :min caracteres.',
-          'max'=>'O campo :attribute deve ter no máximo :max caracteres.',
           'password.required'=>'O campo senha é obrigatório.',
           'password_confirmation.required'=>'O campo de confirmação de senha é obrigatório.'
         ];
 
         return Validator::make($data, [
-            'nome'=>'required|min:3|max:50',
-            'sobrenome'=>'required|min:3|max:100',
-            'cpf'=>'required|min:11|max:11',
+            'nome'=>'required|min:1|max:50',
+            'sobrenome'=>'required|min:1|max:100',
             'sexo'=>'required',
-            'email'=>'required|email|string|max:255',
+            'cpf'=>'required|digits:11',
+            'rg'=>'required|digits_between:6,14',
+            'estado_civil'=>'required',
 
-            //TODO: Departamento, etc.
+            'instituicao'=>'required|min:2|max:100',
+            'sigla'=>'nullable|min:2|max:20',
+            'vinculo'=>'nullable|min:2|max:200',
+            'grande_area'=>'required|min:2|max:100',
+            'area_conhecimento'=>'required|min:2|max:100',
+            'subarea'=>'nullable|min:2|max:100',
+            'especialidade'=>'nullable|min:2|max:100',
 
-            'cidade'=>'required|min:3',
-            'estado'=>'required|min:3',
-            'pais'=>'required|min:3',
-            'password'=>'required|string|min:6|confirmed',
-            'password_confirmation'=>'required|string|min:6'
+            'logradouro'=>'required|min:2|max:255',
+            'bairro'=>'required|min:2|max:50',
+            'cep'=>'required|digits:8',
+            'cidade'=>'required|min:2|max:50',
+            'estado'=>'required|min:2|max:50',
+            'pais'=>'required|min:2|max:50',
+            'telefone'=>'required|digits_between:6,14',
+            'telefone_secundario'=>'nullable|digits_between:6,14',
+            'email_secundario'=>'nullable|max:100|email',
+
+            'email'=>'required|email|max:100',
+            'password'=>'required|min:6|max:60|confirmed',
+            'password_confirmation'=>'required|min:6|max:60'
         ], $messages);
     }
 
