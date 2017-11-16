@@ -128,20 +128,44 @@ class RegisterController extends Controller
 
         $pessoa = Pessoa::create([
           'cpf'=>$data['cpf'],
+          'rg'=>$data['rg'],
           'nome'=>$data['nome'],
           'sobrenome'=>$data['sobrenome'],
           'sexo'=>$data['sexo'],
+          'estado_civil'=>$data['estado_civil'],
+          'logradouro'=>$data['logradouro'],
+          'bairro'=>$data['bairro'],
+          'CEP'=>$data['cep'],
           'Cidade_cod_cidade'=>$cidade->cod_cidade,
         ]);
-/*
+
         DB::table('Email')->insert([
           'endereco'=>$data['email'],
           'tipo'=>'1',
-          'Pessoa_cod_pessoa'=>$idPessoa,
+          'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
 
-        //TODO: Adicionar telefone.
-*/
+        if($data['email_secundario'] != null){
+          DB::table('Email')->insert([
+            'endereco'=>$data['email_secundario'],
+            'tipo'=>'2',
+            'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
+          ]);
+        }
+
+        DB::table('Telefone')->insert([
+          'numero'=>$data['telefone'],
+          'tipo'=>'1',
+          'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
+        ]);
+
+        if ($data['telefone_secundario'] != null) {
+          DB::table('Telefone')->insert([
+            'numero'=>$data['telefone_secundario'],
+            'tipo'=>'2',
+            'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
+          ]);
+        }
 
         $instituicao = Instituicao::firstOrCreate([
           'nome'=>$data['instituicao'],
@@ -154,7 +178,6 @@ class RegisterController extends Controller
 
         $departamento = Departamento::firstOrCreate([
             'nome'=>$data['departamento'],
-            //'sigla'=>$data['sigla-departamento'],
             'Setor_cod_setor'=>$setor->cod_setor
         ]);
 
