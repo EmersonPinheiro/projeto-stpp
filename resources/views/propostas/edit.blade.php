@@ -228,12 +228,12 @@
                   <div class="form-group col-md-4 {{ $errors->has('estado_civil') ? 'has-error' :'' }}">
                     <label class="control-label" for="estado_civil">Estado Civil *</label>
                     <select class="form-control" id="estado_civil" name="estado_civil">
-                      <option value="0">Solteiro</option>
-                      <option value="1">Casado</option>
-                      <option value="2">Separado</option>
-                      <option value="3">Divorciado</option>
-                      <option value="4">Viúvo</option>
-                      <option value="5">Amasiado</option>
+                      <option value="Solteiro">Solteiro(a)</option>
+                       <option value="Casado">Casado(a)</option>
+                       <option value="Separado">Separado(a)</option>
+                       <option value="Divorciado">Divorciado(a)</option>
+                       <option value="Viúvo">Viúvo(a)</option>
+                       <option value="Amasiado">Amasiado(a)</option>
                     </select>
                     @if ($errors->has('estado_civil'))
                         <span class="help-block">
@@ -365,6 +365,7 @@
                         </span>
                     @endif
                   </div>
+
                 </div>
               </div>
 

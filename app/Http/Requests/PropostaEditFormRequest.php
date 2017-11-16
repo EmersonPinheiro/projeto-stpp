@@ -13,7 +13,7 @@ class PropostaEditFormRequest extends FormRequest
      */
     public function authorize()
     {
-      //TODO: Verificar permission do usuário.
+      //TODO: Verificar permissions do usuário.
 
         return true;
     }
@@ -26,6 +26,7 @@ class PropostaEditFormRequest extends FormRequest
     public function rules()
     {
         return [
+
           'titulo'=>'required|min:2|max:100',
           'subtitulo'=>'required|min:2|max:100',
           'descricao'=>'required|min:2|max:10000',
@@ -33,7 +34,6 @@ class PropostaEditFormRequest extends FormRequest
           'area_conhecimento_obra'=>'required|min:2|max:100',
           'subarea_obra'=>'nullable|min:2|max:100',
           'especialidade_obra'=>'nullable|min:2|max:100',
-
           'nome'=>'required|min:1|max:50',
           'sobrenome'=>'required|min:1|max:100',
           'sexo'=>'required',
@@ -50,6 +50,7 @@ class PropostaEditFormRequest extends FormRequest
           'area_conhecimento_autor'=>'required|min:2|max:100',
           'subarea_autor'=>'nullable|min:2|max:100',
           'especialidade_autor'=>'nullable|min:2|max:100',
+
         ];
     }
 }

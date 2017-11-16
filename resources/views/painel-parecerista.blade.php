@@ -53,7 +53,7 @@
                         @endif
                           </strong>
                       @else
-                      <strong>Seu prazo acabou!</strong> <a href="#">Clique para solicitar um prazo maior.</a>
+                      <strong>Seu prazo acabou!</strong> <a href="{!! action('ParecerController@solicitarPrazo', $obra->cod_parecer) !!}">Clique para solicitar um prazo maior.</a>
                       @endif
                     </div>
                   </li>
@@ -72,6 +72,28 @@
             </div> <!-- panel-body -->
           </div> <!-- panel -->
         </div> <!-- quadro-painel painel-propostas -->
+      </div> <!-- col -->
+
+      <!-- PAINEL DE NOTIFICAÇÕES -->
+      <div class="col-md-4">
+        <div class="quadro-painel painel-notificacoes">
+          <div class="panel panel-default">
+            <!-- CABEÇALHO PAINEL -->
+            <div class="panel-heading">
+              <span class="panel-title"><span class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;&nbsp;Notificações</span>
+            </div>
+            <!-- CORPO PAINEL -->
+            <div class="panel-body">
+              @foreach(Auth::user()->notifications as $notification)
+              <div class="alert alert-info" role="alert">
+                    {{$notification->data['message_user']}}
+              </div>
+              @endforeach
+
+              </div>
+            </div> <!-- panel-body -->
+          </div> <!-- panel -->
+        </div> <!-- quadro-painel painel-notificacoes -->
       </div> <!-- col -->
 
     </div> <!-- row -->

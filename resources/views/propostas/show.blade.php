@@ -41,7 +41,9 @@
             </strong>{!! $autor->nome !!} {!! $autor->sobrenome !!}</p>
           @endforeach
           <p><strong>Descrição: </strong>{!! $obra->descricao !!}</p>
+
           <button type="button" name="button" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down glyphicon-space"></span>Informações Adicionais</button>
+
 
           <h4 class="titulo">Arquivos</h4>
           @foreach($materiais as $material)
@@ -61,6 +63,7 @@
             </div>
           </div>
 
+
           <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
 
         </div> <!-- /quadro-->
@@ -71,22 +74,25 @@
     <div class="modal fade" id="myModal2">
       <div class="modal-dialog"> <!-- modal-sm, modal-lg -->
         <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span arua-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Solicitar Cancelamento da Proposta</h4>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="cad3">Conte-nos o motivo do cancelamento. <span style="color:red;">*</span> </label>
-              <textarea type="textarea" class="form-control" id="cad3" placeholder="Obrigatório"></textarea>
-            </div>
-            <p>Esta ação enviará uma solicitação de cancelamento da Proposta para o Administrador do sistema. Uma vez solicidada, não poderá ser desfeita.</p>
-            <p>Deseja continuar?</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
-            <button class="btn btn-primary" data-dismiss="modal">Enviar</button>
-          </div>
+          <form class="" action="{!! action('PropostasController@solicitarCancelamento', $obra->Proposta_cod_proposta) !!}" method="post">
+              <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span arua-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Solicitar Cancelamento da Proposta</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="cad3">Conte-nos o motivo do cancelamento. <span style="color:red;">*</span> </label>
+                  <textarea type="textarea" class="form-control" id="cad3" name="justificativa" placeholder="Obrigatório"></textarea>
+                </div>
+                <p>Esta ação enviará uma solicitação de cancelamento da Proposta para o Administrador do sistema. Uma vez solicidada, não poderá ser desfeita.</p>
+                <p>Deseja continuar?</p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-primary" type="submit" >Enviar</button>
+              </div>
+            </form>
         </div> <!-- modal-content -->
       </div> <!-- modal-dialog -->
     </div>
