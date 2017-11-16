@@ -9,6 +9,9 @@
 
     <link rel="shortcut icon" type="image/png" href="{{ asset('img/editora_uepg.ico') }}"/>
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/bootstrap.js') }}"></script>
+
     <!-- Bootstrap -->
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -30,24 +33,6 @@
     @yield('content')
 
     @include('shared.footer')
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
-
-    <script>
-      $(document).ready(function() {
-        $('[data-toggle="popover"]').popover({
-          animation:true,
-          delay:0,
-          html: true,
-          placement: 'right',
-          trigger: 'focus',
-          container: 'body'
-        });
-      });
-    </script>
 
   </body>
 </html>
