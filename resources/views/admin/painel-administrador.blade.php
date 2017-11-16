@@ -79,11 +79,16 @@
             </div>
             <!-- CORPO PAINEL -->
             <div class="panel-body">
-              @foreach($admin->notifications as $notification)
-              <div class="alert alert-info" role="alert">
-                    {{$notification->data['message']}}
+              @foreach($admin->unreadNotifications as $notification)
+              <div class="alert alert-info alert-dismissible" role="alert">
+                    {{$notification->data['message_user']}}
+                    <button action="" class="btn close" data-dismiss="alert">&times;</button>
               </div>
               @endforeach
+              <div class="alert alert-success alert-dismissible">
+          Tudo certo!
+          <button class="btn close" data-dismiss="alert">&times;</button>
+        </div>
 
               </div>
             </div> <!-- panel-body -->

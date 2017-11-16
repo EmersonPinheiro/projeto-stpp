@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SituacaoAlterada extends Notification
+class PropostaEditada extends Notification
 {
     use Queueable;
 
@@ -48,12 +48,12 @@ class SituacaoAlterada extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/propostas/'.$this->proposta->cod_proposta);
-        return (new MailMessage)
-                    ->subject('Situação alterada!')
-                    ->greeting('Olá!')
-                    ->line('Sua proposta "'.$this->obra->titulo.'" teve a situação alterada para "'. $this->proposta->situacao.'".')
-                    ->action('Acessar proposta', $url);
+      $url = url('/admin/painel-administrador/'.$this->proposta->cod_proposta);
+      return (new MailMessage)
+                  ->subject('Proposta editada.')
+                  ->greeting('Olá!')
+                  ->line('A proposta "'.$this->obra->titulo.'" foi modificada.')
+                  ->action('Acessar proposta', $url);
     }
 
     /**
@@ -65,9 +65,10 @@ class SituacaoAlterada extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message_user'=>'Sua proposta "'.$this->obra->titulo.'" teve a situação alterada para "'. $this->proposta->situacao.'".',
-            'message_report'=>'Situação alterada para "'. $this->proposta->situacao.'".',
-            'cod_proposta'=>$this->proposta->cod_proposta
+          'message_user' => 'A proposta de título "'.$this->obra->titulo.'" foi editada por '.$this->propositor->nome.' '.$this->propositor->sobrenome,
+          'message_report'=>'Proposta editada por '.$this->propositor->nome.' '.$this->propositor->sobrenome,
+          'cod_proposta' => $this->proposta->cod_proposta,
+          'cod_propositor' => $this->proposta->Usuario_Propositor_cod_propositor,
         ];
     }
 }
