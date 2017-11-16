@@ -7,8 +7,6 @@ use App\Pessoa;
 use App\User;
 use App\UsuarioAdmin;
 use App\Cidade;
-use App\Pais;
-use App\EstadoProvincia;
 
 class AdminSeeder extends Seeder
 {
@@ -29,21 +27,7 @@ class AdminTableSeeder extends Seeder
 {
   public function run()
   {
-
-    $pais = Pais::firstOrCreate([
-      'nome'=>'Brasil',
-    ]);
-
-    $estado = EstadoProvincia::firstOrCreate([
-      'nome'=>'Paraná',
-      'sigla'=>'PR',
-      'Pais_cod_pais'=>$pais->cod_pais
-    ]);
-
-    $cidade = Cidade::firstOrCreate([
-      'nome'=>'Ponta Grossa',
-      'Estado_provincia_cod_est_prov'=>$estado->cod_est_prov
-    ]);
+    $cidade = Cidade::where('nome', '=', 'Ponta Grossa')->first();
 
     $pessoa = Pessoa::firstOrCreate([
       'cpf'=>'09165842910',
@@ -56,13 +40,13 @@ class AdminTableSeeder extends Seeder
       'Cidade_cod_cidade'=>$cidade->cod_cidade,
     ]);
 
-    $user = User::firstOrCreate([
+    $user = User::create([
       'email'=>'gabrielmoliveira@gmail.com',
       'password'=>bcrypt('123456'),
       'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
     ]);
 
-    $userAdmin = UsuarioAdmin::firstOrCreate([
+    $userAdmin = UsuarioAdmin::create([
       'Usuario_cod_usuario'=>$user->cod_usuario,
     ]);
 
