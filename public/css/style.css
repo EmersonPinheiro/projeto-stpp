@@ -31,9 +31,17 @@ fieldset {
   margin-top: 20px;
 }
 
+.popover {
+  width: 250px;
+}
+
 .glyphicon-space:before {
   margin-right: 5px;
 
+}
+
+.alert-trim {
+  display: inline-block;
 }
 
 .content {
@@ -52,7 +60,10 @@ fieldset {
 
 .btn-bot-space {
   margin-bottom: 5px;
+}
 
+.btn-right-space {
+  margin-right: 5px;
 }
 
 /* PÁGINA INICIAL */
@@ -89,6 +100,10 @@ fieldset {
 .titulo {
   border-bottom: 1px solid #CFD8DC;
   padding-bottom: 5px;
+}
+
+.invisible {
+  display: none;
 }
 
 /* NAVBAR */
@@ -158,26 +173,18 @@ fieldset {
 
 /* PAINEL */
 
-.painel-propostas {
-  margin-right: -10px;
-}
-
 .painel-propostas .panel-heading {
-  background-color: #ECEFF1;
+  background-color: #E0E0E0;
 }
 
 .painel-propostas .panel-footer {
-  background-color: #ECEFF1;
+  background-color: #EEEEEE;
 }
 
 .painel-propostas .panel-body {
   min-height: 300px;
   max-height: 500px;
   overflow: auto;
-}
-
-.painel-notificacoes {
-  margin-left: -10px;
 }
 
 .painel-notificacoes .panel-body {
@@ -199,7 +206,7 @@ fieldset {
 }
 
 .list-group .titulo-lista {
-  background-color: #ECEFF1;
+  background-color: #EEEEEE;
 }
 
 /* INFORMAÇÕES DA PROPOSTA */

@@ -21,7 +21,7 @@ class DocumentosController extends Controller
         $pathToFile = storage_path()."/app/".$doc->url_documento;
         return response()->download($pathToFile);
 
-      //IMPLEMENTAR DOWNLOAD DO ZIP DAS IMAGENS
+      ///IMPLEMENTAR DOWNLOAD DO ZIP DAS IMAGENS
     }
 
     public function showMaterial($id)

@@ -49,6 +49,10 @@
                 <p>&nbsp;&nbsp;&nbsp;<strong><a href="{!! action('DocumentosController@downloadMaterial', $material->cod_material) !!}">Baixar documento</a></strong></p>
                 <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
               @endforeach
+
+              <div class="">
+                <a class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Solicitar nova versão</a>
+              </div>
             </div>
 
             <div class="col-md-4">
@@ -68,7 +72,7 @@
               @if(!$oficiosAlteracoes->isEmpty())
                 @foreach($oficiosAlteracoes as $oficioAlteracao)
                   <h5><i>Versão {!! $oficioAlteracao->versao !!}</i></h5>
-                  <p><strong>&nbsp;<a href="">Visualizar documento</a></strong></p>
+                  <p><strong>&nbsp;<a href="{!! action('DocumentosController@showOficioAlteracao', $oficioAlteracao->cod_oficio) !!}">Visualizar documento</a></strong></p>
                 @endforeach
               @else
                 <p>Nenhuma ofício foi enviado ainda.</p>
@@ -76,7 +80,7 @@
             </div>
         </div>
 
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Enviar nova versão da Obra</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Enviar nova nersão da Obra</button>
           <hr/>
           <div class="row">
             <div class="col-md-12">
@@ -130,7 +134,7 @@
             <h4 class="modal-title">Enviar Nova Versão da Obra</h4>
           </div>
           <div class="modal-body">
-            <form action="{!! route('enviarNovaVersao', $obra->Proposta_cod_proposta) !!}" method="post" enctype="multipart/form-data">
+            <form action="/propostas/{!! $obra->Proposta_cod_proposta !!}" method="post" enctype="multipart/form-data">
               <input type="hidden" name="_token" value="{!! csrf_token() !!}">
               <div class="form-group">
                 <label for="novoDoc">Documento (.doc)</label>

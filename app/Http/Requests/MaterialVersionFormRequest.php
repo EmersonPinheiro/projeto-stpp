@@ -26,7 +26,7 @@ class MaterialVersionFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'novoDoc'=>'required|file|mimes:doc,docx,odt',
+            'novo_documento'=>'required|file|mimes:doc,docx,odt',
             'oficio'=>'required|file|mimes:pdf',
         ];
     }
