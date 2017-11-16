@@ -25,6 +25,7 @@ class CreateGrandeAreaTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_grande_area');
             $table->string('nome', 100)->nullable();
+            $table->timestamps();
         });
     }
 

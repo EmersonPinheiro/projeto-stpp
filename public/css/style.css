@@ -13,7 +13,8 @@ html {
 }
 
 body {
-  background-color: #CFD8DC;
+  /* background-color: #CFD8DC; */
+  background-color: #EEEEEE;
   padding-top: 70px;
   font-family: 'Lato', sans-serif;
   color: #263238;
@@ -26,6 +27,15 @@ label {
   font-weight: lighter;
 }
 
+fieldset {
+  margin-top: 20px;
+}
+
+.glyphicon-space:before {
+  margin-right: 5px;
+
+}
+
 .content {
   margin-bottom: 20px;
   min-height: 100%;
@@ -34,9 +44,15 @@ label {
 
 .quadro {
   background-color: #fff;
-  border-radius: 2px;
+  border-radius: 1px;
   margin: 10px 0;
-  padding: 30px;
+  padding: 20px 30px;
+  box-shadow: .5px .5px .2px #999999;
+}
+
+.btn-bot-space {
+  margin-bottom: 5px;
+
 }
 
 /* PÁGINA INICIAL */
@@ -45,30 +61,29 @@ label {
   background-color: #fff;
   border-radius: 2px;
   margin: 10px 0;
+  box-shadow: .5px .5px .2px #999999;
+  min-height: 425px;
 }
 
 .quadro-form-login {
-  padding: 30px;
+  padding: 20px 30px;
 }
 
 .quadro-info {
-  background-image: url("../img/books.jpg");
-  background-size: 100% auto;
-  border-radius: 2px;
+  background-color: #00695C;
+  border-radius: 1px;
   margin: 10px 0;
-  min-height: 300px;
-  padding: 30px;
+  min-height: 425px;
+  padding: 40px;
+  color: #fff;
 }
 
-.info {
-  background-color: rgba(255, 255, 255, 0.7);
-  color: #2c3e50;
-  padding: 15px;
-}
-
-.quadro-passos {
+.quadro-editora {
+  background-color: #CFD8DC;
+  border-radius: 1px;
+  margin: 10px 0;
   min-height: 200px;
-  box-shadow: 1px 1px .5px #90A4AE;
+  padding: 40px;
 }
 
 .titulo {
@@ -132,8 +147,8 @@ label {
 /* FOOTER */
 
 .footer {
-  background-color: #B0BEC5;
-  padding: 10px;
+  background-color: #CFD8DC;
+  padding: 15px;
   margin-top: auto;
 }
 
@@ -141,35 +156,18 @@ label {
   margin-bottom: 0;
 }
 
-.footer-homepage .copy {
-  border-top: 1px solid #90A4AE;
-  padding-top: 10px;
-}
-
-.footer-homepage {
-  background-color: #B0BEC5;
-  color: #263238;
-  margin-top: auto;
-}
-
-.quadro-footer {
-  padding: 30px 0;
-}
-
-.footer-homepage .titulo-footer {
-  border-bottom: 1px solid #90A4AE;
-  padding-bottom: 5px;
-}
-
 /* PAINEL */
-
-.quadro-painel {
-  border-radius: 5px;
-  margin: 10px 0;
-}
 
 .painel-propostas {
   margin-right: -10px;
+}
+
+.painel-propostas .panel-heading {
+  background-color: #ECEFF1;
+}
+
+.painel-propostas .panel-footer {
+  background-color: #ECEFF1;
 }
 
 .painel-propostas .panel-body {
@@ -196,8 +194,12 @@ label {
   margin-bottom: 5px;
 }
 
+.list-group .list-group-item {
+  border-radius: 0;
+}
+
 .list-group .titulo-lista {
-  background-color: #f5f5f5;
+  background-color: #ECEFF1;
 }
 
 /* INFORMAÇÕES DA PROPOSTA */

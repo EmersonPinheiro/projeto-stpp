@@ -13,6 +13,8 @@ class MaterialVersionFormRequest extends FormRequest
      */
     public function authorize()
     {
+      //TODO: Verificar permisser do usuário.
+
         return true;
     }
 
@@ -25,7 +27,7 @@ class MaterialVersionFormRequest extends FormRequest
     {
         return [
             'novoDoc'=>'required|file|mimes:doc,docx,odt',
-            'oficio'=>'required|file',
+            'oficio'=>'required|file|mimes:pdf',
         ];
     }
 }

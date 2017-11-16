@@ -1,21 +1,18 @@
-@foreach ($errors->all() as $error)
-<p class="alert alert-danger">{{ $error }}</p>
-@endforeach
-
-@if (Auth::guest())
+<!-- LOGIN -->
 <div class="quadro-form-login">
-  <!-- LOGIN -->
+  @if (!$errors->isEmpty())
+    @foreach ($errors->all() as $error)
+      <p class="alert alert-danger">{{ $error }}</p>
+    @endforeach
+  @else
+    <div class="alert alert-info">
+      <span class="glyphicon glyphicon-info-sign glyphicon-space" aria-hidden="true"></span>
+      Faça login para ter acesso ao sistema ou cadastre-se.
+    </div>
+  @endif
+  @if (Auth::guest())
   <form action="{!! route('login') !!}" method="post">
     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-
-
-    <!--TIPO DO USUÁRIO-->
-    <div class="form-group">
-      <input type="radio" name="user_role" checked value="propositor"/> Propositor
-      <input type="radio" name="user_role" value="parecerista"/> Avaliador
-    </div>
-
-
     <div class="form-group">
       <label for="email-login">E-mail</label>
       <div class="input-group">
@@ -37,10 +34,10 @@
         </label>
       </div>
     </div>
-    <p class="text-right"><a href="{{ route('password.request') }}">Esqueceu sua senha?</a></p>
-    <button type="submit" class="btn btn-success btn-block">Entrar</button><br />
+    <p style="text-decoration: underline;"><a href="{{ route('password.request') }}">Esqueceu sua senha?</a></p>
+    <button type="submit" class="btn btn-success btn-block btn-bot-space">Entrar</button>
   </form>
-  <a class="btn btn-primary btn-block" href="/cadastro" role="button">Cadastro</a>
+  <a class="btn btn-primary btn-block btn-bot-space" href="/cadastro" role="button">Cadastrar-se</a>
 </div> <!-- quadro-form -->
 @else
 

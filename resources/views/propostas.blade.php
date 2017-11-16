@@ -11,11 +11,11 @@
 
       <!-- PAINEL PRINCIPAL -->
       <div class="col-md-8 col-md-offset-2">
-        <div class="quadro-painel painel-propostas">
+        <div class="painel-propostas">
           <div class="panel panel-default">
             <!-- CABEÇALHO PAINEL -->
             <div class="panel-heading">
-              <span class="panel-title"><span class="glyphicon glyphicon-th-list"></span>&nbsp;&nbsp;&nbsp;Suas Propostas</span>
+              <span class="panel-title"><span class="glyphicon glyphicon-th-list glyphicon-space"></span>Suas Propostas</span>
             </div>
             <div class="panel-body">
               <!-- LISTA DE PROPOSTAS -->
@@ -31,16 +31,18 @@
                 <!-- List group -->
                 <ul class="list-group">
                   <li class="list-group-item titulo-lista">
-                    <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Proposta 1
+                    <span class="glyphicon glyphicon-book glyphicon-space"></span>{!! $proposta->titulo !!}
                     <div class="pull-right">
                       <a href="{!! action('PropostasController@show', $proposta->cod_proposta) !!}">Mais Informações</a>
                     </div>
                   </li>
                   <li class="list-group-item">
-                    <p><small>Submetida em {!! $proposta->data_envio !!}</small></p>
+                    <p class="text-warning"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
                     <p><strong>Título da Obra: </strong>{!! $proposta->titulo !!}</p>
                     <p><strong>Subtítulo da Obra: </strong>{!! $proposta->subtitulo !!}</p>
                     <p><strong>Descrição: </strong>{!! $proposta->descricao !!}</p>
+                    <p><small>Submetida em {!! $proposta->data_envio !!}</small></p>
+
                   </li>
                 </ul>
               </div> <!-- painel-lista -->
@@ -51,10 +53,32 @@
             </div> <!-- panel-body -->
             <!-- RODAPÉ PAINEL -->
             <div class="panel-footer">
-              <a class="btn btn-success" href="/enviar-proposta" role="button"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;Submeter Nova Proposta</a>
+              <a class="btn btn-success" href="/enviar-proposta" role="button"><span class="glyphicon glyphicon-plus glyphicon-space"></span>Submeter Nova Proposta</a>
             </div>
           </div> <!-- panel -->
         </div> <!-- quadro-painel painel-propostas -->
+      </div> <!-- col -->
+
+      <!-- PAINEL DE NOTIFICAÇÕES -->
+      <div class="col-md-4">
+        <div class="quadro-painel painel-notificacoes">
+          <div class="panel panel-default">
+            <!-- CABEÇALHO PAINEL -->
+            <div class="panel-heading">
+              <span class="panel-title"><span class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;&nbsp;Notificações</span>
+            </div>
+            <!-- CORPO PAINEL -->
+            <div class="panel-body">
+              @foreach(Auth::user()->notifications as $notification)
+              <div class="alert alert-info" role="alert">
+                    {{$notification->data['message_user']}}
+              </div>
+              @endforeach
+
+              </div>
+            </div> <!-- panel-body -->
+          </div> <!-- panel -->
+        </div> <!-- quadro-painel painel-notificacoes -->
       </div> <!-- col -->
 
     </div> <!-- row -->

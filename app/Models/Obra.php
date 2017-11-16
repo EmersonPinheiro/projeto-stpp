@@ -13,7 +13,7 @@ class Obra extends Model
 
     public function proposta()
     {
-      return $this->hasOne('App\Models\Proposta', 'Proposta_cod_proposta');
+      return $this->hasOne('App\Proposta', 'Proposta_cod_proposta');
     }
 
     public function autor()
@@ -25,7 +25,5 @@ class Obra extends Model
     {
       return $this->hasMany('App\Models\Material', 'Obra_cod_obra');
     }
-
-    //obra_palavra_chave
 
 }

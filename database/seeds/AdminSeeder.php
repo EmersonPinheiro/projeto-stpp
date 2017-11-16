@@ -6,6 +6,9 @@ use App\Permission;
 use App\Pessoa;
 use App\User;
 use App\UsuarioAdmin;
+use App\Cidade;
+use App\Pais;
+use App\EstadoProvincia;
 
 class AdminSeeder extends Seeder
 {
@@ -26,7 +29,23 @@ class AdminTableSeeder extends Seeder
 {
   public function run()
   {
-    $pessoa = Pessoa::firstOrNew([
+
+    $pais = Pais::firstOrCreate([
+      'nome'=>'Brasil',
+    ]);
+
+    $estado = EstadoProvincia::firstOrCreate([
+      'nome'=>'Paraná',
+      'sigla'=>'PR',
+      'Pais_cod_pais'=>$pais->cod_pais
+    ]);
+
+    $cidade = Cidade::firstOrCreate([
+      'nome'=>'Ponta Grossa',
+      'Estado_provincia_cod_est_prov'=>$estado->cod_est_prov
+    ]);
+
+    $pessoa = Pessoa::firstOrCreate([
       'cpf'=>'09165842910',
       'nome'=>'Gabriel',
       'sobrenome'=>'Moreira',
@@ -34,30 +53,20 @@ class AdminTableSeeder extends Seeder
       'logradouro'=>'Rua Marques',
       'bairro'=>'Orfãs',
       'CEP'=>'84015030',
-      'Cidade_cod_cidade'=>'1',
+      'Cidade_cod_cidade'=>$cidade->cod_cidade,
     ]);
 
-    //$pessoa->save();
-    $idPessoa = $pessoa->cod_pessoa;
-
-    var_dump($idPessoa);
-/*
-    $user = User::firstOrNew([
-      'email'=>'gabrielmoliveira@mail.com',
+    $user = User::firstOrCreate([
+      'email'=>'gabrielmoliveira@gmail.com',
       'password'=>bcrypt('123456'),
-      'Pessoa_cod_pessoa'=>$idPessoa,
+      'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
     ]);
 
-
-
-    //$user->save();
-
-    $useradmin = UsuarioAdmin::firstOrNew([
-      'Usuario_cod_usuario'=>$user->id,
+    $userAdmin = UsuarioAdmin::firstOrCreate([
+      'Usuario_cod_usuario'=>$user->cod_usuario,
     ]);
 
-    $role = Role::where('name', 'admin');
-    $useradmin->attachRole($role);
-    //  $useradmin->save();*/
+    $user->attachRole(2);
+
   }
 }

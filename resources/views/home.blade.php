@@ -8,14 +8,10 @@
       <div class="row">
         <!-- INFORMAÇÕES -->
         <div class="col-md-8">
-          <div class="quadro-info">
-            <div class="info text-justify">
-              <h3>Como funciona o sistema de submissão?</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi officia, iure ducimus nulla. Pariatur mollitia, consequatur iusto minus, tenetur non corporis reiciendis vitae aliquam esse illo iste eaque architecto. Itaque.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi officia, iure ducimus nulla. Pariatur mollitia, consequatur iusto minus, tenetur non corporis reiciendis vitae aliquam esse illo iste eaque architecto. Itaque.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi officia, iure ducimus nulla. Pariatur mollitia, consequatur iusto minus, tenetur non corporis reiciendis vitae aliquam esse illo iste eaque architecto. Itaque.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi officia, iure ducimus nulla. Pariatur mollitia, consequatur iusto minus, tenetur non corporis reiciendis vitae aliquam esse illo iste eaque architecto. Itaque.</p>
-            </div> <!-- info -->
+          <div class="quadro-info text-justify">
+            <h3>Como funciona o sistema de submissão?</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div> <!-- quadro-info -->
         </div> <!-- col -->
 
@@ -23,11 +19,28 @@
         <div class="col-md-4">
           <div class="quadro-login">
 
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+
             @include('auth.login')
 
           </div> <!-- quadro-login -->
         </div> <!-- col -->
       </div> <!-- row -->
+      <div class="quadro-editora">
+        <div class="row">
+          <div class="col-md-4">
+            <img src="{{ asset('img/editora_uepg.png') }}" class="img-responsive center-block" alt="Responsive image" width="230" />
+          </div>
+          <div class="col-md-8 text-justify">
+            <h4>A Editora UEPG</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+      </div>
     </div> <!--container -->
   </div> <!-- content -->
 @endsection
