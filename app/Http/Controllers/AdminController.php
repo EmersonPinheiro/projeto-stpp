@@ -10,7 +10,6 @@ use App\Material;
 use App\Pessoa;
 use App\Parecer;
 use App\DocSugestaoAlteracoes;
-use App\OficioAlteracoes;
 use Illuminate\Http\Request;
 use App\Http\Requests\PropostaEditFormRequest;
 use App\Http\Requests\SolicitarNovaVersaoFormRequest;
@@ -135,10 +134,7 @@ class AdminController extends Controller
           'projetista_grafico' => $tecnicos->where('funcao', '7')->first(),
         );
 
-        $docsSugestoes = DocSugestaoAlteracoes::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->get();
-        $oficiosAlteracoes = OficioAlteracoes::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->get();
-
-        return view('admin.show-proposta', compact('proposta', 'obra', 'autores', 'pareceristasPareceres', 'materiais', 'funcoes', 'docsSugestoes', 'oficiosAlteracoes'));
+        return view('admin.show-proposta', compact('proposta', 'obra', 'autores', 'pareceristasPareceres', 'materiais', 'funcoes'));
     }
 
     /**
@@ -262,13 +258,8 @@ class AdminController extends Controller
 
       $docpath = Storage::putFile('documentos_sugestao_alteracao', $request->file('doc_sugestao'), 'private');
 
-      if (($versaoDocSugestao = DocSugestaoAlteracoes::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->max('versao')) == null) {
-        $versaoOficio = 0;
-      }
-
       $docSugestao = DocSugestaoAlteracoes::create([
           'url_documento'=>$docpath,
-          'versao'=>$versaoOficio + 1,
           'Proposta_cod_proposta'=>$proposta->cod_proposta,
       ]);
 

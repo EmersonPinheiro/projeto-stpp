@@ -20,8 +20,11 @@
             <div class="panel-heading">
               <span class="panel-title"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;{{$obra->titulo}}</span>
             </div>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 548c029de052b275561505cb2778d8b358190a62
 
             <div class="panel-body text-justify">
               <div class="pull-right">
@@ -31,7 +34,10 @@
                 @else
                 <h5>Proposta CANCELADA!</h5>
                 @endif
+<<<<<<< HEAD
                 <a class="btn btn-primary" href="{!! action('RelatorioController@index', $proposta->cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Relatório</a>
+=======
+>>>>>>> 548c029de052b275561505cb2778d8b358190a62
               </div>
 
               @foreach ($errors->all() as $error)
@@ -81,33 +87,40 @@
 
               <div class="row">
                 <h4 class="titulo">Arquivos</h4>
-
-                <div class="col-md-4">
+                <div class="col-md-12">
                   <h5 class="titulo">Material</h5>
 
+                <div class="pull-right">
+                  <a class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Solicitar nova versão</a>
+                </div>
+
                   @foreach($materiais as $material)
-                    <h5><i>Versão {!! $material->versao !!}</i></h5>
-                    <p>&nbsp;&nbsp;&nbsp;<strong><a href="{!! action('DocumentosController@downloadMaterial', $material->cod_material) !!}">Baixar documento</a></strong></p>
-                    <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
+                  <h5><i>Versão {!! $material->versao !!}</i></h5>
+                  <p><strong>Documento (doc, docx): </strong>documento.doc<a href="{!! action('MaterialController@downloadMaterial', $material->cod_material) !!}">&nbsp;&nbsp;&nbsp;Baixar </a></p>
+                  <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
                   @endforeach
-
-                  <div class="">
-                    <a class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Solicitar nova versão</a>
-                  </div>
                 </div>
+              </div>
 
-                <div class="col-md-4">
-                  <h5 class="titulo">Docs. de Sugestão de Alterações</h5>
-                  @if(!$docsSugestoes->isEmpty())
-                    @foreach($docsSugestoes as $docSugestao)
-                      <h5><i>Versão {!! $docSugestao->versao !!}</i></h5>
-                      <p><strong>&nbsp;<a href="{!! action('DocumentosController@showDocSugestao', $docSugestao->cod_sug_alteracoes) !!}">Visualizar documento</a></strong></p>
-                    @endforeach
-                  @else
-                    <p>Nenhuma alteração foi sugerida ainda.</p>
-                  @endif
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="titulo">Pareceres</h5>
+                  @foreach($pareceristasPareceres as $pareceristaParecer)
+                    <p class="col-md-8">Parecer de {!! $pareceristaParecer->nome !!} {!! $pareceristaParecer->sobrenome !!}:</p>
+                    @if($pareceristaParecer->envio)
+                      <a class="col-md-4" href="{!! action('ParecerController@show', $pareceristaParecer->cod_parecer) !!}">Visualizar</a>
+                    @else
+                      @if($pareceristaParecer->prazo_restante == 0)
+                        <a class="col-md-4" href="{!! action('ParecerController@prorrogarPrazo', $pareceristaParecer->cod_parecer) !!}">Prorrogar prazo por mais 30 dias</a>
+                      @else
+                        <p>Parecer ainda não enviado.</p>
+                      @endif
+                    @endif
+                  @endforeach
                 </div>
+              </div>
 
+<<<<<<< HEAD
                 <div class="col-md-4">
                   <h5 class="titulo">Ofícios de Alterações</h5>
                   @if(!$oficiosAlteracoes->isEmpty())
@@ -140,6 +153,9 @@
               </div>
 
 
+=======
+
+>>>>>>> 548c029de052b275561505cb2778d8b358190a62
               <strong><a href="{!! action('ConviteController@invite', $obra->Proposta_cod_proposta) !!}">Clique aqui para convidar um avaliador para esta obra.</a></strong>
 
             </div>

@@ -26,37 +26,40 @@ class PropostaFormRequest extends FormRequest
     public function rules()
     {
         return [
+            /* Obra */
+            'titulo'=>'required|min:3|max:100',
+            'subtitulo'=>'required|max:100',
+            'descricao'=>'required|min:3',
+            'grande_area_obra'=>'required|min:3|string',
+            'area_conhecimento_obra'=>'required|min:3|string',
+            'subarea_obra'=>'nullable|min:3|string',
+            'especialidade_obra'=>'nullable|min:3|string',
 
-            'titulo'=>'required|min:2|max:100',
-            'subtitulo'=>'required|min:2|max:100',
-            'descricao'=>'required|min:2|max:10000',
-            'grande_area_obra'=>'required|min:2|max:100',
-            'area_conhecimento_obra'=>'required|min:2|max:100',
-            'subarea_obra'=>'nullable|min:2|max:100',
-            'especialidade_obra'=>'nullable|min:2|max:100',
-
-            'nome'=>'required|min:1|max:50',
-            'sobrenome'=>'required|min:1|max:100',
-
+            /* Pessoa */
+            'nome'=>'required|min:3|max:50',
+            'sobrenome'=>'required|min:3|max:100',
+            'CPF'=>'required|min:11|max:11',
+            'rg'=>'required|max:14',
             'sexo'=>'required',
-            'cpf'=>'required|digits:11',
-            'rg'=>'required|digits_between:6,14',
             'estado_civil'=>'required',
-            'email'=>'nullable|max:100|email',
-            'telefone'=>'required|digits_between:6,14',
-            'telefone_secundario'=>'nullable|digits_between:6,14',
-            'instituicao'=>'required|min:2|max:100',
-            'sigla'=>'nullable|min:2|max:20',
-            'vinculo'=>'nullable|min:2|max:200',
-            'grande_area_autor'=>'required|min:2|max:100',
-            'area_conhecimento_autor'=>'required|min:2|max:100',
-            'subarea_autor'=>'nullable|min:2|max:100',
-            'especialidade_autor'=>'nullable|min:2|max:100',
 
+            /* Contato/Endereço */
+            'email'=>'required|email|max:255',
+            'telefone'=>'required|numeric',
+
+            /* Instituicao/Area de conhecimento do autor */
+            'instituicao'=>'required|min:3',
+            'setor'=>'nullable|min:3|string',
+            'departamento'=>'nullable|min:3|string',
+            'grande_area_autor'=>'required|min:3|string',
+            'area_conhecimento_autor'=>'required|min:3|string',
+            'subarea_autor'=>'nullable|min:3|string',
+            'especialidade_autor'=>'nullable|min:3|string',
+
+            /* Arquivos */
             'documento_s_identificacao'=>'required|mimes:doc, docx, odt',
             'documento_c_identificacao'=>'required|mimes:doc, docx, odt',
-            'imagens'=>'nullable|file|mimes:rar, zip',
-
+            'imagens'=>'file|mimes:rar, zip',
         ];
     }
 }

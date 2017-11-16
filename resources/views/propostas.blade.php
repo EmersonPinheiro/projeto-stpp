@@ -31,17 +31,18 @@
                 <!-- List group -->
                 <ul class="list-group">
                   <li class="list-group-item titulo-lista">
+                    <span class="glyphicon glyphicon-book glyphicon-space"></span>{!! $proposta->titulo !!}
                     <div class="pull-right">
                       <a href="{!! action('PropostasController@show', $proposta->cod_proposta) !!}">Mais Informações</a>
                     </div>
-                    <span class="glyphicon glyphicon-book glyphicon-space"></span>{!! $proposta->titulo !!}
                   </li>
                   <li class="list-group-item">
-                    <p class="alert alert-warning pull-right"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
+                    <p class="text-warning"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
                     <p><strong>Título da Obra: </strong>{!! $proposta->titulo !!}</p>
                     <p><strong>Subtítulo da Obra: </strong>{!! $proposta->subtitulo !!}</p>
                     <p><strong>Descrição: </strong>{!! $proposta->descricao !!}</p>
                     <p><small>Submetida em {!! $proposta->data_envio !!}</small></p>
+
                   </li>
                 </ul>
               </div> <!-- painel-lista -->
@@ -70,7 +71,7 @@
             <div class="panel-body">
               @foreach(Auth::user()->notifications as $notification)
               <div class="alert alert-info" role="alert">
-                    {{$notification->data['message_user']}}
+                    {{$notification->data['message']}}
               </div>
               @endforeach
 

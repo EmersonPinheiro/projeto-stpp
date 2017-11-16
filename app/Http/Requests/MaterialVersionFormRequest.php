@@ -26,8 +26,13 @@ class MaterialVersionFormRequest extends FormRequest
     public function rules()
     {
         return [
+<<<<<<< HEAD
             'novo_documento'=>'required|file|mimes:doc,docx,odt',
             'oficio'=>'required|file|mimes:pdf',
+=======
+            'novoDoc'=>'required|file|mimes:doc,docx,odt',
+            'oficio'=>'required|file',
+>>>>>>> 548c029de052b275561505cb2778d8b358190a62
         ];
     }
 }
