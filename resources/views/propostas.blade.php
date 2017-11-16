@@ -71,7 +71,7 @@
             <div class="panel-body">
               @foreach(Auth::user()->notifications as $notification)
               <div class="alert alert-info" role="alert">
-                    {{$notification->data['message']}}
+                    {{$notification->data['message_user']}}
               </div>
               @endforeach
 

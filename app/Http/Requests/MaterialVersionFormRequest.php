@@ -27,7 +27,7 @@ class MaterialVersionFormRequest extends FormRequest
     {
         return [
             'novoDoc'=>'required|file|mimes:doc,docx,odt',
-            'oficio'=>'required|file',
+            'oficio'=>'required|file|mimes:pdf',
         ];
     }
 }

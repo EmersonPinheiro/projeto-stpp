@@ -21,6 +21,8 @@
               <span class="panel-title"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;{{$obra->titulo}}</span>
             </div>
 
+
+
             <div class="panel-body text-justify">
               <div class="pull-right">
                 @if($proposta->ativa == 1)
@@ -29,6 +31,7 @@
                 @else
                 <h5>Proposta CANCELADA!</h5>
                 @endif
+                <a class="btn btn-primary" href="{!! action('RelatorioController@index', $proposta->cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Relatório</a>
               </div>
 
               @foreach ($errors->all() as $error)
@@ -78,20 +81,45 @@
 
               <div class="row">
                 <h4 class="titulo">Arquivos</h4>
-                <div class="col-md-12">
+
+                <div class="col-md-4">
                   <h5 class="titulo">Material</h5>
 
-                <div class="pull-right">
-                  <a class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Solicitar nova versão</a>
+                  @foreach($materiais as $material)
+                    <h5><i>Versão {!! $material->versao !!}</i></h5>
+                    <p>&nbsp;&nbsp;&nbsp;<strong><a href="{!! action('DocumentosController@downloadMaterial', $material->cod_material) !!}">Baixar documento</a></strong></p>
+                    <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
+                  @endforeach
+
+                  <div class="">
+                    <a class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Solicitar nova versão</a>
+                  </div>
                 </div>
 
-                  @foreach($materiais as $material)
-                  <h5><i>Versão {!! $material->versao !!}</i></h5>
-                  <p><strong>Documento (doc, docx): </strong>documento.doc<a href="{!! action('MaterialController@downloadMaterial', $material->cod_material) !!}">&nbsp;&nbsp;&nbsp;Baixar </a></p>
-                  <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
-                  @endforeach
+                <div class="col-md-4">
+                  <h5 class="titulo">Docs. de Sugestão de Alterações</h5>
+                  @if(!$docsSugestoes->isEmpty())
+                    @foreach($docsSugestoes as $docSugestao)
+                      <h5><i>Versão {!! $docSugestao->versao !!}</i></h5>
+                      <p><strong>&nbsp;<a href="{!! action('DocumentosController@showDocSugestao', $docSugestao->cod_sug_alteracoes) !!}">Visualizar documento</a></strong></p>
+                    @endforeach
+                  @else
+                    <p>Nenhuma alteração foi sugerida ainda.</p>
+                  @endif
                 </div>
-              </div>
+
+                <div class="col-md-4">
+                  <h5 class="titulo">Ofícios de Alterações</h5>
+                  @if(!$oficiosAlteracoes->isEmpty())
+                    @foreach($oficiosAlteracoes as $oficioAlteracao)
+                      <h5><i>Versão {!! $oficioAlteracao->versao !!}</i></h5>
+                      <p><strong>&nbsp;<a href="{!! action('DocumentosController@showOficioAlteracao', $oficioAlteracao->cod_oficio) !!}">Visualizar documento</a></strong></p>
+                    @endforeach
+                  @else
+                    <p>Nenhuma ofício foi enviado ainda.</p>
+                  @endif
+                </div>
+            </div>
 
               <div class="row">
                 <div class="col-md-12">

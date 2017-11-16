@@ -25,6 +25,8 @@ use App\Telefone;
 use App\Email;
 use App\UsuarioPropositor;
 use App\UsuarioAdmin;
+use App\DocSugestaoAlteracoes;
+use App\OficioAlteracoes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,10 +34,13 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PropostaFormRequest;
 use App\Http\Requests\PropostaEditFormRequest;
 use App\Http\Requests\CancelamentoFormRequest;
+use App\Http\Requests\MaterialVersionFormRequest;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\PropostaEnviada;
 use App\Notifications\CancelamentoSolicitado;
+use App\Notifications\NovaVersaoObraEnviada;
+use App\Notifications\PropostaEditada;
 
 class PropostasController extends Controller
 {
@@ -300,20 +305,16 @@ class PropostasController extends Controller
                    ->select('Pessoa.*')
                    ->get();
 
-        //TODO: EXCLUIR PALAVRAS CHAVE
-        $palavrasChave = DB::table('Palavras_Chave')
-                    ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
-                    ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
-                    ->where('cod_obra', $obra->cod_obra)
-                    ->select('Palavras_Chave.palavra')
-                    ->get();
 
         $materiais = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
-                    ->where('cod_obra', $obra->cod_obra)
-                    ->select('Material.*')
-                    ->get();
+                  ->where('cod_obra', $obra->cod_obra)
+                  ->select('Material.*')
+                  ->get();
 
-        return view('propostas.show', compact('obra', 'autores', 'palavrasChave', 'materiais', 'proposta'));
+        $docsSugestoes = DocSugestaoAlteracoes::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->get();
+        $oficiosAlteracoes = OficioAlteracoes::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->get();
+
+        return view('propostas.show', compact('obra', 'autores', 'palavrasChave', 'materiais', 'proposta', 'docsSugestoes', 'oficiosAlteracoes'));
     }
 
     /**
@@ -371,32 +372,28 @@ class PropostasController extends Controller
      */
     public function update(PropostaEditFormRequest $request, $id)
     {
-        DB::table('Obra')->where('Proposta_cod_proposta', $id)->update([
+        if (($proposta = Proposta::where('cod_proposta', '=', $id)->first()) == null) {
+          abort(404);
+        }
+
+        DB::table('Obra')->where('Proposta_cod_proposta', $proposta->cod_proposta)->update([
           'titulo' => $request->get('titulo'),
           'subtitulo' => $request->get('subtitulo'),
           'descricao' => $request->get('descricao'),
-          'resumo' => $request->get('resumo'),
           //ADICIONAR OUTROS CAMPOS
         ]);
 
-        DB::table('Palavras_Chave')->where('Proposta_cod_proposta', $id)
-          ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
-          ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
-          ->update([
-            'palavra' => $request->get('palavra'),
-          ]);
+        $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')
+                             ->get();
+
+        Notification::send($admin->all(), new PropostaEditada($proposta));
+
 
         //TODO: Atualizar um array de autores.
 
         return redirect(action('PropostasController@show', $id))->with('status', 'A proposta '.$id.' foi atualizada!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function solicitarCancelamento(CancelamentoFormRequest $request, $id)
     {
 
@@ -407,4 +404,47 @@ class PropostasController extends Controller
 
         return redirect()->back()->with('status', 'Sua solicitação foi enviada. Aguarde até que o administrador cancele sua proposta.');
     }
+
+    public function novaVersaoObra(MaterialVersionFormRequest $request)
+    {
+      if (($proposta = Proposta::where('cod_proposta', '=', $request->get('cod_proposta'))->first()) == null) {
+        abort(404);
+      }
+
+      $docpath = Storage::putFile('documentos', $request->file('novoDoc'), 'private');
+      $ofcpath = Storage::putFile('oficios-de-alteracao', $request->file('oficio'), 'private');
+
+      $versaoMaterial = DB::table('Material')
+        ->join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
+        ->where('cod_obra', $request->get('cod_obra'))
+        ->max('Material.versao');
+
+      DB::table('Material')
+        ->join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
+        ->where('cod_obra', $request->get('cod_obra'))
+        ->insert([
+          'versao'=>$versaoMaterial + 1,
+          'url_documento'=>$docpath,
+          'Obra_cod_obra'=>$request->get('cod_obra'),
+      ]);
+
+      if (($versaoOficio = OficioAlteracoes::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->max('versao')) == null) {
+        $versaoOficio = 0;
+      }
+
+      $oficio = OficioAlteracoes::create([
+        'url_documento'=>$ofcpath,
+        'versao'=>$versaoOficio + 1,
+        'Proposta_cod_proposta'=>$request->get('cod_proposta'),
+      ]);
+
+      $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')
+                           ->get();
+
+      Notification::send($admin->all(), new NovaVersaoObraEnviada($proposta));
+
+      return redirect(action('PropostasController@show', $request->cod_proposta))->with('status', 'A nova versão da obra foi enviada!');
+
+    }
+
 }
