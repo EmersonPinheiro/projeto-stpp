@@ -34,6 +34,7 @@ class MaterialController extends Controller
     */
     public function newVersion(MaterialVersionFormRequest $request)
     {
+
       $docpath = Storage::putFile('documentos', $request->file('novoDoc'), 'private');
       $ofcpath = Storage::putFile('oficios-de-alteracao', $request->file('oficio'), 'private');
 
