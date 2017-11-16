@@ -44,8 +44,6 @@
 
           <button type="button" name="button" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down glyphicon-space"></span>Informações Adicionais</button>
 
-
-<<<<<<< HEAD
           <div class="row">
             <h4 class="titulo">Arquivos</h4>
 
@@ -83,14 +81,6 @@
               @endif
             </div>
         </div>
-=======
-          <h4 class="titulo">Arquivos</h4>
-          @foreach($materiais as $material)
-            <p><i>Versão {!! $material->versao !!}</i></p>
-            <p><strong>Documento (doc, docx): </strong>documento.doc<a href="{!! action('MaterialController@downloadMaterial', $material->cod_material) !!}">&nbsp;&nbsp;&nbsp;Baixar </a></p>
-            <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
-          @endforeach
->>>>>>> eb1d070bfd786340369a50316a061c0c8f7ba6de
 
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Enviar nova versão da Obra</button>
           <hr/>
