@@ -22,13 +22,11 @@ Route::group(['middleware' => ['auth']], function () {
   Route::post('/enviar-proposta', 'PropostasController@store');
   Route::get('/propostas', 'PropostasController@index');
   Route::get('/propostas/{id?}', 'PropostasController@show');
-
-  Route::post('/propostas/{id?}/enviarNovaVersao', 'PropostasController@novaVersaoObra')->name('enviarNovaVersao');
-
+  Route::post('/propostas/{id?}', 'MaterialController@newVersion');
   Route::get('/propostas/{id?}/edit', 'PropostasController@edit');
   Route::post('/propostas/{id?}/edit', 'PropostasController@update');
-  Route::get('/propostas/{id?}/downloadMaterial', 'DocumentosController@downloadMaterial');
-  Route::get('/propostas/{id?}/showMaterial', 'DocumentosController@showMaterial');
+  Route::get('/propostas/{id?}/downloadMaterial', 'MaterialController@downloadMaterial');
+  Route::get('/propostas/{id?}/showMaterial', 'MaterialController@showMaterial');
 
   Route::post('/propostas/{id?}/solicitarCancelamento', 'PropostasController@solicitarCancelamento');
 
@@ -47,16 +45,6 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/admin/painel-administrador/{id?}/showParecer', 'ParecerController@show');
   Route::get('/admin/painel-administrador/{id?}/prorrogarPrazo', 'ParecerController@prorrogarPrazo');
   Route::post('/admin/painel-administrador/{id?}/solicitarNovaVersao', 'AdminController@solicitarNovaVersao')->name('solicitarNovaVersao');
-
-  //TODO: Verificar se existe uma implementação melhor das seguintes rotas de download
-  //Route::get('/showDocSugestao/{$id?}', 'DocumentosController@showDocSugestao')->name('showDocSugestao');
-  //Route::get('/showOficioAlteracao/{$id?}', 'DocumentosController@showOficioAlteracao')->name('showOficioAlteracao');
-  Route::get('/admin/painel-administrador/{id?}/showDocSugestao', 'DocumentosController@showDocSugestao');
-  Route::get('/propostas/{id?}/showDocSugestao', 'DocumentosController@showDocSugestao');
-  Route::get('/admin/painel-administrador/{id?}/showOficioAlteracao', 'DocumentosController@showOficioAlteracao');
-  Route::get('/admin/painel-administrador/{id?}/relatorio', 'RelatorioController@index');
-  //Route::get('/admin/painel-administrador/{id?}/printRelatorio', 'RelatorioController@printRelatorio');
-
 });
 
 Route::get('/accept/{token}', 'ConviteController@accept')->name('accept');

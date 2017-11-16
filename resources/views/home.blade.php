@@ -25,7 +25,7 @@
                 </div>
             @endif
 
-            @include('formLogin')
+            @include('auth.login')
 
           </div> <!-- quadro-login -->
         </div> <!-- col -->
