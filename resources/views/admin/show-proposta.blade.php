@@ -20,11 +20,6 @@
             <div class="panel-heading">
               <span class="panel-title"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;{{$obra->titulo}}</span>
             </div>
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 548c029de052b275561505cb2778d8b358190a62
 
             <div class="panel-body text-justify">
               <div class="pull-right">
@@ -34,10 +29,9 @@
                 @else
                 <h5>Proposta CANCELADA!</h5>
                 @endif
-<<<<<<< HEAD
+
                 <a class="btn btn-primary" href="{!! action('RelatorioController@index', $proposta->cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Relatório</a>
-=======
->>>>>>> 548c029de052b275561505cb2778d8b358190a62
+
               </div>
 
               @foreach ($errors->all() as $error)
@@ -120,7 +114,6 @@
                 </div>
               </div>
 
-<<<<<<< HEAD
                 <div class="col-md-4">
                   <h5 class="titulo">Ofícios de Alterações</h5>
                   @if(!$oficiosAlteracoes->isEmpty())
@@ -152,10 +145,6 @@
                 </div>
               </div>
 
-
-=======
-
->>>>>>> 548c029de052b275561505cb2778d8b358190a62
               <strong><a href="{!! action('ConviteController@invite', $obra->Proposta_cod_proposta) !!}">Clique aqui para convidar um avaliador para esta obra.</a></strong>
 
             </div>
