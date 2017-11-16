@@ -36,7 +36,7 @@
               <p><strong>Título da Obra: </strong>{!! $obraParecer->titulo !!}</p>
               <p><strong>Subtítulo da Obra: </strong>{!! $obraParecer->subtitulo !!}</p>
               <p><strong>Descrição: </strong>{!! $obraParecer->descricao !!}</p>
-              <p><strong>Documento: </strong>documento.doc<a href="{!! action('DocumentosController@downloadMaterial', $idMaterial) !!}">&nbsp;&nbsp;&nbsp;Baixar </a>| <a href="{!! action('DocumentosController@showMaterial', $idMaterial) !!}">Visualizar PDF</a></p><br>
+              <p><strong>Documento: </strong>documento.doc<a href="{!! action('MaterialController@downloadMaterial', $idMaterial) !!}">&nbsp;&nbsp;&nbsp;Baixar </a>| <a href="{!! action('MaterialController@showMaterial', $idMaterial) !!}">Visualizar PDF</a></p><br>
               @if(!$obraParecer->envio)
                 <p><strong class="alert alert-danger">Dias restantes: {!! $obraParecer->prazo_restante !!}</strong></p>
                 @if($obraParecer->prazo_restante == 0)

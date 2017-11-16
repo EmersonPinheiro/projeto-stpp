@@ -26,23 +26,9 @@
             </div>
           @endif
 
-<<<<<<< HEAD
-
-
-            <div class="panel-body text-justify">
-              <div class="pull-right">
-                @if($proposta->ativa == 1)
-                <a class="btn btn-primary" href="{!! action('AdminController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;Editar Proposta</a>
-                <a href="{!! action('AdminController@cancelarProposta', $obra->Proposta_cod_proposta) !!}" role="button" class="btn btn-danger" ><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Cancelar proposta</a>
-                @else
-                <h5>Proposta CANCELADA!</h5>
-                @endif
-                <a class="btn btn-primary" href="{!! action('RelatorioController@index', $proposta->cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Relatório</a>
-=======
           @if (session('status'))
               <div class="alert alert-info">
                   {{ session('status') }}
->>>>>>> eb1d070bfd786340369a50316a061c0c8f7ba6de
               </div>
           @endif
 
@@ -88,98 +74,9 @@
             <div class="col-md-12">
               <div class="pull-right">
 
-<<<<<<< HEAD
-              @foreach ($errors->all() as $error)
-                  <p class="alert alert-danger">{{ $error }}</p>
-              @endforeach
-
-              @if (session('status'))
-                  <div class="alert alert-success">
-                      {{ session('status') }}
-                  </div>
-              @endif
-
-              <a href="/admin/painel-administrador"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
-              <h4 class="titulo">Informações da Obra</h4>
-              <p><strong>Título da Obra: </strong>{!! $obra->titulo !!}</p>
-              <p><strong>Subtítulo da Obra: </strong>{!! $obra->subtitulo !!}</p>
-
-              <p><strong>Autor(es):
-              @foreach($autores as $autor)
-                </strong>{!! $autor->nome !!} {!! $autor->sobrenome !!}</p>
-              @endforeach
-              <p><strong>Descrição: </strong>{!! $obra->descricao !!}</p>
-
-              <h2>Situação: {!! $proposta->situacao !!}</h2>
-
-              <h4 class="titulo">Informações Adicionais</h4>
-              <p><strong>ISBN: </strong>{!! $obra->isbn !!}</p>
-              <p><strong>Volume: </strong>{!! $obra->volume !!}</p>
-              <p><strong>Ano: </strong>{!! $obra->ano_publicacao !!}</p>
-              <p><strong>Número de Páginas: </strong>{!! $obra->num_paginas !!}</p>
-
-              @if($funcoes['diagramador'] != null)<!--TODO: Retirar. Está aqui só para evitar erro-->
-
-              <p><strong>Diagramador: </strong>{!! $funcoes['diagramador']->nome !!}</p>
-              <p><strong>Revisor Ortográfico: </strong>{!! $funcoes['revisor_ortografico']->nome !!}</p>
-              <p><strong>Revisor de Idioma (Inglês): </strong>{!! $funcoes['revisor_ingles']->nome !!}</p>
-              <p><strong>Revisor de Idioma (Espanhol): </strong>{!! $funcoes['revisor_espanhol']->nome !!}</p>
-              <p><strong>Criador Capa: </strong>{!! $funcoes['cricador_capa']->nome !!}</p>
-              <p><strong>Projetista Gráfico: </strong>{!! $funcoes['projetista_grafico']->nome !!}</p>
-              <p><strong>Coordenação Editorial: </strong>{!! $funcoes['coordenacao_editorial']->nome !!}</p>
-              @endif
-
-              <strong>Parecerista(s): </strong>
-              @foreach($pareceristasPareceres as $pareceristaParecer)
-                <p>{!! $pareceristaParecer->nome !!} </p>
-              @endforeach
-
-              <div class="row">
-                <h4 class="titulo">Arquivos</h4>
-
-                <div class="col-md-4">
-                  <h5 class="titulo">Material</h5>
-
-                  @foreach($materiais as $material)
-                    <h5><i>Versão {!! $material->versao !!}</i></h5>
-                    <p>&nbsp;&nbsp;&nbsp;<strong><a href="{!! action('DocumentosController@downloadMaterial', $material->cod_material) !!}">Baixar documento</a></strong></p>
-                    <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
-                  @endforeach
-
-                  <div class="">
-                    <a class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Solicitar nova versão</a>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <h5 class="titulo">Docs. de Sugestão de Alterações</h5>
-                  @if(!$docsSugestoes->isEmpty())
-                    @foreach($docsSugestoes as $docSugestao)
-                      <h5><i>Versão {!! $docSugestao->versao !!}</i></h5>
-                      <p><strong>&nbsp;<a href="{!! action('DocumentosController@showDocSugestao', $docSugestao->cod_sug_alteracoes) !!}">Visualizar documento</a></strong></p>
-                    @endforeach
-                  @else
-                    <p>Nenhuma alteração foi sugerida ainda.</p>
-                  @endif
-                </div>
-
-                <div class="col-md-4">
-                  <h5 class="titulo">Ofícios de Alterações</h5>
-                  @if(!$oficiosAlteracoes->isEmpty())
-                    @foreach($oficiosAlteracoes as $oficioAlteracao)
-                      <h5><i>Versão {!! $oficioAlteracao->versao !!}</i></h5>
-                      <p><strong>&nbsp;<a href="{!! action('DocumentosController@showOficioAlteracao', $oficioAlteracao->cod_oficio) !!}">Visualizar documento</a></strong></p>
-                    @endforeach
-                  @else
-                    <p>Nenhuma ofício foi enviado ainda.</p>
-                  @endif
-                </div>
-            </div>
-=======
                 <a href="" role="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove glyphicon-space"></span>Excluir proposta</a>
                 <a class="btn btn-primary" href="{!! action('AdminController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil glyphicon-space"></span>Editar Proposta</a>
                 <a href="{!! action('ConviteController@invite', $obra->Proposta_cod_proposta) !!}" role="button" class="btn btn-primary"><span class="glyphicon glyphicon-send glyphicon-space"></span>Convidar Avalidador</a>
->>>>>>> eb1d070bfd786340369a50316a061c0c8f7ba6de
 
               </div>
             </div>
