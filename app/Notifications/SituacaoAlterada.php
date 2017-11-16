@@ -51,7 +51,6 @@ class SituacaoAlterada extends Notification
         $url = url('/propostas/'.$this->proposta->cod_proposta);
         return (new MailMessage)
                     ->subject('Situação alterada!')
-                    ->greeting('Olá!')
                     ->line('Sua proposta "'.$this->obra->titulo.'" teve a situação alterada para "'. $this->proposta->situacao.'".')
                     ->action('Acessar proposta', $url);
     }
