@@ -38,12 +38,46 @@
           <p><strong>Descrição: </strong>{!! $obra->descricao !!}</p>
           <button type="button" name="button" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down glyphicon-space"></span> Informações Adicionais</button>
 
-          <h4 class="titulo">Arquivos</h4>
-          @foreach($materiais as $material)
-          <p><i>Versão {!! $material->versao !!}</i></p>
-          <p><strong>Documento (doc, docx): </strong>documento.doc<a href="{!! action('MaterialController@downloadMaterial', $material->cod_material) !!}">&nbsp;&nbsp;&nbsp;Baixar </a></p>
-          <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
-          @endforeach
+          <button type="button" name="button" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down glyphicon-space"></span>Informações Adicionais</button>
+
+          <div class="row">
+            <h4 class="titulo">Arquivos</h4>
+
+            <div class="col-md-4">
+              <h5 class="titulo">Material</h5>
+
+              @foreach($materiais as $material)
+                <h5><i>Versão {!! $material->versao !!}</i></h5>
+                <p>&nbsp;&nbsp;&nbsp;<strong><a href="{!! action('DocumentosController@downloadMaterial', $material->cod_material) !!}">Baixar documento</a></strong></p>
+                <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
+              @endforeach
+            </div>
+
+            <div class="col-md-4">
+              <h5 class="titulo">Docs. de Sugestão de Alterações</h5>
+              @if(!$docsSugestoes->isEmpty())
+                @foreach($docsSugestoes as $docSugestao)
+                  <h5><i>Versão {!! $docSugestao->versao !!}</i></h5>
+                  <p><strong>&nbsp;<a href="{!! action('DocumentosController@showDocSugestao', $docSugestao->cod_sug_alteracoes) !!}">Visualizar documento</a></strong></p>
+                @endforeach
+              @else
+                <p>Nenhuma alteração foi sugerida ainda.</p>
+              @endif
+            </div>
+
+            <div class="col-md-4">
+              <h5 class="titulo">Ofícios de Alterações</h5>
+              @if(!$oficiosAlteracoes->isEmpty())
+                @foreach($oficiosAlteracoes as $oficioAlteracao)
+                  <h5><i>Versão {!! $oficioAlteracao->versao !!}</i></h5>
+                  <p><strong>&nbsp;<a href="">Visualizar documento</a></strong></p>
+                @endforeach
+              @else
+                <p>Nenhuma ofício foi enviado ainda.</p>
+              @endif
+            </div>
+        </div>
+
 
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Enviar nova nersão da Obra</button>
           <hr/>

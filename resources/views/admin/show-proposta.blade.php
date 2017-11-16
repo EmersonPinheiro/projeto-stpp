@@ -29,6 +29,9 @@
                 @else
                 <h5>Proposta CANCELADA!</h5>
                 @endif
+
+                <a class="btn btn-primary" href="{!! action('RelatorioController@index', $proposta->cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Relatório</a>
+
               </div>
 
               @foreach ($errors->all() as $error)
@@ -110,6 +113,38 @@
                   @endforeach
                 </div>
               </div>
+
+                <div class="col-md-4">
+                  <h5 class="titulo">Ofícios de Alterações</h5>
+                  @if(!$oficiosAlteracoes->isEmpty())
+                    @foreach($oficiosAlteracoes as $oficioAlteracao)
+                      <h5><i>Versão {!! $oficioAlteracao->versao !!}</i></h5>
+                      <p><strong>&nbsp;<a href="{!! action('DocumentosController@showOficioAlteracao', $oficioAlteracao->cod_oficio) !!}">Visualizar documento</a></strong></p>
+                    @endforeach
+                  @else
+                    <p>Nenhuma ofício foi enviado ainda.</p>
+                  @endif
+                </div>
+            </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="titulo">Pareceres</h5>
+                  @foreach($pareceristasPareceres as $pareceristaParecer)
+                    <p class="col-md-8">Parecer de {!! $pareceristaParecer->nome !!} {!! $pareceristaParecer->sobrenome !!}:</p>
+                    @if($pareceristaParecer->envio)
+                      <a class="col-md-4" href="{!! action('ParecerController@show', $pareceristaParecer->cod_parecer) !!}">Visualizar</a>
+                    @else
+                      @if($pareceristaParecer->prazo_restante == 0)
+                        <a class="col-md-4" href="{!! action('ParecerController@prorrogarPrazo', $pareceristaParecer->cod_parecer) !!}">Prorrogar prazo por mais 30 dias</a>
+                      @else
+                        <p>Parecer ainda não enviado.</p>
+                      @endif
+                    @endif
+                  @endforeach
+                </div>
+              </div>
+
 
 
               <strong><a href="{!! action('ConviteController@invite', $obra->Proposta_cod_proposta) !!}">Clique aqui para convidar um avaliador para esta obra.</a></strong>
