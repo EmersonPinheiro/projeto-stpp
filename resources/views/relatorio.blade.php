@@ -18,7 +18,7 @@
               {{$notificacao->message_report}} {{$notificacao->created_at}} <br>
             @endforeach
 
-            <!--<a class="btn btn-primary" href="{!! action('RelatorioController@printRelatorio', $notificacao->cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Imprimir</a>-->
+            <!--<a class="btn btn-primary" href="" role="button"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Imprimir</a>-->
           </div> <!-- painel -->
         </div> <!-- /quadro-painel /painel-info-propostas -->
       </div> <!-- /col -->

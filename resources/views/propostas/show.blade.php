@@ -49,12 +49,8 @@
                 <p>&nbsp;&nbsp;&nbsp;<strong><a href="{!! action('DocumentosController@downloadMaterial', $material->cod_material) !!}">Baixar documento</a></strong></p>
                 <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
               @endforeach
-
-              <div class="">
-                <a class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Solicitar nova versão</a>
-              </div>
             </div>
-
+            
             <div class="col-md-4">
               <h5 class="titulo">Docs. de Sugestão de Alterações</h5>
               @if(!$docsSugestoes->isEmpty())
