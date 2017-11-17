@@ -73,48 +73,18 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-right">
-
                 <a href="" role="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove glyphicon-space"></span>Excluir proposta</a>
                 <a class="btn btn-primary" href="{!! action('AdminController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil glyphicon-space"></span>Editar Proposta</a>
                 <a href="{!! action('ConviteController@invite', $obra->Proposta_cod_proposta) !!}" role="button" class="btn btn-primary"><span class="glyphicon glyphicon-send glyphicon-space"></span>Convidar Avalidador</a>
-
               </div>
             </div>
           </div>
+
           <a href="/admin/painel-administrador"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
-          
+
         </div> <!-- /quadro -->
       </div> <!-- /col -->
     </div> <!-- /row -->
-
-    <!-- MODAL SOLICITAR NOVA VERSÃO -->
-    <div class="modal fade" id="myModal">
-      <div class="modal-dialog"> <!-- modal-sm, modal-lg -->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span arua-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Solicitar Nova Versão da Obra</h4>
-          </div>
-          <div class="modal-body">
-            <form action="{!! route('solicitarNovaVersao', $proposta->cod_proposta) !!}" method="post" enctype="multipart/form-data">
-              <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-              <input type="hidden" name="cod_proposta" value="{!! $proposta->cod_proposta !!}">
-
-              <div class="form-group">
-                <label for="doc_sugestao">Documento de sugestão de alterações (.pdf)</label>
-                <input type="file" class="form-control" id="doc_sugestao" name="doc_sugestao">
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-default" type="button" data-dismiss="modal">Cancelar</button>
-                <input type="submit" class="btn btn-primary" value="Enviar">
-              </div>
-            </form>
-          </div>
-        </div> <!-- modal-content -->
-      </div> <!-- modal-dialog -->
-    </div>
-
-
   </div> <!-- /container -->
 </div> <!-- /content -->
 

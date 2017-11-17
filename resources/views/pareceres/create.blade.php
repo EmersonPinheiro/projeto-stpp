@@ -39,9 +39,6 @@
               <p><strong>Documento: </strong>documento.doc<a href="{!! action('MaterialController@downloadMaterial', $idMaterial) !!}">&nbsp;&nbsp;&nbsp;Baixar </a>| <a href="{!! action('MaterialController@showMaterial', $idMaterial) !!}">Visualizar PDF</a></p><br>
               @if(!$obraParecer->envio)
                 <p><strong class="alert alert-danger">Dias restantes: {!! $obraParecer->prazo_restante !!}</strong></p>
-                @if($obraParecer->prazo_restante == 0)
-                  <br><p><strong><a href="{!! action('ParecerController@solicitarPrazo', $obraParecer->cod_parecer) !!}">Clique aqui para solicitar prorrogação do prazo.</a></strong></p>
-                @endif
               @else
                 <p><strong class="alert alert-success">Parecer enviado!</strong></p>
               @endif

@@ -13,7 +13,7 @@ class PropostaFormRequest extends FormRequest
      */
     public function authorize()
     {
-      //TODO: Verificar permission do usuário.
+      //TODO: Verificar permisser do usuário.
 
         return true;
     }
@@ -26,7 +26,6 @@ class PropostaFormRequest extends FormRequest
     public function rules()
     {
         return [
-
             'titulo'=>'required|min:2|max:100',
             'subtitulo'=>'required|min:2|max:100',
             'descricao'=>'required|min:2|max:10000',
@@ -37,7 +36,6 @@ class PropostaFormRequest extends FormRequest
 
             'nome'=>'required|min:1|max:50',
             'sobrenome'=>'required|min:1|max:100',
-
             'sexo'=>'required',
             'cpf'=>'required|digits:11',
             'rg'=>'required|digits_between:6,14',
@@ -56,7 +54,6 @@ class PropostaFormRequest extends FormRequest
             'documento_s_identificacao'=>'required|mimes:doc, docx, odt',
             'documento_c_identificacao'=>'required|mimes:doc, docx, odt',
             'imagens'=>'nullable|file|mimes:rar, zip',
-
         ];
     }
 }

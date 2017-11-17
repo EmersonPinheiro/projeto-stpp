@@ -26,7 +26,7 @@ class CreateAutorTable extends Migration
             $table->increments('cod_autor');
             $table->integer('categoria')->nullable()->default('1');
             $table->integer('Pessoa_cod_pessoa')->unsigned();
-            $table->integer('Departamento_cod_departamento')->unsigned()->nullable();
+            $table->integer('Departamento_cod_departamento')->unsigned();
             $table->timestamps();
 
             $table->index(["Pessoa_cod_pessoa"], 'fk_Autor_Pessoa1_idx');

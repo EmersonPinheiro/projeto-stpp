@@ -13,7 +13,7 @@
 
 Route::get('/','PagesController@home');
 Route::get('/home','PagesController@home'); //TODO: Retirar. Solução provisória.
-Route::get('/cadastro', 'PagesController@cadastro')->middleware('guest'); //RETIRAR (SUBSTITUIR PELO REGISTER PADRÃO)
+Route::get('/cadastro', 'PagesController@cadastro'); //RETIRAR (SUBSTITUIR PELO REGISTER PADRÃO)
 Route::get('/contato', 'PagesController@contato');
 Route::get('/ajuda', 'PagesController@ajuda');
 
@@ -27,24 +27,16 @@ Route::group(['middleware' => ['auth']], function () {
   Route::post('/propostas/{id?}/edit', 'PropostasController@update');
   Route::get('/propostas/{id?}/downloadMaterial', 'MaterialController@downloadMaterial');
   Route::get('/propostas/{id?}/showMaterial', 'MaterialController@showMaterial');
-
-  Route::post('/propostas/{id?}/solicitarCancelamento', 'PropostasController@solicitarCancelamento');
-
   Route::get('/propostas/{id?}/convidar-parecerista', 'ConviteController@invite')->name('invite');
   Route::post('/propostas/{id?}/convidar-parecerista', 'ConviteController@process')->name('process');
   Route::get('/painel-parecerista', 'ParecerController@index');
   Route::get('/modo-acesso', 'PagesController@modoAcesso');
   Route::get('/enviar-parecer/{parecer?}', 'ParecerController@create');
   Route::post('/enviar-parecer/{parecer?}', 'ParecerController@store');
-  Route::get('/enviar-parecer/{parecer?}/solicitarPrazo', 'ParecerController@solicitarPrazo');
   Route::get('/admin/painel-administrador', 'AdminController@index');
   Route::get('/admin/painel-administrador/{id?}', 'AdminController@show');
   Route::get('/admin/painel-administrador/{id?}/edit', 'AdminController@edit');
   Route::post('/admin/painel-administrador/{id?}/edit', 'AdminController@update');
-  Route::get('/admin/painel-administrador/{id?}/cancelarProposta', 'AdminController@cancelarProposta');
-  Route::get('/admin/painel-administrador/{id?}/showParecer', 'ParecerController@show');
-  Route::get('/admin/painel-administrador/{id?}/prorrogarPrazo', 'ParecerController@prorrogarPrazo');
-  Route::post('/admin/painel-administrador/{id?}/solicitarNovaVersao', 'AdminController@solicitarNovaVersao')->name('solicitarNovaVersao');
 });
 
 Route::get('/accept/{token}', 'ConviteController@accept')->name('accept');

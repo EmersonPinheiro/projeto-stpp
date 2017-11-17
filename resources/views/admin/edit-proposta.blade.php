@@ -46,7 +46,7 @@
               <div class="row">
                 <div class="form-group col-md-6 {{ $errors->has('titulo') ? 'has-error' :'' }}">
                   <label class="control-label" for="titulo">Título *</label>
-                  <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" value="{!! $obra->titulo !!}" maxlength="100">
+                  <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" value="" maxlength="100">
                   @if ($errors->has('titulo'))
                       <span class="help-block">
                           <span class="text-danger"><strong>{{ $errors->first('titulo') }}</strong></span>
@@ -56,20 +56,19 @@
 
                 <div class="form-group col-md-6 {{ $errors->has('subtitulo') ? 'has-error' :'' }}">
                   <label class="control-label" for="subtitulo">Subtítulo *</label>
-                  <input type="text" class="form-control" id="subtitulo" name="subtitulo" placeholder="Subtítulo" value="{!! $obra->subtitulo !!}" maxlength="100">
+                  <input type="text" class="form-control" id="subtitulo" name="subtitulo" placeholder="Subtítulo" value="" maxlength="100">
                   @if ($errors->has('subtitulo'))
                       <span class="help-block">
                           <span class="text-danger"><strong>{{ $errors->first('subtitulo') }}</strong></span>
                       </span>
                   @endif
-
                 </div>
               </div>
 
               <div class="row">
                 <div class="form-group col-md-12 {{ $errors->has('descricao') ? 'has-error' :'' }}">
                   <label class="control-label" for="descricao">Descrição *</label>
-                  <textarea type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição" value="{!! $obra->descricao !!}" maxlength="10000"></textarea>
+                  <textarea type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição" value="" maxlength="10000"></textarea>
                   @if ($errors->has('descricao'))
                       <span class="help-block">
                           <span class="text-danger"><strong>{{ $errors->first('descricao') }}</strong></span>
@@ -97,7 +96,6 @@
                           <span class="text-danger"><strong>{{ $errors->first('area_conhecimento_obra') }}</strong></span>
                       </span>
                   @endif
-
                 </div>
               </div>
 

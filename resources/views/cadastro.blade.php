@@ -48,7 +48,6 @@
             <fieldset>
               <legend>Dados Pessoais</legend>
               <div class="row">
-
                 <div class="form-group col-md-5 {{ $errors->has('nome') ? 'has-error' :'' }}">
                   <label class="control-label" for="nome">Nome *</label>
                   <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" value="{{old('nome')}}" maxlength="50">
@@ -57,7 +56,6 @@
                           <span class="text-danger"><strong>{{ $errors->first('nome') }}</strong></span>
                       </span>
                   @endif
-
                 </div>
 
                 <div class="form-group col-md-5 {{ $errors->has('sobrenome') ? 'has-error' :'' }}">
@@ -70,7 +68,7 @@
                   @endif
                 </div>
 
-                <!-- TODO: RECUPERAR VALOR ANTIGO!!!! -->
+                <!-- RECUPERAR VALOR ANTIGO!!!! -->
                 <div class="form-group col-md-2 {{ $errors->has('sexo') ? 'has-error' :'' }}">
                   <label for="sexo" class="control-label">Sexo *</label>
                   <select class="form-control" id="sexo" name="sexo">
@@ -110,7 +108,7 @@
                   @endif
                 </div>
 
-                <!-- TODO: RECUPERAR VALOR ANTIGO!!!! -->
+                <!-- RECUPERAR VALOR ANTIGO!!!! -->
                 <div class="form-group col-md-4 {{ $errors->has('estado_civil') ? 'has-error' :'' }}">
                   <label class="control-label" for="estado_civil">Estado Civil *</label>
                   <select class="form-control" id="estado_civil" name="estado_civil">
