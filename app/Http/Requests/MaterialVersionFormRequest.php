@@ -28,6 +28,7 @@ class MaterialVersionFormRequest extends FormRequest
         return [
             'novo_documento'=>'required|file|mimes:doc,docx,odt',
             'oficio'=>'required|file|mimes:pdf',
+
         ];
     }
 }
