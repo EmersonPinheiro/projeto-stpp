@@ -38,8 +38,6 @@
           <p><strong>Descrição: </strong>{!! $obra->descricao !!}</p>
           <button type="button" name="button" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down glyphicon-space"></span> Informações Adicionais</button>
 
-          <button type="button" name="button" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down glyphicon-space"></span>Informações Adicionais</button>
-
           <div class="row">
             <h4 class="titulo">Arquivos</h4>
 
@@ -80,7 +78,9 @@
                 <p>Nenhuma ofício foi enviado ainda.</p>
               @endif
             </div>
-        </div>          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Enviar nova nersão da Obra</button>
+        </div>
+
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Enviar nova nersão da Obra</button>
           <hr/>
           <div class="row">
             <div class="col-md-12">
