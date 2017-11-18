@@ -56,22 +56,26 @@
 
               <h2>Situação: {!! $proposta->situacao !!}</h2>
 
-              <h4 class="titulo">Informações Adicionais</h4>
-              <p><strong>ISBN: </strong>{!! $obra->isbn !!}</p>
-              <p><strong>Volume: </strong>{!! $obra->volume !!}</p>
-              <p><strong>Ano: </strong>{!! $obra->ano_publicacao !!}</p>
-              <p><strong>Número de Páginas: </strong>{!! $obra->num_paginas !!}</p>
+              <button type="button" name="button" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down glyphicon-space"></span>Informações Adicionais</button>
+         <button type="button" name="button" class="btn btn-success"><span class="glyphicon glyphicon-plus glyphicon-space"></span>Cadastrar Informações Adicionais</button>
 
-              @if($funcoes['diagramador'] != null)<!--TODO: Retirar. Está aqui só para evitar erro-->
+         <!-- <p><strong>ISBN: </strong>{!! $obra->isbn !!}</p>
+         <p><strong>Edição: </strong>1ª</p>
+         <p><strong>Volume: </strong>{!! $obra->volume !!}</p>
+         <p><strong>Ano: </strong>{!! $obra->ano_publicacao !!}</p>
+         <p><strong>Número de Páginas: </strong>{!! $obra->num_paginas !!}</p>
 
-              <p><strong>Diagramador: </strong>{!! $funcoes['diagramador']->nome !!}</p>
-              <p><strong>Revisor Ortográfico: </strong>{!! $funcoes['revisor_ortografico']->nome !!}</p>
-              <p><strong>Revisor de Idioma (Inglês): </strong>{!! $funcoes['revisor_ingles']->nome !!}</p>
-              <p><strong>Revisor de Idioma (Espanhol): </strong>{!! $funcoes['revisor_espanhol']->nome !!}</p>
-              <p><strong>Criador Capa: </strong>{!! $funcoes['cricador_capa']->nome !!}</p>
-              <p><strong>Projetista Gráfico: </strong>{!! $funcoes['projetista_grafico']->nome !!}</p>
-              <p><strong>Coordenação Editorial: </strong>{!! $funcoes['coordenacao_editorial']->nome !!}</p>
-              @endif
+         @if($funcoes['diagramador'] != null)  TODO: Retirar. Está aqui só para evitar erro
+
+         <p><strong>Diagramador: </strong>{!! $funcoes['diagramador']->nome !!}</p>
+         <p><strong>Revisor Ortográfico: </strong>{!! $funcoes['revisor_ortografico']->nome !!}</p>
+         <p><strong>Revisor de Idioma (Inglês): </strong>{!! $funcoes['revisor_ingles']->nome !!}</p>
+         <p><strong>Revisor de Idioma (Espanhol): </strong>{!! $funcoes['revisor_espanhol']->nome !!}</p>
+         <p><strong>Criador Capa: </strong>{!! $funcoes['cricador_capa']->nome !!}</p>
+         <p><strong>Projetista Gráfico: </strong>{!! $funcoes['projetista_grafico']->nome !!}</p>
+         <p><strong>Coordenação Editorial: </strong>{!! $funcoes['coordenacao_editorial']->nome !!}</p>
+         @endif
+         <p><strong>Pareceristas: </strong>João da Silva</p> -->
 
               @if(!$pareceristasPareceres->isEmpty())
                 <strong>Parecerista(s): </strong>

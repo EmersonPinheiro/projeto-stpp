@@ -275,10 +275,9 @@ class PropostasController extends Controller
                     ->join('Area_Conhecimento', 'Area_Conhecimento.Grande_Area_cod_grande_area', 'Grande_Area.cod_grande_area')
                     ->leftJoin('Subarea', 'Subarea.Area_Conhecimento_cod_area_conhec', 'Area_Conhecimento.cod_area_conhec')
                     ->leftJoin('Especialidade', 'Especialidade.Subarea_cod_subarea', 'Subarea.cod_subarea')
+                    ->where('Proposta_cod_proposta', $proposta->cod_proposta)
                     ->select('Obra.*', 'Grande_Area.nome as grande_area_obra', 'Area_Conhecimento.nome as area_conhecimento_obra', 'Subarea.nome as subarea_obra', 'Especialidade.nome as especialidade_obra')
-                    ->where('Proposta_cod_proposta', $proposta->Proposta_cod_proposta)
                     ->first();
-
 
         $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
                    ->join('Obra_Autor', 'Autor.cod_autor', 'Obra_Autor.Autor_cod_autor')

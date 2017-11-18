@@ -10,11 +10,13 @@ use App\UsuarioPropositor;
 use App\Proposta;
 use App\Obra;
 use App\Parecer;
+use App\Material;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use App\Mail\PareceristaConvidado;
+use App\Http\Requests\ConviteFormRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Storage;
 class ConviteController extends Controller
 {
       public function invite($id)
@@ -23,7 +25,7 @@ class ConviteController extends Controller
         return view('invite', compact('codProposta'));
       }
 
-      public function process(Request $request)
+      public function process(ConviteFormRequest $request)
       {
         do {
           $token = str_random();
@@ -40,9 +42,15 @@ class ConviteController extends Controller
 
       $obra = Obra::where('Proposta_cod_proposta', '=', $request->get('proposta'))->first();
 
+      //NOTE: Insere na última versão do material.
+      $docpath = Storage::putFile('documentos', $request->file('documento_parecerista'), 'private');
+
+      $material = Material::where('versao', '=', DB::raw("(SELECT max(versao) FROM Material WHERE Material.Obra_cod_obra = $obra->cod_obra)"))->first();
+      $material->update(['url_documento_parecerista'=>$docpath]);
+      $material->save();
+
       Mail::to($request->get('email'))->send(new PareceristaConvidado($convite, $obra));
 
-      //TODO: Retornar uma mensagem (possívelmente modal).
       return redirect()->back()->with('status', 'O convite foi enviado.');
     }
 
@@ -51,9 +59,6 @@ class ConviteController extends Controller
       if (!$convite = ConviteParecerista::where('token', $token)->first()) {
         abort(404);
       }
-
-      $convite->aceito = true;
-      $convite->save();
 
       $proposta = Proposta::where('cod_proposta', '=', $convite->Proposta_cod_proposta)->first();
 
@@ -68,17 +73,27 @@ class ConviteController extends Controller
             'Proposta_cod_proposta'=>$proposta->cod_proposta,
             'Usuario_Parecerista_cod_parecerista'=>$usuarioParecerista->cod_parecerista,
           ]);
+
           $convite->delete();
-          return redirect('/home')->with('status', 'O convite foi aceito, faça login para avaliar a obra.');
+
+          if (!Auth::check() && Auth::user()->hasRole('parecerista')) {
+            return redirect('/home')->with('status', 'O convite foi aceito, faça login para avaliar a obra.');
+          }
+          return view('painel-parecerista')->with('status', 'O convite foi aceito. Fique atento ao prazo de envio do parecer.');
         }
         else{
-
+/*
         $propositor = UsuarioPropositor::where('Usuario_cod_usuario', '=', $attributes['cod_usuario'])
                                 ->select('Departamento_cod_departamento')->first();
+*/
 
+        //TODO: Verificar uma maneira de inserir instituicao e grande área vindas do propositor.
         $usuarioParecerista = UsuarioParecerista::create([
           'Usuario_cod_usuario'=>$attributes['cod_usuario'],
-          'Departamento_cod_departamento'=>$propositor->Departamento_cod_departamento,
+          //'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao,
+          //'Grande_Area_cod_grande_area'=>$grandeArea->cod_grande_area,
+          'Instituicao_cod_instituicao'=>'1',
+          'Grande_Area_cod_grande_area'=>'1',
         ]);
 
         $parecer = Parecer::create([

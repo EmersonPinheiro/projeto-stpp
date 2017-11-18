@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', 'Contato')
+@section('title', 'Convidar parecerista')
 
 @section('content')
 <div class="content">
@@ -37,7 +37,7 @@
               </div>
           @endif
 
-          <form method="post">
+          <form method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <input type="hidden" id="proposta" name="proposta" value="{{ $codProposta }}">
             <div class="row">
@@ -48,6 +48,9 @@
                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" value="{{old('nome')}}"/>
                 <label for="sobrenome">Sobrenome do Avaliador</label>
                 <input type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome" value="{{old('sobrenome')}}"/>
+                <!-- TODO: Inserir ajuda sobre o que é este documento -->
+                <label for="documento_parecerista">Material</label>
+                <input type="file" class="form-control" id="documento_parecerista" name="documento_parecerista" placeholder="Material a ser enviado ao parecerista" value="{{old('documento_parecerista')}}"/>
               </div>
             </div>
             <button class="btn btn-primary" type="submit">Convidar Avaliador</button>

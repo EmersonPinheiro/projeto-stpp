@@ -73,12 +73,13 @@ class ParecerController extends Controller
                             ->where('cod_parecer', '=', $id)
                             ->first();
 
+
       if ($obraParecer->prazo_restante == 0) {
 
         return redirect()->back()->withErrors('O prazo para esta proposta acabou. Entre em contato com a Editora UEPG.');
       }
 
-      //ID DA ÚLTIMA VERSÃO DO MATERIAL ASSOCIADO À OBRA
+      //NOTE: ID DA ÚLTIMA VERSÃO DO MATERIAL ASSOCIADO À OBRA
       $idMaterial = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
                           ->where('cod_obra', '=', $obraParecer->cod_obra)
                           ->max('cod_material');

@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\ConviteParecerista;
+use App\Obra;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

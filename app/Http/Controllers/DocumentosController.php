@@ -45,10 +45,10 @@ class DocumentosController extends Controller
       return response()->file($pathToFile);
     }
 
-    public function showMaterialParecerista()
+    public function showMaterialParecerista($id)
     {
       $doc = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento_parecerista')->first();
-      $pathToFile = storage_path()."/app/".$doc->url_documento_nao_ident;
+      $pathToFile = storage_path()."/app/".$doc->url_documento_parecerista;
       return response()->file($pathToFile);
     }
 
