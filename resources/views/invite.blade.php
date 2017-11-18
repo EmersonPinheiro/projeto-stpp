@@ -44,6 +44,10 @@
               <div class="col-md-12 form-group">
                 <label for="email">E-mail do Avaliador</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" value="{{old('email')}}"/>
+                <label for="nome">Nome do Avaliador</label>
+                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" value="{{old('nome')}}"/>
+                <label for="sobrenome">Sobrenome do Avaliador</label>
+                <input type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome" value="{{old('sobrenome')}}"/>
               </div>
             </div>
             <button class="btn btn-primary" type="submit">Convidar Avaliador</button>

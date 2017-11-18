@@ -68,12 +68,25 @@
                 </div>
 
                 <div class="row">
-                  <div class="form-group col-md-12 {{ $errors->has('descricao') ? 'has-error' :'' }}">
-                    <label class="control-label" for="descricao">Descrição *</label>
-                    <textarea type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição" value="{{old('descricao')}}" maxlength="10000"></textarea>
-                    @if ($errors->has('descricao'))
+                  <div class="form-group col-md-12 {{ $errors->has('resumo') ? 'has-error' :'' }}">
+                    <label class="control-label" for="resumo">Resumo *</label>
+                    <textarea type="text" class="form-control" id="resumo" name="resumo" placeholder="Resumo" value="{{old('resumo')}}" maxlength="10000">{{old('resumo')}}</textarea>
+                    @if ($errors->has('resumo'))
                         <span class="help-block">
-                            <span class="text-danger"><strong>{{ $errors->first('descricao') }}</strong></span>
+                            <span class="text-danger"><strong>{{ $errors->first('resumo') }}</strong></span>
+                        </span>
+                    @endif
+                  </div>
+                </div>
+
+                <!-- TODO: Escrever ajuda sobre o que é a genese e relevancia -->
+                <div class="row">
+                  <div class="form-group col-md-12 {{ $errors->has('genese_relevancia') ? 'has-error' :'' }}">
+                    <label class="control-label" for="genese_relevancia">Gênese e Relevância da proposta de publicação *</label>
+                    <textarea type="text" rows="10" class="form-control" id="genese_relevancia" name="genese_relevancia" placeholder="Gênese e Relevância da sua proposta." value="{{old('genese_relevancia')}}" maxlength="10000">{{old('genese_relevancia')}}</textarea>
+                    @if ($errors->has('genese_relevancia'))
+                        <span class="help-block">
+                            <span class="text-danger"><strong>{{ $errors->first('genese_relevancia') }}</strong></span>
                         </span>
                     @endif
                   </div>
@@ -144,7 +157,7 @@
 
                   <div class="form-group col-md-4 {{ $errors->has('nome') ? 'has-error' :'' }}">
                     <label class="control-label" for="nome">Nome *</label>
-                    <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" value="{{old('nome')}}" maxlength="50">
+                    <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" value="{!! $autor->nome !!}" maxlength="50">
                     @if ($errors->has('nome'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('nome') }}</strong></span>
@@ -154,7 +167,7 @@
 
                   <div class="form-group col-md-4 {{ $errors->has('sobrenome') ? 'has-error' :'' }}">
                     <label class="control-label" for="sobrenome">Sobrenome *</label>
-                    <input type="text" id="sobrenome" name="sobrenome" class="form-control" placeholder="Sobrenome" value="{{old('sobrenome')}}" maxlength="100">
+                    <input type="text" id="sobrenome" name="sobrenome" class="form-control" placeholder="Sobrenome" value="{!! $autor->sobrenome !!}" maxlength="100">
                     @if ($errors->has('sobrenome'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('sobrenome') }}</strong></span>
@@ -182,7 +195,7 @@
                     <label class="control-label" for="cpf">CPF * </label>
                     <!-- AJUDA -->
                     <small><a href="javascript:;" data-toggle="popover" data-content="O campo CPF deve conter apenas números. Não é permitida a inserção de pontos ou traços." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
-                    <input type="text" id="cpf" name="cpf" class="form-control" placeholder="CPF (somente números)" value="{{old('cpf')}}" maxlength="11">
+                    <input type="text" id="cpf" name="cpf" class="form-control" placeholder="CPF (somente números)" value="{!! $autor->cpf !!}" maxlength="11" >
                     @if ($errors->has('cpf'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('cpf') }}</strong></span>
@@ -195,7 +208,7 @@
                     <label class="control-label" for="rg">RG *</label>
                     <!-- AJUDA -->
                     <small><a href="javascript:;" data-toggle="popover" data-content="O campo RG deve conter apenas números. Não é permitida a inserção de pontos ou traços." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
-                    <input type="text" id="rg" name="rg" class="form-control" placeholder="RG (somente números)" value="{{old('rg')}}" maxlength="14">
+                    <input type="text" id="rg" name="rg" class="form-control" placeholder="RG (somente números)" value="{!! $autor->rg !!}" maxlength="14">
                     @if ($errors->has('rg'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('rg') }}</strong></span>
@@ -294,11 +307,11 @@
                     @endif
                   </div>
                 </div>
-
+<!--
                 <div class="row">
                   <div class="form-group col-md-6 {{ $errors->has('grande_area_autor') ? 'has-error' :'' }}">
                     <label class="control-label" for="grande_area_autor">Grande Área do Autor *</label>
-                    <!-- AJUDA -->
+
                     <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com a Grande Área do Autor definida pelo CNPQ." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
                     <input type="text" class="form-control" id="grande_area_autor" name="grande_area_autor" placeholder="Grande Área" value="{{old('grande_area_autor')}}" maxlength="100">
                     @if ($errors->has('grande_area_autor'))
@@ -310,7 +323,7 @@
 
                   <div class="form-group col-md-6 {{ $errors->has('area_conhecimento_autor') ? 'has-error' :'' }}">
                     <label class="control-label" for="area_conhecimento_autor">Área de Conhecimento do Autor *</label>
-                    <!-- AJUDA -->
+
                     <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com a Área de Conhecimento do Autor definida pelo CNPQ." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
                     <input type="text" class="form-control" id="area_conhecimento_autor" name="area_conhecimento_autor" placeholder="Área de Conhecimento" value="{{old('area_conhecimento_autor')}}" maxlength="100">
                     @if ($errors->has('area_conhecimento_autor'))
@@ -324,7 +337,7 @@
                 <div class="row">
                     <div class="form-group col-md-6 {{ $errors->has('subarea_autor') ? 'has-error' :'' }}">
                     <label class="control-label" for="subarea_autor">Subarea do Autor</label>
-                    <!-- AJUDA -->
+
                     <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com a Subarea do Autor definida pelo CNPQ (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
                     <input type="text" class="form-control" id="subarea_autor" name="subarea_autor" placeholder="Subarea" value="{{old('subarea_autor')}}" maxlength="100">
                     @if ($errors->has('subarea_autor'))
@@ -336,8 +349,7 @@
 
                   <div class="form-group col-md-6 {{ $errors->has('especialidade_autor') ? 'has-error' :'' }}">
                     <label class="control-label" for="especialidade_autor">Especialidade do Autor</label>
-                    <!-- AJUDA -->
-                    <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com a Especialidade do Autor definida pelo CNPQ (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                      <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com a Especialidade do Autor definida pelo CNPQ (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
                     <input type="text" class="form-control" id="especialidade_autor" name="especialidade_autor" placeholder="Especialidade" value="{{old('especialidade_autor')}}" maxlength="100">
                     @if ($errors->has('especialidade_autor'))
                         <span class="help-block">
@@ -346,7 +358,7 @@
                     @endif
                   </div>
                 </div>
-
+-->
                 <div class="row">
                   <div class="col-md-12">
                     <button type="button" name="button" class="btn btn-success"><span class="glyphicon glyphicon-plus glyphicon-space"></span>Adicionar Autor</button>
@@ -360,7 +372,7 @@
 
                 <div class="form-group col-md-4 {{ $errors->has('documento_s_identificacao') ? 'has-error' :'' }}">
                   <label class="control-label" for="documento_s_identificacao">Documento sem Identificação *<br/>(.doc, .docx ou .odt)</label>
-                  <input type="file" id="documento_s_identificacao" name="documento_s_identficacao" class="form-control">
+                  <input type="file" id="documento_s_identificacao" name="documento_s_identificacao" class="form-control">
                   @if ($errors->has('documento_s_identificacao'))
                       <span class="help-block">
                           <span class="text-danger"><strong>{{ $errors->first('documento_s_identificacao') }}</strong></span>

@@ -40,7 +40,7 @@
                     <p class="alert alert-warning pull-right"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
                     <p><strong>Título da Obra: </strong>{!! $proposta->titulo !!}</p>
                     <p><strong>Subtítulo da Obra: </strong>{!! $proposta->subtitulo !!}</p>
-                    <p><strong>Descrição: </strong>{!! $proposta->descricao !!}</p>
+                    <p><strong>Resumo: </strong>{!! $proposta->resumo !!}</p>
                     <p><small>Submetida em {!! $proposta->data_envio !!}</small></p>
                   </li>
                 </ul>

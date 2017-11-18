@@ -49,7 +49,7 @@
                     <p><small>Submetida em {!! $proposta->data_envio !!}</small></p>
                     <p><strong>Título da Obra: </strong>{!! $proposta->titulo !!}</p>
                     <p><strong>Subtítulo da Obra: </strong>{!! $proposta->subtitulo !!}</p>
-                    <p><strong>Descrição: </strong>{!! $proposta->descricao !!}</p>
+                    <p><strong>Descrição: </strong>{!! $proposta->genese_relevancia !!}</p>
                     <p class="alert alert-warning"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
                   </li>
                 </ul>

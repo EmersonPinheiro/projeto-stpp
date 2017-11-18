@@ -25,15 +25,15 @@ class CreatePessoaTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_pessoa');
             $table->string('cpf', 11)->unique();
-            $table->string('rg', 14)->unique()->nullable();
-            $table->string('nome', 50)->nullable();
-            $table->string('sobrenome', 100)->nullable();
-            $table->char('sexo', 1)->nullable();
-            $table->enum('estado_civil', ['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo', 'Amasiado'])->default('Solteiro')->nullable();
+            $table->string('rg', 14)->unique();
+            $table->string('nome', 50);
+            $table->string('sobrenome', 100);
+            $table->char('sexo', 1);
+            $table->enum('estado_civil', ['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo', 'Amasiado'])->default('Solteiro');
             $table->string('logradouro')->nullable();
             $table->string('bairro', 50)->nullable();
             $table->string('CEP', 8)->nullable();
-            $table->integer('Cidade_cod_cidade')->unsigned();
+            $table->integer('Cidade_cod_cidade')->unsigned()->nullable();
             $table->timestamps();
 
             $table->index(["Cidade_cod_cidade"], 'fk_Pessoa_Cidade1_idx');

@@ -8,6 +8,7 @@ use App\User;
 use App\UsuarioParecerista;
 use App\UsuarioPropositor;
 use App\Proposta;
+use App\Obra;
 use App\Parecer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -16,29 +17,33 @@ use Illuminate\Support\Facades\Mail;
 
 class ConviteController extends Controller
 {
-    public function invite($id)
-    {
-      $codProposta = $id;
-      return view('invite', compact('codProposta'));
-    }
+      public function invite($id)
+      {
+        $codProposta = $id;
+        return view('invite', compact('codProposta'));
+      }
 
-    public function process(Request $request)
-    {
-      do {
-        $token = str_random();
-    }
-    while (ConviteParecerista::where('token', $token)->first());
+      public function process(Request $request)
+      {
+        do {
+          $token = str_random();
+      }
+      while (ConviteParecerista::where('token', $token)->first());
 
-    $convite = ConviteParecerista::create([
-            'email' => $request->get('email'),
-            'proposta' =>$request->get('proposta'),
-            'token' => $token
-        ]);
+      $convite = ConviteParecerista::create([
+              'email' => $request->get('email'),
+              'nome' => $request->get('nome'),
+              'sobrenome' => $request->get('sobrenome'),
+              'Proposta_cod_proposta' =>$request->get('proposta'),
+              'token' => $token
+      ]);
 
-        Mail::to($request->get('email'))->send(new PareceristaConvidado($convite));
+      $obra = Obra::where('Proposta_cod_proposta', '=', $request->get('proposta'))->first();
 
-        //TODO: Retornar uma mensagem (possívelmente modal).
-        return redirect()->back()->with('status', 'O convite foi enviado.');
+      Mail::to($request->get('email'))->send(new PareceristaConvidado($convite, $obra));
+
+      //TODO: Retornar uma mensagem (possívelmente modal).
+      return redirect()->back()->with('status', 'O convite foi enviado.');
     }
 
     public function accept($token)
@@ -50,7 +55,7 @@ class ConviteController extends Controller
       $convite->aceito = true;
       $convite->save();
 
-      $proposta = Proposta::where('cod_proposta', '=', $convite->proposta)->first();
+      $proposta = Proposta::where('cod_proposta', '=', $convite->Proposta_cod_proposta)->first();
 
       if ($usuario = User::where('email', '=', $convite->email)->first()) {
 

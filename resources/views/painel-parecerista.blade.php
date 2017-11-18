@@ -60,7 +60,7 @@
                   <li class="list-group-item">
                     <p><strong>Título da Obra: </strong>{!! $obra->titulo !!}</p>
                     <p><strong>Subtítulo da Obra: </strong>{!! $obra->subtitulo !!}</p>
-                    <p><strong>Descrição: </strong>{!! $obra->descricao !!}</p>
+                    <p><strong>Resumo: </strong>{!! $obra->resumo !!}</p>
                   </li>
 
                     @endforeach

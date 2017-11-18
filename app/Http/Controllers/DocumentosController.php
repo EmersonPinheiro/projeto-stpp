@@ -15,20 +15,20 @@ use App\Http\Requests\MaterialVersionFormRequest;
 
 class DocumentosController extends Controller
 {
-    public function downloadMaterial($id)
+    public function downloadMaterialIdentificado($id)
     {
         $doc = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento')->first();
         $pathToFile = storage_path()."/app/".$doc->url_documento;
         return response()->download($pathToFile);
-
       ///IMPLEMENTAR DOWNLOAD DO ZIP DAS IMAGENS
     }
 
-    public function showMaterial($id)
+    public function downloadMaterialNaoIdentificado($id)
     {
-      $url = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento')->first();
-      $pathToFile=storage_path()."/app/".$url->url_documento;
-      return response()->file($pathToFile); // se for .doc ele faz o download direto com o nome da rota
+        $doc = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento_nao_ident')->first();
+        $pathToFile = storage_path()."/app/".$doc->url_documento_nao_ident;
+        return response()->download($pathToFile);
+
     }
 
     public function showDocSugestao($id)
@@ -42,6 +42,13 @@ class DocumentosController extends Controller
     {
       $doc = OficioAlteracoes::where('cod_oficio', '=', $id)->select('url_documento')->first();
       $pathToFile = storage_path()."/app/".$doc->url_documento;
+      return response()->file($pathToFile);
+    }
+
+    public function showMaterialParecerista()
+    {
+      $doc = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento_parecerista')->first();
+      $pathToFile = storage_path()."/app/".$doc->url_documento_nao_ident;
       return response()->file($pathToFile);
     }
 

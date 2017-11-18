@@ -21,15 +21,13 @@
               <span class="panel-title"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;{{$obra->titulo}}</span>
             </div>
 
-
-
-            <div class="panel-body text-justify">
+            <div class="panel-body ">
               <div class="pull-right">
-                @if($proposta->ativa == 1)
-                <a class="btn btn-primary" href="{!! action('AdminController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;Editar Proposta</a>
-                <a href="{!! action('AdminController@cancelarProposta', $obra->Proposta_cod_proposta) !!}" role="button" class="btn btn-danger" ><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Cancelar proposta</a>
+                @if($proposta->situacao != 'Cancelada')
+                  <a class="btn btn-primary" href="{!! action('AdminController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;Editar Proposta</a>
+                  <a href="{!! action('AdminController@cancelarProposta', $obra->Proposta_cod_proposta) !!}" role="button" class="btn btn-danger" ><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Cancelar proposta</a>
                 @else
-                <h5>Proposta CANCELADA!</h5>
+                  <h5>Proposta CANCELADA!</h5>
                 @endif
                 <a class="btn btn-primary" href="{!! action('RelatorioController@index', $proposta->cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Relatório</a>
               </div>
@@ -53,7 +51,8 @@
               @foreach($autores as $autor)
                 </strong>{!! $autor->nome !!} {!! $autor->sobrenome !!}</p>
               @endforeach
-              <p><strong>Descrição: </strong>{!! $obra->descricao !!}</p>
+              <p><strong>Resumo: </strong>{!! $obra->resumo !!}</p>
+              <p><strong>Gênese e relevância: </strong>{!! $obra->genese_relevancia !!}</p>
 
               <h2>Situação: {!! $proposta->situacao !!}</h2>
 
@@ -74,11 +73,12 @@
               <p><strong>Coordenação Editorial: </strong>{!! $funcoes['coordenacao_editorial']->nome !!}</p>
               @endif
 
-              <strong>Parecerista(s): </strong>
-              @foreach($pareceristasPareceres as $pareceristaParecer)
-                <p>{!! $pareceristaParecer->nome !!} </p>
-              @endforeach
-
+              @if(!$pareceristasPareceres->isEmpty())
+                <strong>Parecerista(s): </strong>
+                @foreach($pareceristasPareceres as $pareceristaParecer)
+                  <p>{!! $pareceristaParecer->nome !!} </p>
+                @endforeach
+              @endif
               <div class="row">
                 <h4 class="titulo">Arquivos</h4>
 
@@ -87,7 +87,8 @@
 
                   @foreach($materiais as $material)
                     <h5><i>Versão {!! $material->versao !!}</i></h5>
-                    <p>&nbsp;&nbsp;&nbsp;<strong><a href="{!! action('DocumentosController@downloadMaterial', $material->cod_material) !!}">Baixar documento</a></strong></p>
+                    <p><strong><a href="{!! action('DocumentosController@downloadMaterialIdentificado', $material->cod_material) !!}">Baixar documento COM identificação</a></strong></p>
+                    <p><strong><a href="{!! action('DocumentosController@downloadMaterialNaoIdentificado', $material->cod_material) !!}">Baixar documento SEM identificação</a></strong></p>
                     <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
                   @endforeach
 

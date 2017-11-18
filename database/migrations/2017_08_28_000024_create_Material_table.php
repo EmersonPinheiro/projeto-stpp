@@ -27,8 +27,8 @@ class CreateMaterialTable extends Migration
             $table->integer('versao')->default(1);
             $table->string('url_documento', 150)->nullable();
             $table->string('url_documento_nao_ident', 150)->nullable();
+            $table->string('url_documento_parecerista', 150)->nullable();
             $table->string('url_imagens', 150)->nullable();
-            $table->integer('edicao')->nullable();
             $table->integer('Obra_cod_obra')->unsigned();
             $table->timestamps();
 

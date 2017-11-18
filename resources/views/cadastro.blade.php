@@ -157,7 +157,7 @@
                 </div>
 
                 <div class="form-group col-md-5 {{ $errors->has('vinculo') ? 'has-error' :'' }}">
-                  <label class="control-label" for="setor">Vínculo Institucional</label>
+                  <label class="control-label" for="vinculo">Vínculo Institucional</label>
                   <!-- AJUDA -->
                   <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com o Setor ou Departamento aos quais você está vinculado (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
                   <input type="text" class="form-control" id="vinculo" name="vinculo" placeholder="Setor, Departamento, ..." value="{{old('vinculo')}}" maxlength="200">
@@ -168,11 +168,11 @@
                   @endif
                 </div>
               </div>
-
+<!--
               <div class="row">
                 <div class="form-group col-md-6 {{ $errors->has('grande_area') ? 'has-error' :'' }}">
                   <label class="control-label" for="grande_area">Grande Área *</label>
-                  <!-- AJUDA -->
+
                   <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Grande Área definida pelo CNPQ." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
                   <input type="text" class="form-control" id="grande_area" name="grande_area" placeholder="Grande Área" value="{{old('grande_area')}}" maxlength="100">
                   @if ($errors->has('grande_area'))
@@ -184,7 +184,7 @@
 
                 <div class="form-group col-md-6 {{ $errors->has('area_conhecimento') ? 'has-error' :'' }}">
                   <label class="control-label" for="area_conhecimento">Área de Conhecimento *</label>
-                  <!-- AJUDA -->
+
                   <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Área de Conhecimento definida pelo CNPQ." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
                   <input type="text" class="form-control" id="area_conhecimento" name="area_conhecimento" placeholder="Área de Conhecimento" value="{{old('area_conhecimento')}}" maxlength="100">
                   @if ($errors->has('area_conhecimento'))
@@ -198,7 +198,7 @@
               <div class="row">
                   <div class="form-group col-md-6 {{ $errors->has('subarea') ? 'has-error' :'' }}">
                   <label class="control-label" for="subarea">Subarea</label>
-                  <!-- AJUDA -->
+
                   <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Subarea definida pelo CNPQ (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
                   <input type="text" class="form-control" id="subarea" name="subarea" placeholder="Subarea" value="{{old('subarea')}}" maxlength="100">
                   @if ($errors->has('subarea'))
@@ -210,7 +210,7 @@
 
                 <div class="form-group col-md-6 {{ $errors->has('especialidade') ? 'has-error' :'' }}">
                   <label class="control-label" for="especialidade">Especialidade</label>
-                  <!-- AJUDA -->
+
                   <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Especialidade definida pelo CNPQ (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
                   <input type="text" class="form-control" id="especialidade" name="especialidade" placeholder="Especialidade" value="{{old('especialidade')}}" maxlength="100">
                   @if ($errors->has('especialidade'))
@@ -219,7 +219,7 @@
                       </span>
                   @endif
                 </div>
-              </div>
+              </div>-->
             </fieldset>
 
             <!-- DADOS DE CONTATO -->

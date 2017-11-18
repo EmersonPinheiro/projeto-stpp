@@ -40,8 +40,8 @@
                   <input type="text" class="form-control" id="subtitulo" name="subtitulo" value="{!! $obra->subtitulo !!}">
                 </div>
                 <div class="form-group col-md-12">
-                  <label>Descrição</label>
-                  <textarea type="text" id="descricao" name="descricao" class="form-control" >{!! $obra->descricao !!}</textarea>
+                  <label>Resumo</label>
+                  <textarea type="text" id="resumo" name="resumo" class="form-control" >{!! $obra->resumo !!}</textarea>
                 </div>
 
                 <div class="form-group col-md-12">

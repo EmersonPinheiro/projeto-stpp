@@ -35,8 +35,8 @@
               <h4 class="titulo">Informações da Obra</h4>
               <p><strong>Título da Obra: </strong>{!! $obraParecer->titulo !!}</p>
               <p><strong>Subtítulo da Obra: </strong>{!! $obraParecer->subtitulo !!}</p>
-              <p><strong>Descrição: </strong>{!! $obraParecer->descricao !!}</p>
-              <p><strong>Documento: </strong>documento.doc<a href="{!! action('DocumentosController@downloadMaterial', $idMaterial) !!}">&nbsp;&nbsp;&nbsp;Baixar </a>| <a href="{!! action('DocumentosController@showMaterial', $idMaterial) !!}">Visualizar PDF</a></p><br>
+              <p><strong>Descrição: </strong>{!! $obraParecer->genese_relevancia !!}</p>
+              <p><strong>Obra: </strong><a href="{!! action('DocumentosController@showMaterialParecerista', $idMaterial) !!}">&nbsp;&nbsp;&nbsp;Acessar material da obra </a>
               @if(!$obraParecer->envio)
                 <p><strong class="alert alert-danger">Dias restantes: {!! $obraParecer->prazo_restante !!}</strong></p>
                 @if($obraParecer->prazo_restante == 0)

@@ -12,12 +12,12 @@ use App\EstadoProvincia;
 use App\Cidade;
 use App\Pessoa;
 use App\Instituicao;
-use App\Setor;
-use App\Departamento;
 use App\ConviteParecerista;
 use App\Proposta;
 use App\Material;
 use App\Parecer;
+use App\VinculoInstitucional;
+use App\GrandeArea;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -80,10 +80,6 @@ class RegisterController extends Controller
             'instituicao'=>'required|min:2|max:100',
             'sigla'=>'nullable|min:2|max:20',
             'vinculo'=>'nullable|min:2|max:200',
-            'grande_area'=>'required|min:2|max:100',
-            'area_conhecimento'=>'required|min:2|max:100',
-            'subarea'=>'nullable|min:2|max:100',
-            'especialidade'=>'nullable|min:2|max:100',
 
             'logradouro'=>'required|min:2|max:255',
             'bairro'=>'required|min:2|max:50',
@@ -171,15 +167,12 @@ class RegisterController extends Controller
           'nome'=>$data['instituicao'],
         ]);
 
-        $setor = Setor::firstOrCreate([
-          'nome'=>$data['setor'],
-          'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao
-        ]);
-
-        $departamento = Departamento::firstOrCreate([
-            'nome'=>$data['departamento'],
-            'Setor_cod_setor'=>$setor->cod_setor
-        ]);
+        if ($data['vinculo'] != null) {
+          $vinculo = VinculoInstitucional::firstOrCreate([
+            'nome'=>$data['vinculo'],
+            'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao,
+          ]);
+        }
 
         $usuario = User::create([
            'email'=>$data['email'],
@@ -192,22 +185,29 @@ class RegisterController extends Controller
         if ($data['tipo']=='propositor') {
           $usuarioPropositor = UsuarioPropositor::create([
             'Usuario_cod_usuario'=>$attributes['cod_usuario'],
-            'Departamento_cod_departamento'=>$departamento->cod_departamento
+            'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao,
           ]);
 
           $usuario->attachRole(1);
         }
         elseif ($data['tipo']=='parecerista') {
+
+          $grandeArea = GrandeArea::firstOrCreate([
+            'nome'=>$data['grande_area'],
+          ]);
+
           $usuarioParecerista = UsuarioParecerista::create([
             'Usuario_cod_usuario'=>$attributes['cod_usuario'],
-            'Departamento_cod_departamento'=>$departamento->cod_departamento
+            'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao,
+            'Grande_Area_cod_grande_area'=>$grandeArea->cod_grande_area,
           ]);
 
           $convite = ConviteParecerista::where('token', '=', $data['convite'])->first();
 
-          $proposta = Proposta::where('cod_proposta', '=', $convite->proposta)->first();
+          $proposta = Proposta::where('cod_proposta', '=', $convite->Proposta_cod_proposta)->first();
 
           $parecer = Parecer::create([
+
             //TODO: Implementar prazo.
             'prazo_envio'=>Carbon::now('America/Sao_Paulo')->addDays(61)->format('Y-m-d'),
             'Proposta_cod_proposta'=>$proposta->cod_proposta,

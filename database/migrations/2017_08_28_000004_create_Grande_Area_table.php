@@ -24,7 +24,7 @@ class CreateGrandeAreaTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('cod_grande_area');
-            $table->string('nome', 100)->nullable();
+            $table->string('nome', 100);
             $table->timestamps();
         });
     }

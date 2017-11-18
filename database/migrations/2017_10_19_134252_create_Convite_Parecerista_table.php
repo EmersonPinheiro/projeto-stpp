@@ -19,13 +19,26 @@ class CreateConvitePareceristaTable extends Migration
       Schema::create($this->set_schema_table, function (Blueprint $table) {
           $table->engine = 'InnoDB';
           $table->increments('id');
+          $table->string('nome', 100);
+          $table->string('sobrenome', 100);
           $table->string('email');
-          $table->string('proposta');
           $table->string('token', 16)->unique();
-          $table->boolean('aceito')->default(false);
           $table->date('prazo')->nullable();
+          $table->integer('Proposta_cod_proposta')->unsigned();
           $table->timestamps();
+
+          $table->index(["Proposta_cod_proposta"], 'fk_Convite_Parecerista_Proposta1_idx');
+
       });
+
+      Schema::table($this->set_schema_table, function (Blueprint $table) {
+          $table->foreign('Proposta_cod_proposta', 'fk_Convite_Parecerista_Proposta1_idx')
+              ->references('cod_proposta')->on('Proposta')
+              ->onDelete('no action')
+              ->onUpdate('no action');
+      });
+
+
     }
 
     /**

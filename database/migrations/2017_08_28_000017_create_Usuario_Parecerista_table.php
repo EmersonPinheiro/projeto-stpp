@@ -25,21 +25,28 @@ class CreateUsuarioPareceristaTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_parecerista');
             $table->integer('Usuario_cod_usuario')->unsigned();
-            $table->integer('Departamento_cod_departamento')->unsigned();
+            $table->integer('Instituicao_cod_instituicao')->unsigned();
+            $table->integer('Grande_Area_cod_grande_area')->unsigned()->nullable();
             $table->timestamps();
 
-            $table->index(["Departamento_cod_departamento"], 'fk_Usuario_Parecerista_Departamento1_idx');
-
+            $table->index(["Instituicao_cod_instituicao"], 'fk_Usuario_Parecerista_Instituicao1_idx');
+            $table->index(["Grande_Area_cod_grande_area"], 'fk_Usuario_Parecerista_Grande_Area1_idx');
             $table->index(["Usuario_cod_usuario"], 'fk_Usuario_Parecerista_Usuario1_idx');
         });
+        
         Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Usuario_cod_usuario', 'fk_Usuario_Parecerista_Usuario1_idx')
                 ->references('cod_usuario')->on('Usuario')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('Departamento_cod_departamento', 'fk_Usuario_Parecerista_Departamento1_idx')
-                ->references('cod_departamento')->on('Departamento')
+            $table->foreign('Instituicao_cod_instituicao', 'fk_Usuario_Parecerista_Instituicao1_idx')
+                ->references('cod_instituicao')->on('Instituicao')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('Grande_Area_cod_grande_area', 'fk_Usuario_Parecerista_Grande_Area1_idx')
+                ->references('cod_grande_area')->on('Grande_Area')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

@@ -93,8 +93,9 @@ class AdminController extends Controller
         $obra = Obra::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->first();
 
         $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
-                   ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
-                   ->where('cod_obra', $obra->cod_obra)
+                   ->join('Obra_Autor', 'Autor.cod_autor', 'Obra_Autor.Autor_cod_autor')
+                   ->join('Obra', 'Obra.cod_obra', '=', 'Obra_Autor.Obra_cod_obra')
+                   ->where('Obra.cod_obra', $obra->cod_obra)
                    ->select('Pessoa.*')
                    ->get();
 /*
@@ -156,10 +157,11 @@ class AdminController extends Controller
       $obra = Obra::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->first();
 
       $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
-                  ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
-                  ->where('cod_obra', $obra->cod_obra)
-                  ->select('Pessoa.*')
-                  ->get();
+                 ->join('Obra_Autor', 'Autor.cod_autor', 'Obra_Autor.Autor_cod_autor')
+                 ->join('Obra', 'Obra.cod_obra', '=', 'Obra_Autor.Obra_cod_obra')
+                 ->where('Obra.cod_obra', $obra->cod_obra)
+                 ->select('Pessoa.*')
+                 ->get();
 
       $materiais = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
                   ->where('cod_obra', $obra->cod_obra)
@@ -205,7 +207,7 @@ class AdminController extends Controller
                   ->update([
                     'titulo'=>$request->get('titulo'),
                     'subtitulo'=>$request->get('subtitulo'),
-                    'descricao'=>$request->get('descricao'),
+                    'genese_relevancia'=>$request->get('genese_relevancia'),
                     'resumo'=>$request->get('resumo'),
                     'volume'=>$request->get('volume'),
                     'ano_publicacao'=>$request->get('ano'),
@@ -243,7 +245,7 @@ class AdminController extends Controller
                         ->select('Usuario.*')
                         ->first();
 
-      $proposta->ativa = 0;
+      $proposta->situacao = 'Cancelada';
       $proposta->save();
 
       Notification::send($propositor, new PropostaCancelada($proposta));

@@ -25,6 +25,7 @@ class CreateInstituicaoTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('cod_instituicao');
             $table->string('nome', 100)->nullable();
+            $table->string('sigla', 20)->nullable();
             $table->timestamps();
         });
     }

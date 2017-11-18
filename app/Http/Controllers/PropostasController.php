@@ -9,12 +9,12 @@ use App\Role;
 use App\Permission;
 use App\User;
 use App\Obra;
+use App\ObraAutor;
 use App\Proposta;
 use App\Autor;
 use App\Pessoa;
 use App\Instituicao;
-use App\Setor;
-use App\Departamento;
+use App\VinculoInstitucional;
 use App\GrandeArea;
 use App\AreaConhecimento;
 use App\Subarea;
@@ -69,7 +69,7 @@ class PropostasController extends Controller
 
       $propostas = Proposta::join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
                         ->where('Usuario_Propositor_cod_propositor', $propositor->cod_propositor)
-                        ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.descricao', 'Obra.cod_obra', 'Proposta.data_envio', 'Proposta.cod_proposta', 'Proposta.situacao')
+                        ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.genese_relevancia', 'Obra.cod_obra', 'Proposta.data_envio', 'Proposta.cod_proposta', 'Proposta.situacao')
                         ->get();
 
       return view('propostas', compact('propostas'));
@@ -88,11 +88,12 @@ class PropostasController extends Controller
           return redirect()->back()->withErrors('Ação não permitida.');
         }
 
-
         $autor = User::join('Pessoa', 'Usuario.Pessoa_cod_pessoa', '=', 'Pessoa.cod_pessoa')
                       ->where('cod_usuario', $usuario->cod_usuario)->first();
 
-        return view('propostas.create', compact('autor'));
+        $sexos = ['F', 'M'];
+
+        return view('propostas.create', compact('autor', 'sexos'));
     }
 
     /**
@@ -106,7 +107,7 @@ class PropostasController extends Controller
 
         $usuario = Auth::user();
 
-        $propositor = DB::table('Usuario_Propositor')->join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+        $propositor = UsuarioPropositor::join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
                               ->where('Usuario.cod_usuario', $usuario->cod_usuario)
                               ->select('Usuario_Propositor.cod_propositor')
                               ->first();
@@ -115,22 +116,6 @@ class PropostasController extends Controller
           'data_envio'=>Carbon::now('America/Sao_Paulo')->format('Y-m-d'),
           'Usuario_Propositor_cod_propositor'=>$propositor->cod_propositor,
         ]);
-
-       if (!$pessoa = Pessoa::where('cpf', '=', $request->get('CPF'))->first()) {  // Verifica cpf duplicado.
-          $pessoa = Pessoa::create([
-            'cpf'=>$request->get('CPF'),
-            'rg'=>$request->get('rg'),
-            'nome'=>$request->get('nome'),
-            'sobrenome'=>$request->get('sobrenome'),
-            'sexo'=>$request->get('sexo'),
-            'estado_civil'=>$request->get('estado_civil'),
-            'logradouro'=>$request->get('logradouro'),
-            'bairro'=>$request->get('bairro'),
-            'CEP'=>$request->get('cep'),
-            'Cidade_cod_cidade'=>$cidade->cod_cidade,
-          ]);
-      }
-
 
         //Áreas de conhecimento da obra
         $grandeAreaObra = GrandeArea::firstOrCreate([
@@ -141,7 +126,6 @@ class PropostasController extends Controller
           'nome'=>$request->get('area_conhecimento_obra'),
           'Grande_Area_cod_grande_area'=>$grandeAreaObra->cod_grande_area,
         ]);
-
 
         if ($request->get('subarea_obra') != null) {
           $subareaObra = Subarea::firstOrCreate([
@@ -157,87 +141,61 @@ class PropostasController extends Controller
           ]);
         }
 
-        //Areas de conhecimento do autor
-        $grandeAreaAutor = GrandeArea::firstOrCreate([
-          'nome'=>$request->get('grande_area_autor'),
+        $obra = Obra::create([
+          'titulo'=>$request->get('titulo'),
+          'subtitulo'=>$request->get('subtitulo'),
+          'resumo'=>$request->get('resumo'),
+          'genese_relevancia'=>$request->get('genese_relevancia'),
+          'Proposta_cod_proposta'=>$proposta->cod_proposta,
+          'Grande_Area_cod_grande_area'=>$grandeAreaObra->cod_grande_area,
         ]);
 
-        $areaConhecimentoAutor = AreaConhecimento::firstOrCreate([
-          'nome'=>$request->get('area_conhecimento_autor'),
-          'Grande_Area_cod_grande_area'=>$grandeAreaAutor->cod_grande_area,
-        ]);
+        //TODO: Inserir um array de autores.
 
-        if ($request->get('subarea_autor') != null) {
-          $subareaAutor = Subarea::firstOrCreate([
-            'nome'=>$request->get('subarea_autor'),
-            'Area_Conhecimento_cod_area_conhec'=>$areaConhecimentoAutor->cod_area_conhec,
+        if (!$pessoa = Pessoa::where('cpf', '=', $request->get('cpf'))->first()) {  // Verifica cpf duplicado.
+          $pessoa = Pessoa::create([
+            'cpf'=>$request->get('cpf'),
+            'rg'=>$request->get('rg'),
+            'nome'=>$request->get('nome'),
+            'sobrenome'=>$request->get('sobrenome'),
+            'sexo'=>$request->get('sexo'),
+            'estado_civil'=>$request->get('estado_civil'),
+            'logradouro'=>$request->get('logradouro'),
+            'bairro'=>$request->get('bairro'),
+            'CEP'=>$request->get('cep'),
           ]);
         }
 
         $instituicao = Instituicao::firstOrCreate([
           'nome'=>$request->get('instituicao'),
+          'sigla'=>$request->get('sigla'),
         ]);
 
-        if ($request->get('setor') != null) {
-          $setor = Setor::firstOrCreate([
-            'nome'=>$request->get('setor'),
-            //falta sigla
+        if ($request->get('vinculo') != null) {
+          $vinculo = VinculoInstitucional::firstOrCreate([
+            'nome'=>$request->get('vinculo'),
             'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao,
-          ]);
-        }
-
-        if ($request->get('departamento') != null) {
-          $departamento = Departamento::firstOrCreate([
-            'nome'=>$request->get('departamento'),
-            'Setor_cod_setor'=>$setor->cod_setor,
           ]);
 
         $autor = Autor::firstOrCreate([
           'categoria'=>$request->get('categoria'),
-          'Departamento_cod_departamento'=>$departamento->cod_departamento,
+          'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao,
           'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
         }
         else{
           $autor = Autor::firstOrCreate([
             'categoria'=>$request->get('categoria'),
+            'Instituicao_cod_instituicao'=>$instituicao->cod_instituicao,
             'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
           ]);
         }
 
-        if ($request->get('especialidade_autor') != null) {
-          $especialidadeAutor = Especialidade::firstOrCreate([
-            'nome'=>$request->get('especialidade_autor'),
-            'Subarea_cod_subarea'=>$subareaAutor->cod_subarea,
-          ]);
-        }
-
-
-        //TODO: Inserir um array de autores.
-/*
-        AutorEspecialidade::firstOrCreate([
-          'Autor_cod_autor'=>$autor->cod_autor,
-          'Especialidade_cod_especialidade'=>$especialidadeAutor->cod_especialidade,
-        ]);
-*/
-        $obra = Obra::create([
-          'titulo'=>$request->get('titulo'),
-          'subtitulo'=>$request->get('subtitulo'),
-          'descricao'=>$request->get('descricao'),
-          'resumo'=>$request->get('resumo'),
-          'Proposta_cod_proposta'=>$proposta->cod_proposta,
-          'Autor_cod_autor'=>$autor->cod_autor,
-        ]);
-
-
-        //TODO: Criar Model e migration de ObraGrandeArea.
-/*
-
-        ObraGrandeArea::firstOrCreate([
+        ObraAutor::create([
           'Obra_cod_obra'=>$obra->cod_obra,
-          'Grande_Area_cod_grande_area'=>$grandeAreaObra->cod_grande_area,
+          'Autor_cod_autor'=>$autor->cod_autor,
         ]);
-*/
+
         $docpathident = Storage::putFile('documentos', $request->file('documento_c_identificacao'), 'private');
         $docpathnaoident = Storage::putFile('documentos', $request->file('documento_s_identificacao'), 'private');
 
@@ -256,11 +214,27 @@ class PropostasController extends Controller
           'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
 
+        if ($request->get('telefeone_secundario') != null) {
+          Telefone::create([
+            'numero'=>$request->get('telefeone_secundario'),
+            'tipo'=>'2',
+            'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
+          ]);
+        }
+
         Email::create([
           'endereco'=>$request->get('email'),
           'tipo'=>'1',
           'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
+
+        if ($request->get('email_secundario') != null) {
+          Email::create([
+            'endereco'=>$request->get('email_secundario'),
+            'tipo'=>'2',
+            'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
+          ]);
+        }
 
 
         $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')
@@ -297,11 +271,19 @@ class PropostasController extends Controller
           abort(404);
         }
 
-        $obra = Obra::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->first();
+        $obra = Obra::join('Grande_Area', 'Grande_Area.cod_grande_area', 'Obra.Grande_Area_cod_grande_area')
+                    ->join('Area_Conhecimento', 'Area_Conhecimento.Grande_Area_cod_grande_area', 'Grande_Area.cod_grande_area')
+                    ->leftJoin('Subarea', 'Subarea.Area_Conhecimento_cod_area_conhec', 'Area_Conhecimento.cod_area_conhec')
+                    ->leftJoin('Especialidade', 'Especialidade.Subarea_cod_subarea', 'Subarea.cod_subarea')
+                    ->select('Obra.*', 'Grande_Area.nome as grande_area_obra', 'Area_Conhecimento.nome as area_conhecimento_obra', 'Subarea.nome as subarea_obra', 'Especialidade.nome as especialidade_obra')
+                    ->where('Proposta_cod_proposta', $proposta->Proposta_cod_proposta)
+                    ->first();
+
 
         $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
-                   ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
-                   ->where('cod_obra', $obra->cod_obra)
+                   ->join('Obra_Autor', 'Autor.cod_autor', 'Obra_Autor.Autor_cod_autor')
+                   ->join('Obra', 'Obra.cod_obra', '=', 'Obra_Autor.Obra_cod_obra')
+                   ->where('Obra.cod_obra', $obra->cod_obra)
                    ->select('Pessoa.*')
                    ->get();
 
@@ -343,24 +325,24 @@ class PropostasController extends Controller
         abort(404);
       }
 
-      $obra = DB::table('Obra')->where('Proposta_cod_proposta', $id)->first();
-
-      $autores = DB::table('Pessoa')
-                  ->join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
-                  ->join('Obra', 'Obra.Autor_cod_autor', '=', 'Autor.cod_autor')
+      $obra = Obra::join('Grande_Area', 'Grande_Area.cod_grande_area', 'Obra.Grande_Area_cod_grande_area')
+                  ->join('Area_Conhecimento', 'Area_Conhecimento.Grande_Area_cod_grande_area', 'Grande_Area.cod_grande_area')
+                  ->leftJoin('Subarea', 'Subarea.Area_Conhecimento_cod_area_conhec', 'Area_Conhecimento.cod_area_conhec')
+                  ->leftJoin('Especialidade', 'Especialidade.Subarea_cod_subarea', 'Subarea.cod_subarea')
+                  ->select('Obra.*', 'Grande_Area.nome as grande_area_obra', 'Area_Conhecimento.nome as area_conhecimento_obra', 'Subarea.nome as subarea_obra', 'Especialidade.nome as especialidade_obra')
                   ->where('Proposta_cod_proposta', $id)
-                  ->select('Pessoa.*')
-                  ->get();
+                  ->first();
 
+      $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
+                 ->join('Obra_Autor', 'Obra_Autor.Autor_cod_autor', 'Autor.cod_autor')
+                 ->join('Obra', 'Obra.cod_obra', '=', 'Obra_Autor.Obra_cod_obra')
+                 ->join('Instituicao', 'Autor.Instituicao_cod_instituicao', 'Instituicao.cod_instituicao')
+                 ->leftJoin('Vinculo_Institucional', 'Vinculo_Institucional.Instituicao_cod_instituicao', 'Instituicao.cod_instituicao')
+                 ->where('Obra.cod_obra', $obra->cod_obra)
+                 ->select('Pessoa.*', 'Autor.*', 'Instituicao.nome as nome_instituicao', 'Vinculo_Institucional.nome as nome_vinculo', 'Instituicao.sigla')
+                 ->get();
 
-      $palavrasChave = DB::table('Palavras_Chave')
-                  ->join('Obra_Palavras_Chave', 'Obra_Palavras_Chave.Palavras_Chave_cod_pchave', '=', 'Palavras_Chave.cod_pchave')
-                  ->join('Obra', 'Obra_Palavras_Chave.Obra_cod_obra', '=', 'Obra.cod_obra')
-                  ->where('Proposta_cod_proposta', $id)
-                  ->select('Palavras_Chave.palavra')
-                  ->get();
-
-      return view('propostas.edit', compact('obra', 'autores', 'palavrasChave'));
+      return view('propostas.edit', compact('obra', 'autores'));
     }
 
     /**
@@ -376,12 +358,37 @@ class PropostasController extends Controller
           abort(404);
         }
 
-        DB::table('Obra')->where('Proposta_cod_proposta', $proposta->cod_proposta)->update([
+        Obra::where('Proposta_cod_proposta', $proposta->cod_proposta)->update([
           'titulo' => $request->get('titulo'),
           'subtitulo' => $request->get('subtitulo'),
-          'descricao' => $request->get('descricao'),
+          'resumo' => $request->get('resumo'),
+          'genese_relevancia' => $request->get('genese_relevancia'),
           //ADICIONAR OUTROS CAMPOS
         ]);
+
+        GrandeArea::where('cod_grande_area', '=', $request->get('cod_grande_area'))
+          ->update([
+            'nome'=>$request->get('grande_area_obra'),
+          ]);
+
+        AreaConhecimento::where('cod_area_conhec', '=', $request->get('cod_area_conhec'))
+          ->update([
+            'nome'=>$request->get('area_conhecimento_obra'),
+          ]);
+
+        if ($request->get('subarea_obra') != null) {
+          Subarea::where('cod_subarea', '=', $request->get('cod_subarea'))
+            ->update([
+              'nome'=>$request->get('subarea_obra'),
+            ]);
+        }
+
+        if ($request->get('especialidade_obra') != null) {
+          Especialidade::where('cod_especialidade', '=', $request->get('cod_especialidade'))
+            ->update([
+              'nome'=>$request->get('especialidade_obra'),
+            ]);
+        }
 
         $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')
                              ->get();
@@ -391,7 +398,7 @@ class PropostasController extends Controller
 
         //TODO: Atualizar um array de autores.
 
-        return redirect(action('PropostasController@show', $id))->with('status', 'A proposta '.$id.' foi atualizada!');
+        return redirect(action('PropostasController@show', $id))->with('status', 'Sua proposta foi atualizada!');
     }
 
     public function solicitarCancelamento(CancelamentoFormRequest $request, $id)
@@ -411,7 +418,8 @@ class PropostasController extends Controller
         abort(404);
       }
 
-      $docpath = Storage::putFile('documentos', $request->file('novoDoc'), 'private');
+      $docpathident = Storage::putFile('documentos', $request->file('novo_documento_identificado'), 'private');
+      $docpathnaoident = Storage::putFile('documentos', $request->file('novo_documento_nao_identificado'), 'private');
       $ofcpath = Storage::putFile('oficios-de-alteracao', $request->file('oficio'), 'private');
 
       $versaoMaterial = DB::table('Material')
@@ -424,7 +432,8 @@ class PropostasController extends Controller
         ->where('cod_obra', $request->get('cod_obra'))
         ->insert([
           'versao'=>$versaoMaterial + 1,
-          'url_documento'=>$docpath,
+          'url_documento'=>$docpathident,
+          'url_documento_nao_ident'=>$docpathnaoident,
           'Obra_cod_obra'=>$request->get('cod_obra'),
       ]);
 

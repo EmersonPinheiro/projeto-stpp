@@ -24,26 +24,28 @@ class CreateAutorTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('cod_autor');
-            $table->integer('categoria')->nullable()->default('1');
+            $table->integer('categoria')->default(1);
             $table->integer('Pessoa_cod_pessoa')->unsigned();
-            $table->integer('Departamento_cod_departamento')->unsigned()->nullable();
+            $table->integer('Instituicao_cod_instituicao')->unsigned()->nullable();
             $table->timestamps();
 
             $table->index(["Pessoa_cod_pessoa"], 'fk_Autor_Pessoa1_idx');
+            $table->index(["Instituicao_cod_instituicao"], 'fk_Autor_Instituicao1_idx');
 
-            $table->index(["Departamento_cod_departamento"], 'fk_Autor_Departamento1_idx');
         });
+
         Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Pessoa_cod_pessoa', 'fk_Autor_Pessoa1_idx')
                 ->references('cod_pessoa')->on('Pessoa')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('Departamento_cod_departamento', 'fk_Autor_Departamento1_idx')
-                ->references('cod_departamento')->on('Departamento')
+            $table->foreign('Instituicao_cod_instituicao', 'fk_Autor_Instituicao1_idx')
+                ->references('cod_instituicao')->on('Instituicao')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });
+
     }
 
     /**

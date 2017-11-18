@@ -26,20 +26,21 @@ class CreateObraTable extends Migration
             $table->increments('cod_obra');
             $table->string('titulo', 100);
             $table->string('subtitulo', 100)->nullable();
-            $table->string('descricao')->nullable();
-            //$table->integer('edicao')->nullable();
+            $table->string('resumo', 1000);
+            $table->string('genese_relevancia', 10000);
+            $table->enum('tipo', ['Livro', 'Coletânea']);
+            $table->integer('edicao')->nullable();
             $table->integer('volume')->nullable();
             $table->string('isbn', 13)->nullable();
             $table->smallInteger('ano_publicacao')->nullable();
-            $table->string('resumo')->nullable();
             $table->integer('num_paginas')->nullable();
             $table->integer('Proposta_cod_proposta')->unsigned();
-            $table->integer('Autor_cod_autor')->unsigned()->nullable();
+            $table->integer('Grande_Area_cod_grande_area')->unsigned()->nullable();
             $table->timestamps();
 
             $table->index(["Proposta_cod_proposta"], 'fk_Obra_Proposta1_idx');
+            $table->index(["Grande_Area_cod_grande_area"], 'fk_Obra_Grande_Area1_idx');
 
-            $table->index(["Autor_cod_autor"], 'fk_Obra_Autor1_idx');
         });
         Schema::table($this->set_schema_table, function (Blueprint $table) {
             $table->foreign('Proposta_cod_proposta', 'fk_Obra_Proposta1_idx')
@@ -47,10 +48,11 @@ class CreateObraTable extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('Autor_cod_autor', 'fk_Obra_Autor1_idx')
-                ->references('cod_autor')->on('Autor')
+            $table->foreign('Grande_Area_cod_grande_area', 'fk_Obra_Grande_Area1_idx')
+                ->references('cod_grande_area')->on('Grande_Area')
                 ->onDelete('no action')
                 ->onUpdate('no action');
+
         });
     }
 

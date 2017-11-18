@@ -35,7 +35,8 @@
           @foreach($autores as $autor)
             </strong>{!! $autor->nome !!} {!! $autor->sobrenome !!}</p>
           @endforeach
-          <p><strong>Descrição: </strong>{!! $obra->descricao !!}</p>
+          <p><strong>Resumo: </strong>{!! $obra->resumo !!}</p>
+          <p><strong>Gênese e relevância: </strong>{!! $obra->genese_relevancia !!}</p>
           <button type="button" name="button" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down glyphicon-space"></span> Informações Adicionais</button>
 
           <div class="row">
@@ -46,11 +47,12 @@
 
               @foreach($materiais as $material)
                 <h5><i>Versão {!! $material->versao !!}</i></h5>
-                <p>&nbsp;&nbsp;&nbsp;<strong><a href="{!! action('DocumentosController@downloadMaterial', $material->cod_material) !!}">Baixar documento</a></strong></p>
+                <p><strong><a href="{!! action('DocumentosController@downloadMaterialIdentificado', $material->cod_material) !!}">Baixar documento COM identificação</a></strong></p>
+                <p><strong><a href="{!! action('DocumentosController@downloadMaterialNaoIdentificado', $material->cod_material) !!}">Baixar documento SEM identificação</a></strong></p>
                 <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
               @endforeach
             </div>
-            
+
             <div class="col-md-4">
               <h5 class="titulo">Docs. de Sugestão de Alterações</h5>
               @if(!$docsSugestoes->isEmpty())
@@ -81,8 +83,13 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-right">
+                @if($proposta->situacao != 'Cancelada')
                 <a class="btn btn-primary" href="{!! action('PropostasController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil glyphicon-space"></span>Editar Proposta</a>
-                <a href="" role="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal2"><span class="glyphicon glyphicon-remove glyphicon-space"></span>Solicitar Cancelamento da Proposta</a>
+                <a href="{!! action('PropostasController@solicitarCancelamento', $obra->Proposta_cod_proposta) !!}" role="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal2"><span class="glyphicon glyphicon-remove glyphicon-space"></span>Solicitar Cancelamento da Proposta</a>
+                @else
+                  <h5>Proposta CANCELADA!</h5>
+                @endif
+
               </div>
             </div>
           </div>
@@ -130,17 +137,19 @@
             <h4 class="modal-title">Enviar Nova Versão da Obra</h4>
           </div>
           <div class="modal-body">
-            <form action="/propostas/{!! $obra->Proposta_cod_proposta !!}" method="post" enctype="multipart/form-data">
+            <form action="{!! route('enviarNovaVersao', $proposta->cod_proposta) !!}" method="post" enctype="multipart/form-data">
               <input type="hidden" name="_token" value="{!! csrf_token() !!}">
               <div class="form-group">
-                <label for="novoDoc">Documento (.doc)</label>
-                <input type="file" class="form-control" id="novoDoc" name="novoDoc">
+                <label for="novo_documento_identificado">Documento COM identificação(.doc)</label>
+                <input type="file" class="form-control" id="novo_documento_identificado" name="novo_documento_identificado">
+                <br><label for="novo_documento_nao_identificado">Documento SEM identificação(.doc)</label>
+                <input type="file" class="form-control" id="novo_documento_nao_identificado" name="novo_documento_nao_identificado">
 
                 <input type="hidden" name="cod_obra" value="{!! $obra->cod_obra !!}">
                 <input type="hidden" name="cod_proposta" value="{!! $proposta->cod_proposta !!}">
               </div>
               <div class="form-group">
-                <label for="oficio">Ofício de Alterações (.doc)</label>
+                <label for="oficio">Ofício de Alterações (.pdf)</label>
                 <input type="file" class="form-control" id="oficio" name="oficio">
               </div>
               <div class="modal-footer">

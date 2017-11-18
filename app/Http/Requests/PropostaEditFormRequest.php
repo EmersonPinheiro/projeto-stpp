@@ -29,7 +29,8 @@ class PropostaEditFormRequest extends FormRequest
 
           'titulo'=>'required|min:2|max:100',
           'subtitulo'=>'required|min:2|max:100',
-          'descricao'=>'required|min:2|max:10000',
+          'resumo'=>'required|min:2|max:1000',
+          'genese_relevancia'=>'required|max:10000',
           'grande_area_obra'=>'required|min:2|max:100',
           'area_conhecimento_obra'=>'required|min:2|max:100',
           'subarea_obra'=>'nullable|min:2|max:100',
@@ -46,11 +47,6 @@ class PropostaEditFormRequest extends FormRequest
           'instituicao'=>'required|min:2|max:100',
           'sigla'=>'nullable|min:2|max:20',
           'vinculo'=>'nullable|min:2|max:200',
-          'grande_area_autor'=>'required|min:2|max:100',
-          'area_conhecimento_autor'=>'required|min:2|max:100',
-          'subarea_autor'=>'nullable|min:2|max:100',
-          'especialidade_autor'=>'nullable|min:2|max:100',
-
         ];
     }
 }
