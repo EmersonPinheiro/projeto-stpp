@@ -57,7 +57,6 @@
                           <span class="text-danger"><strong>{{ $errors->first('nome') }}</strong></span>
                       </span>
                   @endif
-
                 </div>
 
                 <div class="form-group col-md-5 {{ $errors->has('sobrenome') ? 'has-error' :'' }}">
