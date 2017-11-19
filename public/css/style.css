@@ -100,9 +100,10 @@ fieldset {
 .titulo {
   border-bottom: 1px solid #CFD8DC;
   padding-bottom: 5px;
+  margin-top: 20px;
 }
 
-.invisible {
+.invisivel {
   display: none;
 }
 
@@ -173,7 +174,7 @@ fieldset {
 
 /* PAINEL */
 
-.painel-propostas .panel-heading {
+.painel-propostas .panel-heading, .painel-notificacoes .panel-heading {
   background-color: #E0E0E0;
 }
 
@@ -193,10 +194,6 @@ fieldset {
   overflow: auto;
 }
 
-.painel-notificacoes .panel-body .alert {
-  margin-bottom: 5px;
-}
-
 .list-group {
   margin-bottom: 5px;
 }
@@ -207,13 +204,4 @@ fieldset {
 
 .list-group .titulo-lista {
   background-color: #EEEEEE;
-}
-
-/* INFORMAÇÕES DA PROPOSTA */
-.painel-info-proposta .panel-body, .painel-info-proposta .panel-footer {
-  padding: 20px 40px;
-}
-
-.painel-info-proposta .titulo {
-  margin-top: 30px;
 }

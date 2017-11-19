@@ -11,7 +11,7 @@
         <div class="quadro text-justify">
 
           <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
-          <h3><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;{{$obra->titulo}}</h3>
+          <h3><span class="glyphicon glyphicon-book glyphicon-space"></span><strong>{{$obra->titulo}}</strong></h3>
 
           @if (!$errors->isEmpty())
             <div class="alert alert-danger">
@@ -21,6 +21,7 @@
               @endforeach
             </div>
           @endif
+
           @if (session('status'))
               <div class="alert alert-info">
                   {{ session('status') }}
@@ -28,7 +29,7 @@
           @endif
 
           <h4 class="titulo">Informações da Obra</h4>
-          <p class="text-warning"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
+          <p class="alert alert-warning alert-trim"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
           <p><strong>Título da Obra: </strong>{!! $obra->titulo !!}</p>
           <p><strong>Subtítulo da Obra: </strong>{!! $obra->subtitulo !!}</p>
           <p><strong>Autor(es):
@@ -37,48 +38,98 @@
           @endforeach
           <p><strong>Resumo: </strong>{!! $obra->resumo !!}</p>
           <p><strong>Gênese e relevância: </strong>{!! $obra->genese_relevancia !!}</p>
-          <button type="button" name="button" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down glyphicon-space"></span> Informações Adicionais</button>
+
+          <button type="button" name="button" id="info-adicionais" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down glyphicon-space"></span> Informações Adicionais</button>
+
+          <div class="invisivel">
+            <h4 class="titulo">Informações Adicionais</h4>
+            @if($obra->isbn == null and $obra->edicao == null and $obra->volume == null and $obra->ano_publicacao == null and $obra->num_paginas == null and $tecnicos->isEmpty())<p class="alert alert-info">Nenhuma informação adicional foi cadastrada pelo Administrador até o momento.</p>@endif
+            @if($obra->isbn != null)<p><strong>ISBN: </strong>{!! $obra->isbn !!}</p>@endif
+            @if($obra->edicao != null)<p><strong>Edição: </strong>{!! $obra->edicao !!}</p>@endif
+            @if($obra->volume != null)<p><strong>Volume: </strong>{!! $obra->volume !!}</p>@endif
+            @if($obra->ano_publicacao != null)<p><strong>Ano: </strong>{!! $obra->ano_publicacao !!}</p>@endif
+            @if($obra->num_paginas != null)<p><strong>Número de Páginas: </strong>{!! $obra->num_paginas !!}</p>@endif
+
+            @if($funcoes['diagramador'] != null)<p><strong>Diagramador: </strong>{!! $funcoes['diagramador']->nome !!}</p>@endif
+            @if($funcoes['revisor_ortografico'] != null)<p><strong>Revisor Ortográfico: </strong>{!! $funcoes['revisor_ortografico']->nome !!}</p>@endif
+            @if($funcoes['revisor_ingles'] != null)<p><strong>Revisor de Idioma (Inglês): </strong>{!! $funcoes['revisor_ingles']->nome !!}</p>@endif
+            @if($funcoes['revisor_espanhol'] != null)<p><strong>Revisor de Idioma (Espanhol): </strong>{!! $funcoes['revisor_espanhol']->nome !!}</p>@endif
+            @if($funcoes['criador_capa'] != null)<p><strong>Criador Capa: </strong>{!! $funcoes['criador_capa']->nome !!}</p>@endif
+            @if($funcoes['projetista_grafico'] != null)<p><strong>Projetista Gráfico: </strong>{!! $funcoes['projetista_grafico']->nome !!}</p>@endif
+            @if($funcoes['coordenacao_editorial'] != null)<p><strong>Coordenação Editorial: </strong>{!! $funcoes['coordenacao_editorial']->nome !!}</p>@endif
+          </div>
+
+          <h4 class="titulo">Arquivos</h4>
+
+          <h5 class="titulo">Material</h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Versão</th>
+                <th>Documento com Identificação</th>
+                <th>Documento sem Identificação</th>
+                <th>Imagens</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($materiais as $material)
+              <tr>
+                <td>{!! $material->versao !!}</td>
+                <td><a href="{!! action('DocumentosController@downloadMaterialIdentificado', $material->cod_material) !!}">Baixar</a></td>
+                <td><a href="{!! action('DocumentosController@downloadMaterialNaoIdentificado', $material->cod_material) !!}">Baixar</a></td>
+                <td>Baixar</td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Enviar nova versão da Obra</button>
 
           <div class="row">
-            <h4 class="titulo">Arquivos</h4>
-
-            <div class="col-md-4">
-              <h5 class="titulo">Material</h5>
-
-              @foreach($materiais as $material)
-                <h5><i>Versão {!! $material->versao !!}</i></h5>
-                <p><strong><a href="{!! action('DocumentosController@downloadMaterialIdentificado', $material->cod_material) !!}">Baixar documento COM identificação</a></strong></p>
-                <p><strong><a href="{!! action('DocumentosController@downloadMaterialNaoIdentificado', $material->cod_material) !!}">Baixar documento SEM identificação</a></strong></p>
-                <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
-              @endforeach
-            </div>
-
-            <div class="col-md-4">
-              <h5 class="titulo">Docs. de Sugestão de Alterações</h5>
+            <div class="col-md-6">
+              <h5 class="titulo">Documentos de Sugestão de Alterações</h5>
               @if(!$docsSugestoes->isEmpty())
-                @foreach($docsSugestoes as $docSugestao)
-                  <h5><i>Versão {!! $docSugestao->versao !!}</i></h5>
-                  <p><strong>&nbsp;<a href="{!! action('DocumentosController@showDocSugestao', $docSugestao->cod_sug_alteracoes) !!}">Visualizar documento</a></strong></p>
-                @endforeach
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Versão</th>
+                      <th>Documento</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($docsSugestoes as $docSugestao)
+                      <td>{!! $docSugestao->versao !!}</td>
+                      <td><a href="{!! action('DocumentosController@showDocSugestao', $docSugestao->cod_sug_alteracoes) !!}">Visualizar</a></td>
+                    @endforeach
+                  </tbody>
+                </table>
               @else
-                <p>Nenhuma alteração foi sugerida ainda.</p>
+                <p class="alert alert-info">Nenhuma alteração foi sugerida até o momento.</p>
               @endif
             </div>
 
-            <div class="col-md-4">
-              <h5 class="titulo">Ofícios de Alterações</h5>
+            <div class="col-md-6">
+              <h5 class="titulo">Ofícios de Alteração</h5>
               @if(!$oficiosAlteracoes->isEmpty())
-                @foreach($oficiosAlteracoes as $oficioAlteracao)
-                  <h5><i>Versão {!! $oficioAlteracao->versao !!}</i></h5>
-                  <p><strong>&nbsp;<a href="{!! action('DocumentosController@showOficioAlteracao', $oficioAlteracao->cod_oficio) !!}">Visualizar documento</a></strong></p>
-                @endforeach
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Versão</th>
+                      <th>Documento</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($oficiosAlteracoes as $oficioAlteracao)
+                      <td>{!! $oficioAlteracao->versao !!}</td>
+                      <td><a href="{!! action('DocumentosController@showOficioAlteracao', $oficioAlteracao->cod_oficio) !!}">Visualizar</a></td>
+                    @endforeach
+                  </tbody>
+                </table>
               @else
-                <p>Nenhuma ofício foi enviado ainda.</p>
+                <p class="alert alert-info">Nenhum ofício foi enviado até o momento.</p>
               @endif
             </div>
-        </div>
+          </div>
 
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Enviar nova nersão da Obra</button>
           <hr/>
           <div class="row">
             <div class="col-md-12">
