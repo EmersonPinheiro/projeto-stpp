@@ -67,13 +67,20 @@
             </div>
             <!-- CORPO PAINEL -->
             <div class="panel-body">
-              @foreach(Auth::user()->notifications as $notification)
-                <div class="alert alert-info" role="alert">
-                  <p><span class="glyphicon glyphicon-pushpin glyphicon-space"></span>
-                  {{$notification->data['message_user']}}</p>
-                  <p><small>{{$notification->created_at}}</small></p>
+              @if(Auth::user()->notifications->isEmpty())
+                <div class="alert alert-info">
+                  <span class="glyphicon glyphicon-pushpin glyphicon-space"></span>
+                  Não há notificações.
                 </div>
-              @endforeach
+              @else
+                @foreach(Auth::user()->notifications as $notification)
+                  <div class="alert alert-info" role="alert">
+                    <p><span class="glyphicon glyphicon-pushpin glyphicon-space"></span>
+                    {{$notification->data['message_user']}}</p>
+                    <p><small>{{$notification->created_at}}</small></p>
+                  </div>
+                @endforeach
+              @endif
             </div> <!-- panel-body -->
           </div> <!-- panel -->
         </div> <!-- quadro-painel painel-notificacoes -->
