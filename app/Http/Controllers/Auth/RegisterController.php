@@ -94,7 +94,7 @@ class RegisterController extends Controller
             'email'=>'required|email|max:100',
             'password'=>'required|min:6|max:60|confirmed',
             'password_confirmation'=>'required|min:6|max:60',
-            'termos'=>'required'
+            //'termos'=>'required'
         ], $messages);
     }
 
@@ -196,6 +196,11 @@ class RegisterController extends Controller
 
           $grandeArea = GrandeArea::firstOrCreate([
             'nome'=>$data['grande_area'],
+          ]);
+
+          $areaConhecimento = AreaConhecimento::firstOrCreate([
+            'nome'=>$data['area_conhecimento'],
+            'Grande_Area_cod_grande_area'=>$grandeArea->cod_grande_area,
           ]);
 
           $usuarioParecerista = UsuarioParecerista::create([

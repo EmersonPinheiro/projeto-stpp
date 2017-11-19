@@ -68,18 +68,6 @@ class AdminTableSeeder extends Seeder
       'Usuario_cod_usuario'=>$user->cod_usuario,
     ]);
 
-    Telefone::create([
-      'numero'=>'00000000000',
-      'tipo'=>'1',
-      'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
-    ]);
-
-    Email::create([
-      'endereco'=>'gabrielmoliveira@gmail.com',
-      'tipo'=>'1',
-      'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
-    ]);
-
     $user->attachRole(2);
 
   }
