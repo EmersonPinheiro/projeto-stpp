@@ -49,7 +49,9 @@
                 <h5><i>Versão {!! $material->versao !!}</i></h5>
                 <p><strong><a href="{!! action('DocumentosController@downloadMaterialIdentificado', $material->cod_material) !!}">Baixar documento COM identificação</a></strong></p>
                 <p><strong><a href="{!! action('DocumentosController@downloadMaterialNaoIdentificado', $material->cod_material) !!}">Baixar documento SEM identificação</a></strong></p>
-                <p><strong>Imagens (zip, rar): </strong>imagens.zip<a href="">&nbsp;&nbsp;&nbsp;Baixar </a></p>
+                @if($material->url_imagens != null)
+                  <p><strong><a href="{!! action('DocumentosController@downloadImagens', $material->cod_material) !!}">Baixar Imagens</a></strong></a></p>
+                @endif
               @endforeach
             </div>
 
@@ -139,14 +141,20 @@
           <div class="modal-body">
             <form action="{!! route('enviarNovaVersao', $proposta->cod_proposta) !!}" method="post" enctype="multipart/form-data">
               <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-              <div class="form-group">
-                <label for="novo_documento_identificado">Documento COM identificação(.doc)</label>
-                <input type="file" class="form-control" id="novo_documento_identificado" name="novo_documento_identificado">
-                <br><label for="novo_documento_nao_identificado">Documento SEM identificação(.doc)</label>
-                <input type="file" class="form-control" id="novo_documento_nao_identificado" name="novo_documento_nao_identificado">
+              <input type="hidden" name="cod_obra" value="{!! $obra->cod_obra !!}">
+              <input type="hidden" name="cod_proposta" value="{!! $proposta->cod_proposta !!}">
 
-                <input type="hidden" name="cod_obra" value="{!! $obra->cod_obra !!}">
-                <input type="hidden" name="cod_proposta" value="{!! $proposta->cod_proposta !!}">
+              <div class="form-group">
+                <label for="novo_documento_identificado">Documento COM identificação (.doc)</label>
+                <input type="file" class="form-control" id="novo_documento_identificado" name="novo_documento_identificado">
+              </div>
+              <div class="form-group">
+                <label for="novo_documento_nao_identificado">Documento SEM identificação (.doc)</label>
+                <input type="file" class="form-control" id="novo_documento_nao_identificado" name="novo_documento_nao_identificado">
+              </div>
+              <div class="form-group">
+                <label for="novas_imagens">Imagens (.zip ou .rar)</label>
+                <input type="file" class="form-control" id="novas_imagens" name="novas_imagens">
               </div>
               <div class="form-group">
                 <label for="oficio">Ofício de Alterações (.pdf)</label>

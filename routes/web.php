@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::post('/propostas/{id?}/edit', 'PropostasController@update');
   Route::get('/propostas/{id?}/downloadMaterialIdentificado', 'DocumentosController@downloadMaterial');
   Route::get('/propostas/{id?}/downloadMaterialNaoIdentificado', 'DocumentosController@downloadMaterialNaoIdentificado');
+  Route::get('/propostas/{id?}/downloadImagens', 'DocumentosController@downloadImagens');
   Route::post('/propostas/{id?}/solicitarCancelamento', 'PropostasController@solicitarCancelamento');
   Route::get('/propostas/{id?}/convidar-parecerista', 'ConviteController@invite')->name('invite');
   Route::post('/propostas/{id?}/convidar-parecerista', 'ConviteController@process')->name('process');

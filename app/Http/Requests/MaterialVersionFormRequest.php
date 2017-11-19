@@ -28,6 +28,7 @@ class MaterialVersionFormRequest extends FormRequest
         return [
             'novo_documento_identificado'=>'required|file|mimes:doc,docx,odt',
             'novo_documento_nao_identificado'=>'required|file|mimes:doc,docx,odt',
+            'novas_imagens'=>'nullable|file|mimes:rar,zip',
             'oficio'=>'required|file|mimes:pdf',
         ];
     }
