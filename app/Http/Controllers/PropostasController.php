@@ -297,7 +297,23 @@ class PropostasController extends Controller
         $docsSugestoes = DocSugestaoAlteracoes::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->get();
         $oficiosAlteracoes = OficioAlteracoes::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->get();
 
-        return view('propostas.show', compact('obra', 'autores', 'palavrasChave', 'materiais', 'proposta', 'docsSugestoes', 'oficiosAlteracoes'));
+        $tecnicos = Pessoa::join('Tecnico_Catalografia', 'Tecnico_Catalografia.Pessoa_cod_pessoa', '=', 'Pessoa.cod_pessoa')
+                    ->join('Obra_Tecnico_Catalografia', 'Obra_Tecnico_Catalografia.Tecnico_Catalografia_cod_tec_catalog', '=', 'Tecnico_Catalografia.cod_tec_catalog')
+                    ->join('Obra', 'Obra_Tecnico_Catalografia.Obra_cod_obra', '=', 'Obra.cod_obra')
+                    ->where('Obra.cod_obra', '=', $obra->cod_obra)
+                    ->get();
+
+        $funcoes = array(
+          'revisor_ortografico' => $tecnicos->where('funcao', '1')->first(),
+          'revisor_ingles' => $tecnicos->where('funcao', '2')->first(),
+          'revisor_espanhol' => $tecnicos->where('funcao', '3')->first(),
+          'criador_capa' => $tecnicos->where('funcao', '4')->first(),
+          'diagramador' => $tecnicos->where('funcao', '5')->first(),
+          'coordenacao_editorial' => $tecnicos->where('funcao', '6')->first(),
+          'projetista_grafico' => $tecnicos->where('funcao', '7')->first(),
+        );
+
+        return view('propostas.show', compact('obra', 'autores', 'palavrasChave', 'materiais', 'proposta', 'docsSugestoes', 'oficiosAlteracoes', 'funcoes', 'tecnicos'));
     }
 
     /**
