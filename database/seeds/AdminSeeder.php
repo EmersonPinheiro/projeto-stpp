@@ -48,6 +48,7 @@ class AdminTableSeeder extends Seeder
     $pessoa = Pessoa::firstOrCreate([
       'cpf'=>'09165842910',
       'rg'=>'123377656',
+      'slug'=>uniqid(10),
       'nome'=>'Gabriel',
       'sobrenome'=>'Moreira',
       'sexo'=>'M',

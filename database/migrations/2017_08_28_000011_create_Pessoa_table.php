@@ -24,6 +24,7 @@ class CreatePessoaTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('cod_pessoa');
+            $table->string('slug')->nullable();
             $table->string('cpf', 11)->unique();
             $table->string('rg', 14)->unique();
             $table->string('nome', 50);

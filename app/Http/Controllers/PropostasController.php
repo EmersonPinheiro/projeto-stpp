@@ -202,14 +202,21 @@ class PropostasController extends Controller
         if($request->file('imagens') != null)
         {
           $imgpath = Storage::putFile('imagens', $request->file('imagens'), 'private');
+          Material::create([
+            'url_documento'=>$docpathident,
+            'url_documento_nao_ident'=>$docpathnaoident,
+            'url_imagens'=>$imgpath,
+            'Obra_cod_obra'=>$obra->cod_obra,
+          ]);
+        }
+        else {
+          Material::create([
+            'url_documento'=>$docpathident,
+            'url_documento_nao_ident'=>$docpathnaoident,
+            'Obra_cod_obra'=>$obra->cod_obra,
+          ]);
         }
 
-        Material::create([
-          'url_documento'=>$docpathident,
-          'url_documento_nao_ident'=>$docpathnaoident,
-          'url_imagens'=>$imgpath,
-          'Obra_cod_obra'=>$obra->cod_obra,
-        ]);
 
         Telefone::create([
           'numero'=>$request->get('telefone'),
