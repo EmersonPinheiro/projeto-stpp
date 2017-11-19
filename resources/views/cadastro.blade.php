@@ -27,7 +27,7 @@
             <!-- INFORMAÇÕES -->
             <div class="alert alert-info alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <span class="glyphicon glyphicon-info-sign glyphicon-space" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-question-sign glyphicon-space" aria-hidden="true"></span>
               Preencha o formulário abaixo para ter acesso ao sistema. Os campos com asterisco (*) são obrigatórios.
             </div>
           @endif
@@ -69,7 +69,6 @@
                   @endif
                 </div>
 
-                <!-- TODO: RECUPERAR VALOR ANTIGO!!!! -->
                 <div class="form-group col-md-2 {{ $errors->has('sexo') ? 'has-error' :'' }}">
                   <label for="sexo" class="control-label">Sexo *</label>
                   <select class="form-control" id="sexo" name="sexo">
@@ -89,7 +88,7 @@
                 <div class="form-group col-md-4 {{ $errors->has('cpf') ? 'has-error' :'' }}">
                   <label class="control-label" for="cpf">CPF * </label>
                   <!-- AJUDA -->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="O campo CPF deve conter apenas números. Não é permitida a inserção de pontos ou traços." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="O campo CPF deve conter apenas números. Não é permitida a inserção de pontos ou traços." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" id="cpf" name="cpf" class="form-control" placeholder="CPF (somente números)" value="{{old('cpf')}}" maxlength="11">
                   @if ($errors->has('cpf'))
                       <span class="help-block">
@@ -101,7 +100,7 @@
                 <div class="form-group col-md-4 {{ $errors->has('rg') ? 'has-error' :'' }}">
                   <label class="control-label" for="rg">RG *</label>
                   <!-- AJUDA -->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="O campo RG deve conter apenas números. Não é permitida a inserção de pontos ou traços." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="O campo RG deve conter apenas números. Não é permitida a inserção de pontos ou traços." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" id="rg" name="rg" class="form-control" placeholder="RG (somente números)" value="{{old('rg')}}" maxlength="14">
                   @if ($errors->has('rg'))
                       <span class="help-block">
@@ -110,7 +109,6 @@
                   @endif
                 </div>
 
-                <!-- TODO: RECUPERAR VALOR ANTIGO!!!! -->
                 <div class="form-group col-md-4 {{ $errors->has('estado_civil') ? 'has-error' :'' }}">
                   <label class="control-label" for="estado_civil">Estado Civil *</label>
                   <select class="form-control" id="estado_civil" name="estado_civil">
@@ -138,7 +136,7 @@
                 <div class="form-group col-md-5 {{ $errors->has('instituicao') ? 'has-error' :'' }}">
                   <label class="control-label" for="instituicao">Instituição *</label>
                   <!-- AJUDA -->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com a Instituição a qual você está vinculado." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com a Instituição a qual você está vinculado." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="instituicao" name="instituicao" placeholder="Instituição" value="{{old('instituicao')}}" maxlength="100">
                   @if ($errors->has('instituicao'))
                       <span class="help-block">
@@ -160,7 +158,7 @@
                 <div class="form-group col-md-5 {{ $errors->has('vinculo') ? 'has-error' :'' }}">
                   <label class="control-label" for="vinculo">Vínculo Institucional</label>
                   <!-- AJUDA -->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com o Setor ou Departamento aos quais você está vinculado (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com o Setor ou Departamento aos quais você está vinculado (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="vinculo" name="vinculo" placeholder="Setor, Departamento, ..." value="{{old('vinculo')}}" maxlength="200">
                   @if ($errors->has('vinculo'))
                       <span class="help-block">
@@ -174,7 +172,7 @@
                 <div class="form-group col-md-6 {{ $errors->has('grande_area') ? 'has-error' :'' }}">
                   <label class="control-label" for="grande_area">Grande Área *</label>
 
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Grande Área definida pelo CNPQ." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Grande Área definida pelo CNPQ." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="grande_area" name="grande_area" placeholder="Grande Área" value="{{old('grande_area')}}" maxlength="100">
                   @if ($errors->has('grande_area'))
                       <span class="help-block">
@@ -186,7 +184,7 @@
                 <div class="form-group col-md-6 {{ $errors->has('area_conhecimento') ? 'has-error' :'' }}">
                   <label class="control-label" for="area_conhecimento">Área de Conhecimento *</label>
 
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Área de Conhecimento definida pelo CNPQ." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Área de Conhecimento definida pelo CNPQ." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="area_conhecimento" name="area_conhecimento" placeholder="Área de Conhecimento" value="{{old('area_conhecimento')}}" maxlength="100">
                   @if ($errors->has('area_conhecimento'))
                       <span class="help-block">
@@ -200,7 +198,7 @@
                   <div class="form-group col-md-6 {{ $errors->has('subarea') ? 'has-error' :'' }}">
                   <label class="control-label" for="subarea">Subarea</label>
 
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Subarea definida pelo CNPQ (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Subarea definida pelo CNPQ (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="subarea" name="subarea" placeholder="Subarea" value="{{old('subarea')}}" maxlength="100">
                   @if ($errors->has('subarea'))
                       <span class="help-block">
@@ -212,7 +210,7 @@
                 <div class="form-group col-md-6 {{ $errors->has('especialidade') ? 'has-error' :'' }}">
                   <label class="control-label" for="especialidade">Especialidade</label>
 
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Especialidade definida pelo CNPQ (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Especialidade definida pelo CNPQ (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="especialidade" name="especialidade" placeholder="Especialidade" value="{{old('especialidade')}}" maxlength="100">
                   @if ($errors->has('especialidade'))
                       <span class="help-block">
@@ -230,7 +228,7 @@
                 <div class="form-group col-md-4 {{ $errors->has('logradouro') ? 'has-error' :'' }}">
                   <label class="control-label" for="logradouro">Logradouro *</label>
                   <!-- AJUDA -->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo sua Rua, Avenida, Praça, etc. e o número de sua residência." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo sua Rua, Avenida, Praça, etc. e o número de sua residência." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="logradouro" name="logradouro" placeholder="Rua, Avenida, Praça, ..." value="{{old('logradouro')}}" maxlength="255">
                   @if ($errors->has('logradouro'))
                       <span class="help-block">
@@ -252,7 +250,7 @@
                 <div class="form-group col-md-4 {{ $errors->has('cep') ? 'has-error' :'' }}">
                   <label class="control-label" for="cep">CEP *</label>
                   <!-- AJUDA-->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="O campo CEP deve conter apenas números. Não é permitida a inserção de traços." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="O campo CEP deve conter apenas números. Não é permitida a inserção de traços." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP (somente números)"value="{{old('cep')}}">
                   @if ($errors->has('cep'))
                       <span class="help-block">
@@ -298,7 +296,7 @@
                 <div class="form-group col-md-3 {{ $errors->has('telefone') ? 'has-error' :'' }}">
                   <label class="control-label" for="telefone">Telefone *</label>
                   <!-- AJUDA-->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="O campo Telefone deve conter apenas números. Não é permitida a inserção de parênteses ou traços. Informe o deu DDD." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="O campo Telefone deve conter apenas números. Não é permitida a inserção de parênteses ou traços. Informe o deu DDD." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Telefone" value="{{old('telefone')}}" maxlength="14">
                   @if ($errors->has('telefone'))
                       <span class="help-block">
@@ -310,7 +308,7 @@
                 <div class="form-group col-md-3 {{ $errors->has('telefone_secundario') ? 'has-error' :'' }}">
                   <label class="control-label" for="telefone_secundario">Telefone secundário</label>
                   <!-- AJUDA-->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="O campo Telefone Secundário deve conter apenas números. Não é permitida a inserção de parênteses ou traços. Informe o deu DDD. Este campo é opcional." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="O campo Telefone Secundário deve conter apenas números. Não é permitida a inserção de parênteses ou traços. Informe o deu DDD. Este campo é opcional." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="telefone_secundario" name="telefone_secundario" placeholder="Telefone secundário" value="{{old('telefone_secundario')}}" maxlength="14">
                   @if ($errors->has('telefone_secundario'))
                       <span class="help-block">
@@ -322,7 +320,7 @@
                 <div class="form-group col-md-6 {{ $errors->has('email_secundario') ? 'has-error' :'' }}">
                   <label class="control-label" for="email_secundario">E-mail secundário</label>
                   <!-- AJUDA-->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Este e-mail <strong>NÃO</strong> será utilizado por você para acessar o sistema (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Este e-mail <strong>NÃO</strong> será utilizado por você para acessar o sistema (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="email" class="form-control" id="email_secundario" name="email_secundario" placeholder="E-mail secundário" value="{{old('email_secundario')}}" maxlength="100">
                   @if ($errors->has('email_secundario'))
                   <span class="help-block">
@@ -343,7 +341,7 @@
                 <div class="form-group col-md-12 {{ $errors->has('email') ? 'has-error' :'' }}">
                   <label class="control-label" for="email-cad">E-mail *</label>
                   <!-- AJUDA-->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Este e-mail será utilizado por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Este e-mail será utilizado por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" value="{{old('email')}}" maxlength="100">
                   @if ($errors->has('email'))
                   <span class="help-block">
@@ -354,10 +352,10 @@
               </div>
 
               <div class="row">
-                <div class="form-group col-md-6 {{ $errors->has('password') ? 'has-error' :'' }}">
+                <div class="form-group col-md-6 {{ $errors->has('password') | !$errors->isEmpty() ? 'has-error' :'' }}">
                   <label class="control-label" for="senha">Senha *</label>
                   <!-- AJUDA-->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Sua senha deve conter no mínimo 6 caracteres." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Sua senha deve conter no mínimo 6 caracteres." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="password" class="form-control" id="senha" name="password" placeholder="Senha" maxlength="60">
                   @if ($errors->has('password'))
                   <span class="help-block">
@@ -366,7 +364,7 @@
                   @endif
                 </div>
 
-                <div class="form-group col-md-6 {{ $errors->has('password_confirmation') ? 'has-error' :'' }}">
+                <div class="form-group col-md-6 {{ $errors->has('password_confirmation') | !$errors->isEmpty() ? 'has-error' :'' }}">
                   <label class="control-label" for="confirma_senha">Repita sua senha *</label>
                   <input type="password" class="form-control" id="confirma_senha" name="password_confirmation" placeholder="Repita sua senha" maxlength="60">
                   @if ($errors->has('password_confirmation'))
@@ -378,7 +376,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-12 checkbox {{ $errors->has('termos') ? 'has-error' :'' }}">
+                <div class="col-md-12 checkbox {{ $errors->has('termos') | !$errors->isEmpty() ? 'has-error' :'' }}">
                   <label for="termos">
                     <input type="checkbox" name="termos" id="termos"> * Li e concordo com os <a href="/termos-de-uso">Termos de Uso</a> do sistema.
                   </label>
