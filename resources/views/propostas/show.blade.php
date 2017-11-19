@@ -15,7 +15,8 @@
 
           @if (!$errors->isEmpty())
             <div class="alert alert-danger">
-              <p><strong>Ops! Algo deu errado.</strong></p>
+              <p><span class="glyphicon glyphicon-exclamation-sign glyphicon-space"></span>
+              <strong>Ops! Algo deu errado.</strong></p>
               @foreach ($errors->all() as $error)
               <p>{{ $error }}</p>
               @endforeach
