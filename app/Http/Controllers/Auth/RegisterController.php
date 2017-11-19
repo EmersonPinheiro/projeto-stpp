@@ -124,6 +124,7 @@ class RegisterController extends Controller
         ]);
 
         $pessoa = Pessoa::create([
+          'slug'=>uniqid(),
           'cpf'=>$data['cpf'],
           'rg'=>$data['rg'],
           'nome'=>$data['nome'],

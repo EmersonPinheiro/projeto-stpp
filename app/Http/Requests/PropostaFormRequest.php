@@ -47,9 +47,9 @@ class PropostaFormRequest extends FormRequest
             'instituicao'=>'required|min:2|max:100',
             'sigla'=>'nullable|min:2|max:20',
             'vinculo'=>'nullable|min:2|max:200',
-            'documento_s_identificacao'=>'required|mimes:doc, docx, odt',
-            'documento_c_identificacao'=>'required|mimes:doc, docx, odt',
-            'imagens'=>'nullable|file|mimes:rar, zip',
+            'documento_s_identificacao'=>'required|mimes:doc,docx,odt',
+            'documento_c_identificacao'=>'required|mimes:doc,docx,odt',
+            'imagens'=>'nullable|file|mimes:rar,zip',
 
         ];
     }

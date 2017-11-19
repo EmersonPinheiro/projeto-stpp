@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/admin/painel-administrador/{id?}/showDocSugestao', 'DocumentosController@showDocSugestao');
   Route::get('/admin/painel-administrador/{id?}/showOficioAlteracao', 'DocumentosController@showOficioAlteracao');
   Route::get('/admin/painel-administrador/{id?}/relatorio', 'RelatorioController@index');
-  Route::get('/perfil/{id}', 'PerfilController@show')->name('perfil');
+  Route::get('/perfil/{slug}', 'PerfilController@show')->name('perfil');
 });
 
 Route::get('/accept/{token}', 'ConviteController@accept')->name('accept');

@@ -11,6 +11,9 @@ use App\Pessoa;
 use App\Parecer;
 use App\DocSugestaoAlteracoes;
 use App\OficioAlteracoes;
+use App\GrandeArea;
+use App\Instituicao;
+use App\AreaConhecimento;
 use Illuminate\Http\Request;
 use App\Http\Requests\PropostaEditFormRequest;
 use App\Http\Requests\SolicitarNovaVersaoFormRequest;
@@ -154,13 +157,21 @@ class AdminController extends Controller
         abort(404);
       }
 
-      $obra = Obra::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->first();
+      $obra = Obra::join('Grande_Area', 'Grande_Area.cod_grande_area', 'Obra.Grande_Area_cod_grande_area')
+                  ->join('Area_Conhecimento', 'Area_Conhecimento.Grande_Area_cod_grande_area', 'Grande_Area.cod_grande_area')
+                  ->leftJoin('Subarea', 'Subarea.Area_Conhecimento_cod_area_conhec', 'Area_Conhecimento.cod_area_conhec')
+                  ->leftJoin('Especialidade', 'Especialidade.Subarea_cod_subarea', 'Subarea.cod_subarea')
+                  ->select('Obra.*', 'Grande_Area.nome as grande_area_obra', 'Area_Conhecimento.nome as area_conhecimento_obra', 'Subarea.nome as subarea_obra', 'Especialidade.nome as especialidade_obra')
+                  ->where('Proposta_cod_proposta', $proposta->cod_proposta)
+                  ->first();
 
       $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
-                 ->join('Obra_Autor', 'Autor.cod_autor', 'Obra_Autor.Autor_cod_autor')
+                 ->join('Obra_Autor', 'Obra_Autor.Autor_cod_autor', 'Autor.cod_autor')
                  ->join('Obra', 'Obra.cod_obra', '=', 'Obra_Autor.Obra_cod_obra')
+                 ->join('Instituicao', 'Autor.Instituicao_cod_instituicao', 'Instituicao.cod_instituicao')
+                 ->leftJoin('Vinculo_Institucional', 'Vinculo_Institucional.Instituicao_cod_instituicao', 'Instituicao.cod_instituicao')
                  ->where('Obra.cod_obra', $obra->cod_obra)
-                 ->select('Pessoa.*')
+                 ->select('Pessoa.*', 'Autor.*', 'Instituicao.nome as nome_instituicao', 'Vinculo_Institucional.nome as nome_vinculo', 'Instituicao.sigla')
                  ->get();
 
       $materiais = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
@@ -209,9 +220,6 @@ class AdminController extends Controller
                     'subtitulo'=>$request->get('subtitulo'),
                     'genese_relevancia'=>$request->get('genese_relevancia'),
                     'resumo'=>$request->get('resumo'),
-                    'volume'=>$request->get('volume'),
-                    'ano_publicacao'=>$request->get('ano'),
-                    'num_paginas'=>$request->get('num_paginas'),
                   ]);
 
       if ($proposta->situacao != $request->get('situacao')) {
@@ -225,6 +233,30 @@ class AdminController extends Controller
                        ->first();
 
         Notification::send($usuario, new SituacaoAlterada($proposta));
+      }
+
+      GrandeArea::where('cod_grande_area', '=', $request->get('cod_grande_area'))
+        ->update([
+          'nome'=>$request->get('grande_area_obra'),
+        ]);
+
+      AreaConhecimento::where('cod_area_conhec', '=', $request->get('cod_area_conhec'))
+        ->update([
+          'nome'=>$request->get('area_conhecimento_obra'),
+        ]);
+
+      if ($request->get('subarea_obra') != null) {
+        Subarea::where('cod_subarea', '=', $request->get('cod_subarea'))
+          ->update([
+            'nome'=>$request->get('subarea_obra'),
+          ]);
+      }
+
+      if ($request->get('especialidade_obra') != null) {
+        Especialidade::where('cod_especialidade', '=', $request->get('cod_especialidade'))
+          ->update([
+            'nome'=>$request->get('especialidade_obra'),
+          ]);
       }
 
       //TODO: Atualizar um array de autores/tecnicos.

@@ -19,7 +19,7 @@
             </div>
           </div>
 
-          <h3><span class="glyphicon glyphicon-user glyphicon-space"></span><strong>Perfil de INSERIR NOME DA PESSOA</strong></h3>
+          <h3><span class="glyphicon glyphicon-user glyphicon-space"></span><strong>Perfil de {!! $pessoa->nome !!} {!! $pessoa->sobrenome !!}</strong></h3>
 
           <div class="row">
             <div class="col-md-6">
@@ -49,14 +49,18 @@
                   <td><strong>Estado Civil: </strong></td>
                   <td> {!! $pessoa->estado_civil !!} </td>
                 </tr>
+                @if($instituicaoVinculo != null)
                 <tr>
                   <td><strong>Instituicao: </strong></td>
-                  <td>  </td>
+                  <td> {!! $instituicaoVinculo->nome_instituicao !!}
+
+                    @if($instituicaoVinculo->sigla != null) - {!! $instituicaoVinculo->sigla !!} @endif</td>
                 </tr>
                 <tr>
                   <td><strong>Vínculo Institucional: </strong></td>
-                  <td> INSERIR </td>
+                  <td> {!! $instituicaoVinculo->nome_vinculo !!} </td>
                 </tr>
+                @endif
               </table>
             </div>
 
@@ -89,27 +93,32 @@
                 </tr>
                 <tr>
                   <td><strong>Telefone: </strong></td>
-                  <td> INSERIR </td>
+                  <td> {!! $telefone->numero !!} </td>
                 </tr>
                 <tr>
                   <td><strong>Telefone Secundário: </strong></td>
-                  <td> INSERIR </td>
+                  <td>  </td>
+                </tr>
+                <tr>
+                  <td><strong>E-mail: </strong></td>
+                  <td> {!! $email->endereco !!} </td>
                 </tr>
                 <tr>
                   <td><strong>E-mail Secundário: </strong></td>
-                  <td> INSERIR </td>
+                  <td>  </td>
                 </tr>
               </table>
             </div>
           </div>
 
+          @if($usuario->email == $email->endereco  )
           <div class="row">
             <div class="col-md-12">
               <h4 class="titulo">Dados de Acesso ao Sistema</h4>
               <table class="table table-striped">
                 <tr>
                   <td><strong>E-mail: </strong></td>
-                  <td> INSERIR </td>
+                  <td> {!! $email->endereco !!} </td>
                   <td><strong>Senha: </strong></td>
                   <td >
                     <a class="btn btn-primary" href="" role="button"><span class="glyphicon glyphicon-lock glyphicon-space"></span>Alterar sua Senha</a>
@@ -118,7 +127,7 @@
               </table>
             </div>
           </div>
-
+          @endif
         </div> <!-- quadro -->
       </div>
     </div>

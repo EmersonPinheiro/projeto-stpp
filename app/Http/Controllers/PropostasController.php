@@ -69,7 +69,7 @@ class PropostasController extends Controller
 
       $propostas = Proposta::join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')
                         ->where('Usuario_Propositor_cod_propositor', $propositor->cod_propositor)
-                        ->select('Obra.titulo', 'Obra.subtitulo', 'Obra.genese_relevancia', 'Obra.cod_obra', 'Proposta.data_envio', 'Proposta.cod_proposta', 'Proposta.situacao')
+                        ->select('Obra.*', 'Proposta.data_envio', 'Proposta.cod_proposta', 'Proposta.situacao')
                         ->get();
 
       return view('propostas', compact('propostas'));
@@ -154,6 +154,7 @@ class PropostasController extends Controller
 
         if (!$pessoa = Pessoa::where('cpf', '=', $request->get('cpf'))->first()) {  // Verifica cpf duplicado.
           $pessoa = Pessoa::create([
+            'slug'=>uniqid(),
             'cpf'=>$request->get('cpf'),
             'rg'=>$request->get('rg'),
             'nome'=>$request->get('nome'),
@@ -356,6 +357,7 @@ class PropostasController extends Controller
                   ->select('Obra.*', 'Grande_Area.nome as grande_area_obra', 'Area_Conhecimento.nome as area_conhecimento_obra', 'Subarea.nome as subarea_obra', 'Especialidade.nome as especialidade_obra')
                   ->where('Proposta_cod_proposta', $id)
                   ->first();
+
 
       $autores = Pessoa::join('Autor', 'Pessoa.cod_pessoa', '=', 'Autor.Pessoa_cod_pessoa')
                  ->join('Obra_Autor', 'Obra_Autor.Autor_cod_autor', 'Autor.cod_autor')
