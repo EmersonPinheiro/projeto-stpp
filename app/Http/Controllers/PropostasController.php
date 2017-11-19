@@ -199,12 +199,15 @@ class PropostasController extends Controller
         $docpathident = Storage::putFile('documentos', $request->file('documento_c_identificacao'), 'private');
         $docpathnaoident = Storage::putFile('documentos', $request->file('documento_s_identificacao'), 'private');
 
-        //$imgpath = Storage::putFile('imagens', $request->file('imagens'), 'public');
+        if($request->file('imagens') != null)
+        {
+          $imgpath = Storage::putFile('imagens', $request->file('imagens'), 'private');
+        }
 
         Material::create([
           'url_documento'=>$docpathident,
           'url_documento_nao_ident'=>$docpathnaoident,
-          //'url_imagens'=>$url_imagens,
+          'url_imagens'=>$imgpath,
           'Obra_cod_obra'=>$obra->cod_obra,
         ]);
 
@@ -285,7 +288,6 @@ class PropostasController extends Controller
                    ->where('Obra.cod_obra', $obra->cod_obra)
                    ->select('Pessoa.*')
                    ->get();
-
 
         $materiais = Material::join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
                   ->where('cod_obra', $obra->cod_obra)
@@ -419,8 +421,7 @@ class PropostasController extends Controller
     public function solicitarCancelamento(CancelamentoFormRequest $request, $id)
     {
 
-        $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')
-                             ->get();
+        $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')->get();
 
         Notification::send($admin->all(), new CancelamentoSolicitado($id, $request->get('justificativa')));
 
@@ -437,20 +438,30 @@ class PropostasController extends Controller
       $docpathnaoident = Storage::putFile('documentos', $request->file('novo_documento_nao_identificado'), 'private');
       $ofcpath = Storage::putFile('oficios-de-alteracao', $request->file('oficio'), 'private');
 
-      $versaoMaterial = DB::table('Material')
-        ->join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
-        ->where('cod_obra', $request->get('cod_obra'))
-        ->max('Material.versao');
+      $cod_obra = $request->get('cod_obra');
+      $material = Material::where('versao', '=', DB::raw("(SELECT max(versao) FROM Material WHERE Material.Obra_cod_obra = $cod_obra)"))->first();
 
-      DB::table('Material')
-        ->join('Obra', 'Material.Obra_cod_obra', '=', 'Obra.cod_obra')
-        ->where('cod_obra', $request->get('cod_obra'))
-        ->insert([
-          'versao'=>$versaoMaterial + 1,
+      if($request->file('novas_imagens') != null)
+      {
+        $imgpath = Storage::putFile('imagens', $request->file('novas_imagens'), 'private');
+
+        Material::create([
+            'versao'=>$material->versao + 1,
+            'url_documento'=>$docpathident,
+            'url_documento_nao_ident'=>$docpathnaoident,
+            'url_imagens'=>$imgpath,
+            'Obra_cod_obra'=>$request->get('cod_obra'),
+        ]);
+      }
+      else{
+        Material::create([
+          'versao'=>$material->versao + 1,
           'url_documento'=>$docpathident,
           'url_documento_nao_ident'=>$docpathnaoident,
+          'url_imagens'=>$material->url_imagens,
           'Obra_cod_obra'=>$request->get('cod_obra'),
-      ]);
+        ]);
+      }
 
       if (($versaoOficio = OficioAlteracoes::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->max('versao')) == null) {
         $versaoOficio = 0;

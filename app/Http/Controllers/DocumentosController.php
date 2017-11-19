@@ -17,18 +17,29 @@ class DocumentosController extends Controller
 {
     public function downloadMaterialIdentificado($id)
     {
-        $doc = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento')->first();
-        $pathToFile = storage_path()."/app/".$doc->url_documento;
+        $material = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento')->first();
+        $pathToFile = storage_path()."/app/".$material->url_documento;
         return response()->download($pathToFile);
       ///IMPLEMENTAR DOWNLOAD DO ZIP DAS IMAGENS
     }
 
     public function downloadMaterialNaoIdentificado($id)
     {
-        $doc = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento_nao_ident')->first();
-        $pathToFile = storage_path()."/app/".$doc->url_documento_nao_ident;
+        $material = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento_nao_ident')->first();
+        $pathToFile = storage_path()."/app/".$material->url_documento_nao_ident;
         return response()->download($pathToFile);
 
+    }
+
+    public function downloadImagens($id)
+    {
+        $material = DB::table('Material')->where('cod_material', $id)->select('Material.url_imagens')->first();
+
+        if ($material->url_imagens == null) {
+          return redirect()->back()->with('status', 'Desculpe, não há imagens cadastradas para esta versão do material.');
+        }
+        $pathToFile = storage_path()."/app/".$material->url_imagens;
+        return response()->download($pathToFile);
     }
 
     public function showDocSugestao($id)
@@ -47,8 +58,8 @@ class DocumentosController extends Controller
 
     public function showMaterialParecerista($id)
     {
-      $doc = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento_parecerista')->first();
-      $pathToFile = storage_path()."/app/".$doc->url_documento_parecerista;
+      $material = DB::table('Material')->where('cod_material', $id)->select('Material.url_documento_parecerista')->first();
+      $pathToFile = storage_path()."/app/".$material->url_documento_parecerista;
       return response()->file($pathToFile);
     }
 
