@@ -17,6 +17,7 @@ Route::get('/cadastro', 'PagesController@cadastro')->middleware('guest'); //RETI
 Route::get('/register', 'PagesController@cadastro')->middleware('guest');
 Route::get('/contato', 'PagesController@contato');
 Route::get('/ajuda', 'PagesController@ajuda');
+Route::get('/termos-de-uso', 'PagesController@termosDeUso');
 
 Route::group(['middleware' => ['auth']], function () {
 

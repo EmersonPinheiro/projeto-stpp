@@ -13,7 +13,7 @@
           <a href="/home"><span class="glyphicon glyphicon-menu-left"></span>Voltar para a Página Inicial</a>
 
           <!-- TÍTULO -->
-          <h3><span class="glyphicon glyphicon-user glyphicon-space"></span>Cadastro de Propositor</h3>
+          <h3><span class="glyphicon glyphicon-user glyphicon-space"></span><strong>Cadastro de Propositor</strong></h3>
 
           @if (!$errors->isEmpty())
             <!-- ERRO -->
@@ -57,7 +57,6 @@
                           <span class="text-danger"><strong>{{ $errors->first('nome') }}</strong></span>
                       </span>
                   @endif
-
                 </div>
 
                 <div class="form-group col-md-5 {{ $errors->has('sobrenome') ? 'has-error' :'' }}">
@@ -74,8 +73,9 @@
                 <div class="form-group col-md-2 {{ $errors->has('sexo') ? 'has-error' :'' }}">
                   <label for="sexo" class="control-label">Sexo *</label>
                   <select class="form-control" id="sexo" name="sexo">
-                    <option value="F" selected>F</option>
-                    <option value="M">M</option>
+                    <option value="">Selecione</option>
+                    <option value="F" @if (old('sexo') == 'F') selected="selected" @endif>F</option>
+                    <option value="M" @if (old('sexo') == 'M') selected="selected" @endif>M</option>
                   </select>
                   @if ($errors->has('sexo'))
                       <span class="help-block">
@@ -114,12 +114,13 @@
                 <div class="form-group col-md-4 {{ $errors->has('estado_civil') ? 'has-error' :'' }}">
                   <label class="control-label" for="estado_civil">Estado Civil *</label>
                   <select class="form-control" id="estado_civil" name="estado_civil">
-                    <option value="Solteiro">Solteiro</option>
-                    <option value="Casado">Casado</option>
-                    <option value="Separado">Separado</option>
-                    <option value="Divorciado">Divorciado</option>
-                    <option value="Viúvo">Viúvo</option>
-                    <option value="Amasiado">Amasiado</option>
+                    <option value="">Selecione</option>
+                    <option value="Solteiro" @if (old('estado_civil') == 'Solteiro') selected="selected" @endif>Solteiro</option>
+                    <option value="Casado" @if (old('estado_civil') == 'Casado') selected="selected" @endif>Casado</option>
+                    <option value="Separado" @if (old('estado_civil') == 'Separado') selected="selected" @endif>Separado</option>
+                    <option value="Divorciado" @if (old('estado_civil') == 'Divorciado') selected="selected" @endif>Divorciado</option>
+                    <option value="Viúvo" @if (old('estado_civil') == 'Viúvo') selected="selected" @endif>Viúvo</option>
+                    <option value="Amasiado" @if (old('estado_civil') == 'Amasiado') selected="selected" @endif>Amasiado</option>
                   </select>
                   @if ($errors->has('estado_civil'))
                       <span class="help-block">
@@ -375,7 +376,22 @@
                   @endif
                 </div>
               </div>
+
+              <div class="row">
+                <div class="col-md-12 checkbox {{ $errors->has('termos') ? 'has-error' :'' }}">
+                  <label for="termos">
+                    <input type="checkbox" name="termos" id="termos"> * Li e concordo com os <a href="/termos-de-uso">Termos de Uso</a> do sistema.
+                  </label>
+                  @if ($errors->has('termos'))
+                  <span class="help-block">
+                    <span class="text-danger"><strong>{{ $errors->first('termos') }}</strong></span>
+                  </span>
+                  @endif
+                </div>
+              </div>
             </fieldset>
+
+            <hr/>
 
             <div class="row">
               <div class="col-md-4 col-md-offset-4">

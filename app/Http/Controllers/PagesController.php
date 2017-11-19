@@ -37,4 +37,8 @@ class PagesController extends Controller
     {
         return view('modo-acesso');
     }
+    public function termosDeUso()
+    {
+      return view('termos-de-uso');
+    }
 }
