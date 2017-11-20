@@ -27,6 +27,7 @@ class CreateObraTable extends Migration
             $table->string('titulo', 100);
             $table->string('subtitulo', 100)->nullable();
             $table->string('resumo', 1000);
+            $table->tinyInteger('categoria');
             $table->string('genese_relevancia', 10000);
             $table->enum('tipo', ['Livro', 'Coletânea']);
             $table->integer('edicao')->nullable();

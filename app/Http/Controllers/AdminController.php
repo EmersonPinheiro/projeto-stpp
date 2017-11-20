@@ -85,13 +85,6 @@ class AdminController extends Controller
         if (($proposta = Proposta::where('cod_proposta', '=', $id)->first()) == null) {
           abort(404);
         }
-/*
-        $propositor = UsuarioPropositor::join('Proposta', 'Proposta.Usuario_Propositor_cod_propositor', '=', 'cod_propositor')
-                    ->where('Proposta.cod_proposta', '=', $proposta->cod_proposta)
-                    ->select('Usuario_Propositor.*')
-                    ->first();
-*/
-
 
         $obra = Obra::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->first();
 
@@ -101,15 +94,7 @@ class AdminController extends Controller
                    ->where('Obra.cod_obra', $obra->cod_obra)
                    ->select('Pessoa.*')
                    ->get();
-/*
-        $pareceristasPareceres = Pessoa::join('Usuario', 'Pessoa.cod_pessoa', '=', 'Usuario.Pessoa_cod_pessoa')
-                   ->join('Usuario_Parecerista', 'Usuario.cod_usuario', '=', 'Usuario_Parecerista.Usuario_cod_usuario')
-                   ->join('Parecer', 'Usuario_Parecerista.cod_parecerista', '=', 'Parecer.Usuario_Parecerista_cod_parecerista')
-                   ->join('Proposta', 'Proposta.cod_proposta', 'Parecer.Proposta_cod_proposta')
-                   ->where('cod_proposta', $proposta->cod_proposta)
-                   ->select('Pessoa.*', 'Parecer.*')
-                   ->get();
-*/
+
         $pareceristasPareceres = Parecer::join('Usuario_Parecerista', 'Usuario_Parecerista.cod_parecerista', '=', 'Parecer.Usuario_Parecerista_cod_parecerista')
                   ->join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Parecerista.Usuario_cod_usuario')
                   ->join('Pessoa', 'Pessoa.cod_pessoa', '=', 'Usuario.Pessoa_cod_pessoa')

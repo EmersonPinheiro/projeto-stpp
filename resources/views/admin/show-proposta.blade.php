@@ -41,6 +41,13 @@
           @foreach($autores as $autor)
             <p>{!! $autor->nome !!} {!! $autor->sobrenome !!}</p>
           @endforeach
+          <p><strong>Categoria da Obra: </strong>
+            @if($obra->categoria == 1)
+              Livro
+            @elseif($obra->categoria == 2)
+              Coletânea
+            @endif
+          </p>
           <p><strong>Resumo: </strong>{!! $obra->resumo !!}</p>
           <p><strong>Gênese e relevância: </strong>{!! $obra->genese_relevancia !!}</p>
 

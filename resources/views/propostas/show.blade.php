@@ -34,7 +34,13 @@
           <p class="alert {{ $proposta->situacao != 'Cancelada' ? 'alert-warning' : 'alert-danger' }} alert-trim"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
           <p><strong>Título da Obra: </strong>{!! $obra->titulo !!}</p>
           <p><strong>Subtítulo da Obra: </strong>{!! $obra->subtitulo !!}</p>
-          <p><strong>Categoria da Obra: </strong>{!! $obra->categoria !!}</p>
+          <p><strong>Categoria da Obra: </strong> 
+            @if($obra->categoria == 1)
+              Livro
+            @elseif($obra->categoria == 2)
+              Coletânea
+            @endif
+          </p>
           <p><strong>Autor(es):</strong></p>
           @foreach($autores as $autor)
             <p>{!! $autor->nome !!} {!! $autor->sobrenome !!}</p>
