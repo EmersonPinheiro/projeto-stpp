@@ -49,7 +49,9 @@ class ConviteController extends Controller
       $material->update(['url_documento_parecerista'=>$docpath]);
       $material->save();
 
-      Mail::to($request->get('email'))->send(new PareceristaConvidado($convite, $obra));
+      $numPaginas = $request->get('numero_paginas');
+
+      Mail::to($request->get('email'))->send(new PareceristaConvidado($convite, $obra, $numPaginas));
 
       return redirect()->back()->with('status', 'O convite foi enviado.');
     }

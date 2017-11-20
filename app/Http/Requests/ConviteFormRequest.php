@@ -27,6 +27,7 @@ class ConviteFormRequest extends FormRequest
             'nome'=>'required|min:3|max:100',
             'sobrenome'=>'required|min:3|max:100',
             'email'=>'email',
+            'numero_paginas'=>'required|numeric',
             'documento_parecerista'=>'required|file|mimes:pdf'
         ];
     }

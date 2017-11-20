@@ -66,7 +66,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(Request $data)
+    protected function validator($data)
     {
         $messages = [
           'password.required'=>'O campo senha é obrigatório.',
@@ -111,6 +111,14 @@ class RegisterController extends Controller
     protected function register(Request $data)
     {
         //VERIFICAR INSERSÃO DE VALORES IGUAIS
+        $validator = $this->validator($data->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $data, $validator
+            );
+        }
+
 
         $pais = Pais::firstOrCreate([
           'nome'=>$data['pais']
@@ -237,7 +245,6 @@ class RegisterController extends Controller
         Mail::to($usuario->email)->send(new ConfirmacaoCadastro($usuario->confirmation_token));
 
         return redirect('/')->with('status', 'Cadastro efetuado com sucesso, por favor verifique seus e-mails e confirme seu cadastro.');
-
     }
 
     public function confirmation($confirmation_token)

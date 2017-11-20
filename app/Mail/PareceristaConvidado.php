@@ -18,10 +18,11 @@ class PareceristaConvidado extends Mailable
      *
      * @return void
      */
-    public function __construct(ConviteParecerista $convite, Obra $obra)
+    public function __construct(ConviteParecerista $convite, Obra $obra, $numPaginas)
     {
         $this->convite = $convite;
         $this->obra = $obra;
+        $this->numPaginas = $numPaginas;
     }
 
     /**
@@ -35,6 +36,6 @@ class PareceristaConvidado extends Mailable
         return $this->from("exemploadmin@email.com")
                     ->subject('Convite de avaliador!')
                     ->view('emails.pareceristas.convidado')
-                    ->with(['convite'=>$this->convite, 'obra'=>$this->obra]);
+                    ->with(['convite'=>$this->convite, 'obra'=>$this->obra, 'numPaginas' => $this->numPaginas]);
     }
 }
