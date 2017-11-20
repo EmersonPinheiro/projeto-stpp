@@ -49,7 +49,7 @@
                   <td><strong>Estado Civil: </strong></td>
                   <td> {!! $pessoaUsuario->estado_civil !!} </td>
                 </tr>
-                @if(!$usuarioLogado->hasRole('admin'))
+                @if(!$pessoaUsuario->hasRole('admin'))
                   <tr>
                     <td><strong>Instituicao: </strong></td>
                     <td> {!! $instituicaoVinculo->nome_instituicao !!} @if($instituicaoVinculo->sigla != null) - {!! $instituicaoVinculo->sigla !!} @endif</td>
@@ -59,7 +59,7 @@
                     <td> {!! $instituicaoVinculo->nome_vinculo !!} </td>
                   </tr>
 
-                  @if($usuarioTipo->hasRole('parecerista'))
+                  @if($pessoaUsuario->hasRole('parecerista'))
                     <tr>
                       <td><strong>Grande Area: </strong></td>
                       <td> {!! $areasConhecimento->nome_grande_area !!} </td>

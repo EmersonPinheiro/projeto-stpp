@@ -61,6 +61,7 @@ class AdminTableSeeder extends Seeder
     $user = User::firstOrCreate([
       'email'=>'gabrielmoliveira@gmail.com',
       'password'=>bcrypt('123456'),
+      'confirmed'=>'1',
       'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
     ]);
 

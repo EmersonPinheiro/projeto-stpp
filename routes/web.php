@@ -14,7 +14,7 @@
 Route::get('/','PagesController@home');
 Route::get('/home','PagesController@home'); //TODO: Retirar. Solução provisória.
 Route::get('/cadastro', 'PagesController@cadastro')->middleware('guest'); //RETIRAR (SUBSTITUIR PELO REGISTER PADRÃO)
-Route::get('/register', 'PagesController@cadastro')->middleware('guest');
+Route::get('/cadastro/verificar/{confirmation_token}', 'Auth\RegisterController@confirmation')->middleware('guest');
 Route::get('/contato', 'PagesController@contato');
 Route::get('/ajuda', 'PagesController@ajuda');
 Route::get('/termos-de-uso', 'PagesController@termosDeUso');
@@ -34,8 +34,6 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/propostas/{id?}/downloadMaterialNaoIdentificado', 'DocumentosController@downloadMaterialNaoIdentificado');
   Route::get('/propostas/{id?}/downloadImagens', 'DocumentosController@downloadImagens');
   Route::post('/propostas/{id?}/solicitarCancelamento', 'PropostasController@solicitarCancelamento');
-  Route::get('/propostas/{id?}/convidar-parecerista', 'ConviteController@invite')->name('invite');
-  Route::post('/propostas/{id?}/convidar-parecerista', 'ConviteController@process')->name('process');
 
   Route::get('/painel-parecerista', 'ParecerController@index');
   Route::get('/enviar-parecer/{parecer?}', 'ParecerController@create');
@@ -54,6 +52,8 @@ Route::group(['middleware' => ['auth']], function () {
   Route::post('/admin/painel-administrador/{id?}/solicitarNovaVersao', 'AdminController@solicitarNovaVersao')->name('solicitarNovaVersao');
   Route::get('/admin/painel-administrador/{id?}/downloadMaterialIdentificado', 'DocumentosController@downloadMaterialIdentificado');
   Route::get('/admin/painel-administrador/{id?}/downloadMaterialNaoIdentificado', 'DocumentosController@downloadMaterialNaoIdentificado');
+  Route::get('/admin/painel-administrador/{id?}/convidarParecerista', 'ConviteController@invite')->name('invite');
+  Route::post('/admin/painel-administrador/{id?}/convidarParecerista', 'ConviteController@process')->name('process');
 
   //TODO: Verificar se existe uma implementação melhor das seguintes rotas de download
   Route::get('/admin/painel-administrador/{id?}/showDocSugestao', 'DocumentosController@showDocSugestao');

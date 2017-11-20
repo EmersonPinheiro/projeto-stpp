@@ -71,7 +71,6 @@ class PerfilController extends Controller
           ->where('cod_cidade', '=', $pessoaUsuario->Cidade_cod_cidade)->first();
 
       if ($pessoaUsuario->hasRole('admin') && $usuarioLogado->hasRole('admin')) {
-
         return view('perfil.perfil', compact('pessoaUsuario', 'localizacao', 'usuarioLogado'));
       }
 

@@ -20,9 +20,12 @@ use App\VinculoInstitucional;
 use App\GrandeArea;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Mail\ConfirmacaoCadastro;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -62,7 +65,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(Request $data)
     {
         $messages = [
           'password.required'=>'O campo senha é obrigatório.',
@@ -104,7 +107,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function register(Request $data)
     {
         //VERIFICAR INSERSÃO DE VALORES IGUAIS
 
@@ -176,9 +179,11 @@ class RegisterController extends Controller
           ]);
         }
 
+        $confirmation_token = str_random(30);
         $usuario = User::create([
            'email'=>$data['email'],
            'password'=>bcrypt($data['password']),
+           'confirmation_token'=>$confirmation_token,
            'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
 
@@ -228,7 +233,26 @@ class RegisterController extends Controller
           $usuario->attachRole(3);//Associa a role 'parecerista'.
         }
 
-        return $usuario;
+        Mail::to($usuario->email)->send(new ConfirmacaoCadastro($usuario->confirmation_token));
 
+        return redirect('/')->with('status', 'Cadastro efetuado com sucesso, por favor verifique seus e-mails e confirme seu cadastro.');
+
+    }
+
+    public function confirmation($confirmation_token)
+    {
+        if (!$confirmation_token) {
+          abort(404);
+        }
+
+        if (!$usuario = User::where('confirmation_token', '=', $confirmation_token)->first()) {
+          abort(404);
+        }
+
+        $usuario->confirmed = 1;
+        $usuario->confirmation_token = null;
+        $usuario->save();
+
+        return redirect('/')->with('status', 'Cadastro confirmado! Faça login para ter acesso ao sistema.');
     }
 }

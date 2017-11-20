@@ -26,6 +26,8 @@ class CreateUsuarioTable extends Migration
             $table->increments('cod_usuario');
             $table->string('email', 100)->unique();
             $table->string('password', 60);
+            $table->tinyInteger('confirmed')->default(0);
+            $table->string('confirmation_token', 30)->nullable();
             $table->integer('Pessoa_cod_pessoa')->unsigned();
             $table->rememberToken();
             $table->timestamps();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -32,7 +33,17 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    //TODO: Verificar uma solução melhor.
+    public function login(Request $request)
+    {
+        if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password'), 'confirmed'=> 1])) {
+          return $this->sendLoginResponse($request);
+            //return redirect('/')->withErrors('Cadastro ainda não confirmado! Por favor, verifique seus e-mails e confirme seu cadastro');
+        }
+
+        return $this->sendFailedLoginResponse($request)->withErrors('Cadastro não confirmado!');
+    }
+
+    //TODO: Verificar uma solução melhor dos redirecionamentos.
     public function authenticated()
     {
       $usuario = Auth::user();

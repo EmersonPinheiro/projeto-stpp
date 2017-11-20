@@ -31,6 +31,7 @@ class PareceristaConvidado extends Mailable
      */
     public function build()
     {
+        //TODO: Colcoar e-mail do admin.
         return $this->from("exemploadmin@email.com")
                     ->subject('Convite de avaliador!')
                     ->view('emails.pareceristas.convidado')

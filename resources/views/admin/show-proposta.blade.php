@@ -167,8 +167,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($oficiosAlteracoes as $oficioAlteracao)
-                      <td>{!! $pareceristaParecer->nome !!} {!! $pareceristaParecer->sobrenome !!}</td>
+                    @foreach($pareceristasPareceres as $pareceristaParecer)
+                      <td><a href="{!! action('PerfilController@show', $pareceristaParecer->slug) !!}">{!! $pareceristaParecer->nome !!} {!! $pareceristaParecer->sobrenome !!}</a></td>
                       <td>
                         @if($pareceristaParecer->envio)
                           <a class="col-md-4" href="{!! action('ParecerController@show', $pareceristaParecer->cod_parecer) !!}">Visualizar</a>
