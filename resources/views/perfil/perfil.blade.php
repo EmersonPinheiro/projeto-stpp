@@ -8,21 +8,16 @@
       <div class="col-md-10 col-md-offset-1">
         <div class="quadro">
 
-          <div class="row">
-            <div class="col-md-8">
-              <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
-            </div>
-            <div class="col-md-4">
-              <div class="pull-right">
-                <a class="btn btn-primary" href="{!! action('PerfilController@edit', $pessoaUsuario->slug) !!}" role="button"><span class="glyphicon glyphicon-pencil glyphicon-space"></span>Editar Perfil</a>
-              </div>
-            </div>
+          <div class="pull-right">
+            <a class="btn btn-primary" href="{!! action('PerfilController@edit', $pessoaUsuario->slug) !!}" role="button"><span class="glyphicon glyphicon-pencil glyphicon-space"></span>Editar Perfil</a>
           </div>
+
+          <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
 
           <h3><span class="glyphicon glyphicon-user glyphicon-space"></span><strong>Perfil de {!! $pessoaUsuario->nome !!} {!! $pessoaUsuario->sobrenome !!}</strong></h3>
 
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <h4 class="titulo">Dados Pessoais e Institucionais</h4>
               <table class="table table-striped">
                 <tr>
@@ -82,8 +77,10 @@
                   @endif
               </table>
             </div>
+          </div>
 
-            <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12">
               <h4 class="titulo">Dados de Contato</h4>
               <table class="table table-striped">
                 <tr>
@@ -139,15 +136,18 @@
                 <tr>
                   <td><strong>E-mail: </strong></td>
                   <td> {!! $pessoaUsuario->email !!} </td>
-                  <td><strong>Senha: </strong></td>
-                  <td >
-                    <a class="btn btn-primary" href="" role="button"><span class="glyphicon glyphicon-lock glyphicon-space"></span>Alterar sua Senha</a>
-                  </td>
+                  <tr>
+                    <td><strong>Senha: </strong></td>
+                    <td >
+                      <a class="btn btn-primary" href="" role="button"><span class="glyphicon glyphicon-lock glyphicon-space"></span>Clique para alterar sua Senha</a>
+                    </td>
+                  </tr>
                 </tr>
               </table>
             </div>
           </div>
           @endif
+
         </div> <!-- quadro -->
       </div>
     </div>

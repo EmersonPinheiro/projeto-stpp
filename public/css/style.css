@@ -107,6 +107,10 @@ fieldset {
   display: none;
 }
 
+.logo-editora {
+  margin: auto auto 30px;
+}
+
 /* NAVBAR */
 
 .navbar-outro {
@@ -202,4 +206,10 @@ fieldset {
 
 .list-group .titulo-lista {
   background-color: #EEEEEE;
+}
+
+@media (max-width: 767px) {
+    li > .navbar-usuario {
+        padding: 10px 15px;
+    }
 }
