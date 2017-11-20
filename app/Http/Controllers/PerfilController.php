@@ -8,6 +8,8 @@ use App\UsuarioPropositor;
 use App\Instituicao;
 use App\Telefone;
 use App\Email;
+use App\User;
+use App\GrandeArea;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -52,39 +54,58 @@ class PerfilController extends Controller
      */
     public function show($slug)
     {
-        $pessoa = Pessoa::where('slug', '=', $slug)->first();
+      $pessoaUsuario = User::join('Pessoa', 'Usuario.Pessoa_cod_pessoa', '=', 'Pessoa.cod_pessoa')
+          ->where('Pessoa.slug', '=', $slug)->first();
 
-        $localizacao = Cidade::join('Estado_provincia', 'Estado_provincia.cod_est_prov', '=', 'Cidade.Estado_provincia_cod_est_prov')
-            ->join('Pais', 'Pais.cod_pais', '=', 'Estado_provincia.Pais_cod_pais')
-            ->select('Pais.nome as nome_pais', 'Estado_provincia.nome as nome_estado_provincia', 'Cidade.nome as nome_cidade')
-            ->where('cod_cidade', '=', $pessoa->Cidade_cod_cidade)->first();
+      $usuarioLogado = Auth::user();
 
-        $propositor = UsuarioPropositor::join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
-            ->where('Usuario.Pessoa_cod_pessoa', '=', $pessoa->cod_pessoa)->first();
+      $localizacao = Cidade::join('Estado_provincia', 'Estado_provincia.cod_est_prov', '=', 'Cidade.Estado_provincia_cod_est_prov')
+          ->join('Pais', 'Pais.cod_pais', '=', 'Estado_provincia.Pais_cod_pais')
+          ->select('Pais.nome as nome_pais', 'Estado_provincia.nome as nome_estado_provincia', 'Cidade.nome as nome_cidade')
+          ->where('cod_cidade', '=', $pessoaUsuario->Cidade_cod_cidade)->first();
 
-        //HACK: Retirar a seguinte verificação e inserir instituição no administrador.
-        $instituicaoVinculo = null;
-        if ($propositor != null) {
-          $instituicaoVinculo = Instituicao::leftJoin('Vinculo_Institucional', 'Vinculo_Institucional.Instituicao_cod_instituicao', 'Instituicao.cod_instituicao')
-          ->where('cod_instituicao', '=', $propositor->Instituicao_cod_instituicao)
-          ->select('Instituicao.nome as nome_instituicao', 'Instituicao.sigla', 'Vinculo_Institucional.nome as nome_vinculo')
+      if ($pessoaUsuario->hasRole('admin') && $usuarioLogado->hasRole('admin')) {
+
+        return view('perfil.perfil', compact('pessoaUsuario', 'localizacao', 'usuarioLogado'));
+      }
+
+      if($pessoaUsuario->hasRole('propositor')){
+        $usuarioTipo = User::join('Usuario_Propositor', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+            ->where('Usuario.Pessoa_cod_pessoa', '=', $pessoaUsuario->cod_pessoa)->first();
+      }
+
+      if($pessoaUsuario->hasRole('parecerista')){
+        $usuarioTipo = User::join('Usuario_Parecerista', 'Usuario.cod_usuario', '=', 'Usuario_Parecerista.Usuario_cod_usuario')
+            ->where('Usuario.Pessoa_cod_pessoa', '=', $pessoaUsuario->cod_pessoa)->first();
+
+        $areasConhecimento = GrandeArea::join('Area_Conhecimento', 'Area_Conhecimento.Grande_Area_cod_grande_area', 'Grande_Area.cod_grande_area')
+          ->leftJoin('Subarea', 'Subarea.Area_Conhecimento_cod_area_conhec', 'Area_Conhecimento.cod_area_conhec')
+          ->leftJoin('Especialidade', 'Especialidade.Subarea_cod_subarea', 'Subarea.cod_subarea')
+          ->where('Grande_Area.cod_grande_area', '=', $usuarioTipo->Grande_Area_cod_grande_area)
+          ->select('Grande_Area.nome as nome_grande_area', 'Area_Conhecimento.nome as nome_area_conhecimento', 'Subarea.nome as nome_subarea', 'Especialidade.nome as nome_especialidade')
           ->first();
-        }
+          //var_dump($usuarioTipo);
+        //var_dump($areasConhecimento);
+      }
 
-        $telefone = Telefone::join('Pessoa', 'Pessoa.cod_pessoa', '=','Telefone.Pessoa_cod_pessoa')
-            ->where('Telefone.tipo', '=', 1)
-            ->where('Pessoa.cod_pessoa', '=', $pessoa->cod_pessoa)
-            ->select('Telefone.*')
-            ->first();
+      $instituicaoVinculo = Instituicao::leftJoin('Vinculo_Institucional', 'Vinculo_Institucional.Instituicao_cod_instituicao', 'Instituicao.cod_instituicao')
+        ->where('cod_instituicao', '=', $usuarioTipo->Instituicao_cod_instituicao)
+        ->select('Instituicao.nome as nome_instituicao', 'Instituicao.sigla', 'Vinculo_Institucional.nome as nome_vinculo')
+        ->first();
 
-        $email = Email::join('Pessoa', 'Pessoa.cod_pessoa', '=','Email.Pessoa_cod_pessoa')
-            ->where('Email.tipo', '=', 1)
-            ->where('Pessoa.cod_pessoa', '=', $pessoa->cod_pessoa)
-            ->select('Email.*')
-            ->first();
+      $telefone = Telefone::join('Pessoa', 'Pessoa.cod_pessoa', '=','Telefone.Pessoa_cod_pessoa')
+          ->where('Telefone.tipo', '=', 1)
+          ->where('Pessoa.cod_pessoa', '=', $pessoaUsuario->cod_pessoa)
+          ->select('Telefone.*')
+          ->first();
 
-        $usuario = Auth::user();
-        return view('perfil.perfil', compact('pessoa', 'localizacao', 'instituicaoVinculo', 'telefone', 'email', 'usuario'));
+      $email = Email::join('Pessoa', 'Pessoa.cod_pessoa', '=','Email.Pessoa_cod_pessoa')
+          ->where('Email.tipo', '=', 1)
+          ->where('Pessoa.cod_pessoa', '=', $pessoaUsuario->cod_pessoa)
+          ->select('Email.*')
+          ->first();
+
+      return view('perfil.perfil', compact('pessoaUsuario', 'localizacao', 'instituicaoVinculo', 'telefone', 'email', 'usuarioTipo', 'usuarioLogado', 'areasConhecimento'));
     }
 
     /**
@@ -93,9 +114,60 @@ class PerfilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+      $pessoaUsuario = User::join('Pessoa', 'Usuario.Pessoa_cod_pessoa', '=', 'Pessoa.cod_pessoa')
+          ->where('Pessoa.slug', '=', $slug)->first();
+
+      $usuarioLogado = Auth::user();
+
+      $localizacao = Cidade::join('Estado_provincia', 'Estado_provincia.cod_est_prov', '=', 'Cidade.Estado_provincia_cod_est_prov')
+          ->join('Pais', 'Pais.cod_pais', '=', 'Estado_provincia.Pais_cod_pais')
+          ->select('Pais.nome as nome_pais', 'Estado_provincia.nome as nome_estado_provincia', 'Cidade.nome as nome_cidade')
+          ->where('cod_cidade', '=', $pessoaUsuario->Cidade_cod_cidade)->first();
+
+      if ($pessoaUsuario->hasRole('admin') && $usuarioLogado->hasRole('admin')) {
+
+        return view('perfil.perfil', compact('pessoaUsuario', 'localizacao', 'usuarioLogado'));
+      }
+
+      if($pessoaUsuario->hasRole('propositor')){
+        $usuarioTipo = User::join('Usuario_Propositor', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+            ->where('Usuario.Pessoa_cod_pessoa', '=', $pessoaUsuario->cod_pessoa)->first();
+      }
+
+      if($pessoaUsuario->hasRole('parecerista')){
+        $usuarioTipo = User::join('Usuario_Parecerista', 'Usuario.cod_usuario', '=', 'Usuario_Parecerista.Usuario_cod_usuario')
+            ->where('Usuario.Pessoa_cod_pessoa', '=', $pessoaUsuario->cod_pessoa)->first();
+
+        $areasConhecimento = GrandeArea::join('Area_Conhecimento', 'Area_Conhecimento.Grande_Area_cod_grande_area', 'Grande_Area.cod_grande_area')
+          ->leftJoin('Subarea', 'Subarea.Area_Conhecimento_cod_area_conhec', 'Area_Conhecimento.cod_area_conhec')
+          ->leftJoin('Especialidade', 'Especialidade.Subarea_cod_subarea', 'Subarea.cod_subarea')
+          ->where('Grande_Area.cod_grande_area', '=', $usuarioTipo->Grande_Area_cod_grande_area)
+          ->select('Grande_Area.nome as nome_grande_area', 'Area_Conhecimento.nome as nome_area_conhecimento', 'Subarea.nome as nome_subarea', 'Especialidade.nome as nome_especialidade')
+          ->first();
+
+        //var_dump($areasConhecimento);
+      }
+
+      $instituicaoVinculo = Instituicao::leftJoin('Vinculo_Institucional', 'Vinculo_Institucional.Instituicao_cod_instituicao', 'Instituicao.cod_instituicao')
+        ->where('cod_instituicao', '=', $usuarioTipo->Instituicao_cod_instituicao)
+        ->select('Instituicao.nome as nome_instituicao', 'Instituicao.sigla', 'Vinculo_Institucional.nome as nome_vinculo')
+        ->first();
+
+      $telefone = Telefone::join('Pessoa', 'Pessoa.cod_pessoa', '=','Telefone.Pessoa_cod_pessoa')
+          ->where('Telefone.tipo', '=', 1)
+          ->where('Pessoa.cod_pessoa', '=', $pessoaUsuario->cod_pessoa)
+          ->select('Telefone.*')
+          ->first();
+
+      $email = Email::join('Pessoa', 'Pessoa.cod_pessoa', '=','Email.Pessoa_cod_pessoa')
+          ->where('Email.tipo', '=', 1)
+          ->where('Pessoa.cod_pessoa', '=', $pessoaUsuario->cod_pessoa)
+          ->select('Email.*')
+          ->first();
+
+      return view('perfil.edit', compact('pessoaUsuario', 'localizacao', 'instituicaoVinculo', 'telefone', 'email', 'usuarioTipo', 'usuarioLogado', 'areasConhecimento'));
     }
 
     /**
@@ -107,7 +179,7 @@ class PerfilController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**

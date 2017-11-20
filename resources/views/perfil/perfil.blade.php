@@ -14,12 +14,12 @@
             </div>
             <div class="col-md-4">
               <div class="pull-right">
-                <a class="btn btn-primary" href="" role="button"><span class="glyphicon glyphicon-pencil glyphicon-space"></span>Editar Perfil</a>
+                <a class="btn btn-primary" href="{!! action('PerfilController@edit', $pessoaUsuario->slug) !!}" role="button"><span class="glyphicon glyphicon-pencil glyphicon-space"></span>Editar Perfil</a>
               </div>
             </div>
           </div>
 
-          <h3><span class="glyphicon glyphicon-user glyphicon-space"></span><strong>Perfil de {!! $pessoa->nome !!} {!! $pessoa->sobrenome !!}</strong></h3>
+          <h3><span class="glyphicon glyphicon-user glyphicon-space"></span><strong>Perfil de {!! $pessoaUsuario->nome !!} {!! $pessoaUsuario->sobrenome !!}</strong></h3>
 
           <div class="row">
             <div class="col-md-6">
@@ -27,40 +27,59 @@
               <table class="table table-striped">
                 <tr>
                   <td><strong>Nome: </strong></td>
-                  <td> {!! $pessoa->nome !!} </td>
+                  <td> {!! $pessoaUsuario->nome !!} </td>
                 </tr>
                 <tr>
                   <td><strong>Sobrenome: </strong></td>
-                  <td> {!! $pessoa->sobrenome !!} </td>
+                  <td> {!! $pessoaUsuario->sobrenome !!} </td>
                 </tr>
                 <tr>
                   <td><strong>Sexo: </strong></td>
-                  <td> {!! $pessoa->sexo !!} </td>
+                  <td> {!! $pessoaUsuario->sexo !!} </td>
                 </tr>
                 <tr>
                   <td><strong>CPF: </strong></td>
-                  <td> {!! $pessoa->cpf !!} </td>
+                  <td> {!! $pessoaUsuario->cpf !!} </td>
                 </tr>
                 <tr>
                   <td><strong>RG: </strong></td>
-                  <td> {!! $pessoa->rg !!} </td>
+                  <td> {!! $pessoaUsuario->rg !!} </td>
                 </tr>
                 <tr>
                   <td><strong>Estado Civil: </strong></td>
-                  <td> {!! $pessoa->estado_civil !!} </td>
+                  <td> {!! $pessoaUsuario->estado_civil !!} </td>
                 </tr>
-                @if($instituicaoVinculo != null)
-                <tr>
-                  <td><strong>Instituicao: </strong></td>
-                  <td> {!! $instituicaoVinculo->nome_instituicao !!}
+                @if(!$usuarioLogado->hasRole('admin'))
+                  <tr>
+                    <td><strong>Instituicao: </strong></td>
+                    <td> {!! $instituicaoVinculo->nome_instituicao !!} @if($instituicaoVinculo->sigla != null) - {!! $instituicaoVinculo->sigla !!} @endif</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Vínculo Institucional: </strong></td>
+                    <td> {!! $instituicaoVinculo->nome_vinculo !!} </td>
+                  </tr>
 
-                    @if($instituicaoVinculo->sigla != null) - {!! $instituicaoVinculo->sigla !!} @endif</td>
-                </tr>
-                <tr>
-                  <td><strong>Vínculo Institucional: </strong></td>
-                  <td> {!! $instituicaoVinculo->nome_vinculo !!} </td>
-                </tr>
-                @endif
+                  @if($usuarioTipo->hasRole('parecerista'))
+                    <tr>
+                      <td><strong>Grande Area: </strong></td>
+                      <td> {!! $areasConhecimento->nome_grande_area !!} </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Area de conhecimento: </strong></td>
+                      <td> {!! $areasConhecimento->nome_area_conhecimento !!} </td>
+                    </tr>
+
+                      @if($areasConhecimento->nome_subarea != null)
+                        <tr>
+                          <td><strong>Subarea: </strong></td>
+                          <td> {!! $areasConhecimento->nome_subarea !!} </td>
+                        </tr>
+                      <tr>
+                        <td><strong>Especialidade: </strong></td>
+                        <td> {!! $areasConhecimento->nome_especialidade !!} </td>
+                      </tr>
+                      @endif
+                  @endif
               </table>
             </div>
 
@@ -69,11 +88,11 @@
               <table class="table table-striped">
                 <tr>
                   <td><strong>Logradouro: </strong></td>
-                  <td> {!! $pessoa->logradouro !!} </td>
+                  <td> {!! $pessoaUsuario->logradouro !!} </td>
                 </tr>
                 <tr>
                   <td><strong>Bairro: </strong></td>
-                  <td> {!! $pessoa->bairro !!} </td>
+                  <td> {!! $pessoaUsuario->bairro !!} </td>
                 </tr>
                 <tr>
                   <td><strong>Cidade: </strong></td>
@@ -89,7 +108,7 @@
                 </tr>
                 <tr>
                   <td><strong>CEP: </strong></td>
-                  <td> {!! $pessoa->CEP !!} </td>
+                  <td> {!! $pessoaUsuario->CEP !!} </td>
                 </tr>
                 <tr>
                   <td><strong>Telefone: </strong></td>
@@ -107,18 +126,19 @@
                   <td><strong>E-mail Secundário: </strong></td>
                   <td>  </td>
                 </tr>
+                @endif
               </table>
             </div>
           </div>
 
-          @if($usuario->email == $email->endereco  )
+          @if($usuarioLogado->email == $pessoaUsuario->email  )
           <div class="row">
             <div class="col-md-12">
               <h4 class="titulo">Dados de Acesso ao Sistema</h4>
               <table class="table table-striped">
                 <tr>
                   <td><strong>E-mail: </strong></td>
-                  <td> {!! $email->endereco !!} </td>
+                  <td> {!! $pessoaUsuario->email !!} </td>
                   <td><strong>Senha: </strong></td>
                   <td >
                     <a class="btn btn-primary" href="" role="button"><span class="glyphicon glyphicon-lock glyphicon-space"></span>Alterar sua Senha</a>
