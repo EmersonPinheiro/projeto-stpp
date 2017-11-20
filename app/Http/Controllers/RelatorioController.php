@@ -33,13 +33,16 @@ class RelatorioController extends Controller
                        ->orderByRaw('created_at ASC')
                        ->get();
 
-     /* POSTGRESSQL (exemplo)*/
-     /*select
-     json_extract_path_text(my_json_field, 'userId'),
-     json_extract_path_text(my_json_field, 'transaction', 'id'),
-     json_extract_path_text(my_json_field, 'transaction', 'sku')
-     from my_table;*/
-
+     /* POSTGRESSQL *//*
+     $notificacoes = DB::table('notifications')
+                       ->select(DB::raw("id, type, notifiable_id, notifiable_type,
+                                     data ->> 'message_report' AS message_report,
+                                     data ->> 'cod_proposta' AS cod_proposta,
+                                     created_at
+                                     "))
+                       ->orderByRaw('created_at ASC')
+                       ->get();
+*/
      $notificacoesProposta = $notificacoes->where('cod_proposta', '=', $id);
 
      return view('relatorio', compact('notificacoesProposta'));

@@ -91,9 +91,27 @@ class PropostasController extends Controller
         $autor = User::join('Pessoa', 'Usuario.Pessoa_cod_pessoa', '=', 'Pessoa.cod_pessoa')
                       ->where('cod_usuario', $usuario->cod_usuario)->first();
 
-        $sexos = ['F', 'M'];
+        $telefone = Telefone::join('Pessoa', 'Pessoa.cod_pessoa', '=','Telefone.Pessoa_cod_pessoa')
+            ->where('Telefone.tipo', '=', 1)
+            ->where('Pessoa.cod_pessoa', '=', $autor->cod_pessoa)
+            ->select('Telefone.*')
+            ->first();
 
-        return view('propostas.create', compact('autor', 'sexos'));
+        $email = Email::join('Pessoa', 'Pessoa.cod_pessoa', '=','Email.Pessoa_cod_pessoa')
+            ->where('Email.tipo', '=', 1)
+            ->where('Pessoa.cod_pessoa', '=', $autor->cod_pessoa)
+            ->select('Email.*')
+            ->first();
+
+        $usuarioTipo = User::join('Usuario_Propositor', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
+            ->where('Usuario.Pessoa_cod_pessoa', '=', $autor->cod_pessoa)->first();
+
+        $instituicaoVinculo = Instituicao::leftJoin('Vinculo_Institucional', 'Vinculo_Institucional.Instituicao_cod_instituicao', 'Instituicao.cod_instituicao')
+            ->where('cod_instituicao', '=', $usuarioTipo->Instituicao_cod_instituicao)
+            ->select('Instituicao.nome as nome_instituicao', 'Instituicao.sigla', 'Vinculo_Institucional.nome as nome_vinculo')
+            ->first();
+
+        return view('propostas.create', compact('autor', 'telefone', 'email'));
     }
 
     /**

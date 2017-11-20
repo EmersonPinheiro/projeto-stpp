@@ -116,10 +116,6 @@
                   <td>  </td>
                 </tr>
                 <tr>
-                  <td><strong>E-mail: </strong></td>
-                  <td> {!! $email->endereco !!} </td>
-                </tr>
-                <tr>
                   <td><strong>E-mail Secundário: </strong></td>
                   <td>  </td>
                 </tr>
@@ -128,14 +124,14 @@
             </div>
           </div>
 
-          @if($usuarioLogado->email == $pessoaUsuario->email  )
+          @if($usuarioLogado->email == $usuarioTipo->email  )
           <div class="row">
             <div class="col-md-12">
               <h4 class="titulo">Dados de Acesso ao Sistema</h4>
               <table class="table table-striped">
                 <tr>
                   <td><strong>E-mail: </strong></td>
-                  <td> {!! $pessoaUsuario->email !!} </td>
+                  <td> {!! $usuarioTipo->email !!} </td>
                   <tr>
                     <td><strong>Senha: </strong></td>
                     <td >

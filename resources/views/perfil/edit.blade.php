@@ -42,7 +42,6 @@
             <input type="hidden" name="cod_est_prov" value="{!! $localizacao->cod_est_prov !!}">
             <input type="hidden" name="cod_pais" value="{!! $localizacao->cod_pais !!}">
             <input type="hidden" name="cod_telefone" value="{!! $telefone->cod_telefone !!}">
-            <input type="hidden" name="cod_email" value="{!! $email->cod_email !!}">
 
             <!-- DADOS PESSOAIS E INSTITUCIONAIS -->
             <!-- TODO: RECUPERAR VALORES DO BANCO -->
@@ -338,14 +337,14 @@
             <fieldset>
               <legend>Dados de Acesso ao sistema</legend>
               <div class="row">
-                <div class="form-group col-md-6 {{ $errors->has('email_acesso') ? 'has-error' :'' }}">
-                  <label class="control-label" for="email_acesso">E-mail de Acesso ao Sistema e de Contato</label>
+                <div class="form-group col-md-6 {{ $errors->has('email') ? 'has-error' :'' }}">
+                  <label class="control-label" for="email">E-mail de Acesso ao Sistema e de Contato</label>
                   <!-- AJUDA-->
                   <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Este e-mail <strong>SERÁ</strong> utilizado por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
-                  <input type="email" class="form-control" id="email_acesso" name="email_acesso" placeholder="E-mail secundário" value="{!! $pessoaUsuario->email !!}" maxlength="100">
-                  @if ($errors->has('email_acesso'))
+                  <input type="email" class="form-control" id="email" name="email" placeholder="E-mail secundário" value="{!! $pessoaUsuario->email !!}" maxlength="100">
+                  @if ($errors->has('email'))
                   <span class="help-block">
-                    <span class="text-danger"><strong>{{ $errors->first('email_acesso') }}</strong></span>
+                    <span class="text-danger"><strong>{{ $errors->first('email') }}</strong></span>
                   </span>
                   @endif
                 </div>

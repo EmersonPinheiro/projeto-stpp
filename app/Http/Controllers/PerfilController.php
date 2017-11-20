@@ -104,13 +104,7 @@ class PerfilController extends Controller
           ->select('Telefone.*')
           ->first();
 
-      $email = Email::join('Pessoa', 'Pessoa.cod_pessoa', '=','Email.Pessoa_cod_pessoa')
-          ->where('Email.tipo', '=', 1)
-          ->where('Pessoa.cod_pessoa', '=', $pessoaUsuario->cod_pessoa)
-          ->select('Email.*')
-          ->first();
-
-      return view('perfil.perfil', compact('pessoaUsuario', 'localizacao', 'instituicaoVinculo', 'telefone', 'email', 'usuarioTipo', 'usuarioLogado', 'areasConhecimento'));
+      return view('perfil.perfil', compact('pessoaUsuario', 'localizacao', 'instituicaoVinculo', 'telefone', 'usuarioTipo', 'usuarioLogado', 'areasConhecimento'));
     }
 
     /**
@@ -200,7 +194,7 @@ class PerfilController extends Controller
       ]);
 
       User::where('cod_usuario', $request->get('cod_usuario'))->update([
-        'email'=>$request->get('email_acesso'),
+        'email'=>$request->get('email'),
       ]);
 
       Instituicao::where('cod_instituicao', $request->get('cod_instituicao'))->update([
@@ -243,10 +237,6 @@ class PerfilController extends Controller
 
       Telefone::where('cod_telefone', $request->get('cod_telefone'))->update([
         'numero'=>$request->get('telefone'),
-      ]);
-
-      Email::where('cod_email', $request->get('cod_email'))->update([
-        'endereco'=>$request->get('email_contato'),
       ]);
 
       return redirect()->back()->with('status', 'Seu perfil foi atualizado com sucesso!');
