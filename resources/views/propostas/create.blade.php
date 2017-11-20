@@ -42,6 +42,20 @@
             <form method="post" enctype="multipart/form-data">
               <input type="hidden" name="_token" value="{!! csrf_token() !!}">
 
+              <!-- Dados obrigatórios que o autor não insere -->
+              <input type="hidden" name="nome" value="{!! $autor->nome !!}">
+              <input type="hidden" name="sobrenome" value="{!! $autor->sobrenome !!}">
+              <input type="hidden" name="sexo" value="{!! $autor->sexo !!}">
+              <input type="hidden" name="cpf" value="{!! $autor->cpf !!}">
+              <input type="hidden" name="rg" value="{!! $autor->rg !!}">
+              <input type="hidden" name="estado_civil" value="{!! $autor->estado_civil !!}">
+              <input type="hidden" name="email" value="{!! $usuario->email !!}">
+              <input type="hidden" name="telefone" value="{!! $telefone->numero !!}">
+              <input type="hidden" name="instituicao" value="{!! $instituicaoVinculo->nome_instituicao !!}">
+              <input type="hidden" name="sigla" value="{!! $instituicaoVinculo->sigla !!}">
+              <input type="hidden" name="vinculo" value="{!! $instituicaoVinculo->nome_vinculo !!}">
+
+
               <!-- DADOS DA OBRA -->
               <fieldset>
                 <legend>Dados da Obra</legend>
@@ -169,7 +183,7 @@
               <fieldset>
                 <legend>Dados do(s) Autor(es)</legend>
                 <div class="alert alert-warning">
-                  <p><span class="glyphicon glyphicon-alert glyphicon-space"></span><strong>Atenção!</strong> Suas próprias informações podem ser alteradas apenas na guia <strong>Perfil</strong> localizada na barra superior da página. Somente o campo <strong>Categoria</strong> deve ser inserido nesta página.</p>
+                  <p><span class="glyphicon glyphicon-alert glyphicon-space"></span><strong>Atenção!</strong> Suas próprias informações podem ser alteradas apenas na guia <strong>Perfil</strong> localizada na barra superior da página. Somente o campo <strong>Categoria</strong> deve ser a seguir.</p>
                 </div>
 
                 <div class="row">
@@ -189,8 +203,8 @@
                   </div>
 
                   <div class="form-group col-md-4 {{ $errors->has('nome') ? 'has-error' :'' }}">
-                    <label class="control-label" for="nome">Nome *</label>
-                    <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" value="{!! $autor->nome !!}" maxlength="50" >
+                    <label class="control-label" for="">Nome *</label>
+                    <input type="text" id="nome" name="" class="form-control" placeholder="Nome" value="{!! $autor->nome !!}" maxlength="50" disabled>
                     @if ($errors->has('nome'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('nome') }}</strong></span>
@@ -199,8 +213,8 @@
                   </div>
 
                   <div class="form-group col-md-4 {{ $errors->has('sobrenome') ? 'has-error' :'' }}">
-                    <label class="control-label" for="sobrenome">Sobrenome *</label>
-                    <input type="text" id="sobrenome" name="sobrenome" class="form-control" placeholder="Sobrenome" value="{!! $autor->sobrenome !!}" maxlength="100" >
+                    <label class="control-label" for="">Sobrenome *</label>
+                    <input type="text" id="sobrenome" name="" class="form-control" placeholder="Sobrenome" value="{!! $autor->sobrenome !!}" maxlength="100" disabled>
                     @if ($errors->has('sobrenome'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('sobrenome') }}</strong></span>
@@ -209,8 +223,8 @@
                   </div>
 
                   <div class="form-group col-md-2 {{ $errors->has('sexo') ? 'has-error' :'' }}">
-                    <label for="sexo" class="control-label">Sexo *</label>
-                    <select class="form-control" id="sexo" name="sexo" >
+                    <label for="" class="control-label">Sexo *</label>
+                    <select class="form-control" id="sexo" name="" disabled>
                       <option value="">Selecione</option>
                       <option value="F" @if ($autor->sexo == 'F') selected="selected" @endif>F</option>
                       <option value="M" @if ($autor->sexo == 'M') selected="selected" @endif>M</option>
@@ -228,7 +242,7 @@
                     <label class="control-label" for="cpf">CPF * </label>
                     <!-- AJUDA -->
                     <small><a href="javascript:;" data-toggle="popover" data-content="O campo CPF deve conter apenas números. Não é permitida a inserção de pontos ou traços." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
-                    <input type="text" id="cpf" name="cpf" class="form-control" placeholder="CPF (somente números)" value="{!! $autor->cpf !!}" maxlength="11" >
+                    <input type="text" id="cpf" name="" class="form-control" placeholder="CPF (somente números)" value="{!! $autor->cpf !!}" maxlength="11" disabled>
                     @if ($errors->has('cpf'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('cpf') }}</strong></span>
@@ -241,7 +255,7 @@
                     <label class="control-label" for="rg">RG *</label>
                     <!-- AJUDA -->
                     <small><a href="javascript:;" data-toggle="popover" data-content="O campo RG deve conter apenas números. Não é permitida a inserção de pontos ou traços." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
-                    <input type="text" id="rg" name="rg" class="form-control" placeholder="RG (somente números)" value="{!! $autor->rg !!}" maxlength="14" >
+                    <input type="text" id="rg" name="" class="form-control" placeholder="RG (somente números)" value="{!! $autor->rg !!}" maxlength="14" disabled>
                     @if ($errors->has('rg'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('rg') }}</strong></span>
@@ -251,7 +265,7 @@
 
                   <div class="form-group col-md-4 {{ $errors->has('estado_civil') ? 'has-error' :'' }}">
                     <label class="control-label" for="estado_civil">Estado Civil *</label>
-                    <select class="form-control" id="estado_civil" name="estado_civil" >
+                    <select class="form-control" id="estado_civil" name="estado_civil" disabled>
                       <option value="">Selecione</option>
                       <option value="Solteiro" @if ($autor->estado_civil  == 'Solteiro') selected="selected" @endif>Solteiro(a)</option>
                       <option value="Casado" @if ($autor->estado_civil == 'Casado') selected="selected" @endif>Casado(a)</option>
@@ -271,7 +285,7 @@
                 <div class="row">
                   <div class="form-group col-md-7 {{ $errors->has('email') ? 'has-error' :'' }}">
                     <label class="control-label" for="email_secundario">E-mail *</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" value="{{old('email')}}" maxlength="100">
+                    <input type="email" class="form-control" id="email" name="" placeholder="E-mail" value="{!! $usuario->email !!}" maxlength="100" disabled>
                     @if ($errors->has('email'))
                     <span class="help-block">
                       <span class="text-danger"><strong>{{ $errors->first('email') }}</strong></span>
@@ -283,7 +297,7 @@
                     <label class="control-label" for="telefone">Telefone *</label>
                     <!-- AJUDA-->
                     <small><a href="javascript:;" data-toggle="popover" data-content="O Telefone deve conter apenas números. Não é permitida a inserção de parênteses ou traços. Informe o deu DDD." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
-                    <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Telefone" value="{{old('telefone')}}" maxlength="14" >
+                    <input type="text" class="form-control" id="telefone" name="" placeholder="Telefone" value="{!! $telefone->numero !!}" maxlength="14" disabled>
                     @if ($errors->has('telefone'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('telefone') }}</strong></span>
@@ -297,7 +311,7 @@
                     <label class="control-label" for="instituicao">Instituição *</label>
                     <!-- AJUDA -->
                     <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com a Instituição a qual o Autor está vinculado." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
-                    <input type="text" class="form-control" id="instituicao" name="instituicao" placeholder="Instituição" value="{{old('instituicao')}}" maxlength="100" >
+                    <input type="text" class="form-control" id="instituicao" name="" placeholder="Instituição" value="{!! $instituicaoVinculo->nome_instituicao !!}" maxlength="100" disabled>
                     @if ($errors->has('instituicao'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('instituicao') }}</strong></span>
@@ -307,7 +321,7 @@
 
                   <div class="form-group col-md-2 {{ $errors->has('sigla') ? 'has-error' :'' }}">
                     <label for="sigla" class="control-label">Sigla</label>
-                    <input type="text" class="form-control" id="sigla" name="sigla" placeholder="Sigla" value="{{old('sigla')}}" maxlength="20" >
+                    <input type="text" class="form-control" id="sigla" name="" placeholder="Sigla" value="{!! $instituicaoVinculo->sigla !!}" maxlength="20" disabled>
                     @if ($errors->has('sigla'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('sigla') }}</strong></span>
@@ -319,7 +333,7 @@
                     <label class="control-label" for="setor">Vínculo Institucional</label>
                     <!-- AJUDA -->
                     <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com o Setor ou Departamento aos quais o Autor está vinculado (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
-                    <input type="text" class="form-control" id="vinculo" name="vinculo" placeholder="Setor, Departamento, ..." value="{{old('vinculo')}}" maxlength="200" >
+                    <input type="text" class="form-control" id="vinculo" name="" placeholder="Setor, Departamento, ..." value="{!! $instituicaoVinculo->nome_vinculo !!}" maxlength="200" disabled>
                     @if ($errors->has('vinculo'))
                         <span class="help-block">
                             <span class="text-danger"><strong>{{ $errors->first('vinculo') }}</strong></span>

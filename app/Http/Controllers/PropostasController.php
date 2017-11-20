@@ -59,11 +59,9 @@ class PropostasController extends Controller
     public function index()
     {
       $usuario = Auth::user();
-      $dadosUsuario = $usuario->getAttributes();
-      $idUsuario = $dadosUsuario['cod_usuario'];
 
       $propositor = UsuarioPropositor::join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
-                        ->where('Usuario.cod_usuario', $idUsuario)
+                        ->where('Usuario.cod_usuario', $usuario->cod_usuario)
                         ->select('Usuario_Propositor.cod_propositor')
                         ->first();
 
@@ -97,12 +95,6 @@ class PropostasController extends Controller
             ->select('Telefone.*')
             ->first();
 
-        $email = Email::join('Pessoa', 'Pessoa.cod_pessoa', '=','Email.Pessoa_cod_pessoa')
-            ->where('Email.tipo', '=', 1)
-            ->where('Pessoa.cod_pessoa', '=', $autor->cod_pessoa)
-            ->select('Email.*')
-            ->first();
-
         $usuarioTipo = User::join('Usuario_Propositor', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
             ->where('Usuario.Pessoa_cod_pessoa', '=', $autor->cod_pessoa)->first();
 
@@ -111,7 +103,7 @@ class PropostasController extends Controller
             ->select('Instituicao.nome as nome_instituicao', 'Instituicao.sigla', 'Vinculo_Institucional.nome as nome_vinculo')
             ->first();
 
-        return view('propostas.create', compact('autor', 'telefone', 'email'));
+        return view('propostas.create', compact('autor', 'telefone', 'instituicaoVinculo', 'usuario'));
     }
 
     /**
@@ -122,8 +114,6 @@ class PropostasController extends Controller
      */
     public function store(PropostaFormRequest $request)
     {
-        return $request->all();
-
         $usuario = Auth::user();
 
         $propositor = UsuarioPropositor::join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
@@ -285,11 +275,10 @@ class PropostasController extends Controller
     public function show($id)
     {
 
-        $usuario = Auth::user()->getAttributes();
-        $idUsuario = $usuario['cod_usuario'];
+        $usuario = Auth::user();
 
         $propositor = DB::table('Usuario_Propositor')->join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
-                              ->where('Usuario.cod_usuario', $idUsuario)
+                              ->where('Usuario.cod_usuario', $usuario->cod_usuario)
                               ->select('Usuario_Propositor.cod_propositor')
                               ->first();
 
@@ -352,11 +341,10 @@ class PropostasController extends Controller
      */
     public function edit($id)
     {
-      $usuario = Auth::user()->getAttributes();
-      $idUsuario = $usuario['cod_usuario'];
+      $usuario = Auth::user();
 
       $propositor = DB::table('Usuario_Propositor')->join('Usuario', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')
-                            ->where('Usuario.cod_usuario', $idUsuario)
+                            ->where('Usuario.cod_usuario', $usuario->cod_usuario)
                             ->select('Usuario_Propositor.cod_propositor')
                             ->first();
 
