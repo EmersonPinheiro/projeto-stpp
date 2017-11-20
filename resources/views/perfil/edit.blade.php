@@ -12,7 +12,7 @@
           <a href="/home"><span class="glyphicon glyphicon-menu-left"></span>Voltar o Painel de Propostas</a>
 
           <!-- TÍTULO -->
-          <h3><span class="glyphicon glyphicon-user glyphicon-space"></span>Editar Perfil</h3>
+          <h3><span class="glyphicon glyphicon-user glyphicon-space"></span><strong>Editar Perfil</strong></h3>
 
           @if (!$errors->isEmpty())
             <!-- ERRO -->
@@ -47,7 +47,7 @@
             <!-- DADOS PESSOAIS E INSTITUCIONAIS -->
             <!-- TODO: RECUPERAR VALORES DO BANCO -->
             <fieldset>
-              <legend>Dados Pessoais e institucionais</legend>
+              <legend>Dados Pessoais e Institucionais</legend>
               <div class="row">
 
                 <div class="form-group col-md-5 {{ $errors->has('nome') ? 'has-error' :'' }}">
@@ -165,67 +165,64 @@
                 </div>
               </div>
 
-
-
-
               @role('parecerista')
               <!-- AREAS DE CONHECIMENTO  -->
               <input type="hidden" name="cod_grande_area" value="{!! $areasConhecimento->cod_grande_area !!}">
               <input type="hidden" name="cod_area_conhec" value="{!! $areasConhecimento->cod_area_conhec !!}">
               <input type="hidden" name="cod_subarea" value="{!! $areasConhecimento->cod_subarea !!}">
               <input type="hidden" name="cod_especialidade" value="{!! $areasConhecimento->cod_especialidade !!}">
-              <fieldset>
-                <legend>Áreas de conhecimento</legend>
-                <div class="row">
-                  <div class="form-group col-md-4 {{ $errors->has('grande_area') ? 'has-error' :'' }}">
-                    <label class="control-label" for="grande_area">Grande área *</label>
-                    <!-- AJUDA -->
-                    <small><a href="javascript:;" data-toggle="popover" data-content=" title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
-                    <input type="text" class="form-control" id="grande_area" name="grande_area" placeholder="Grande área" value="{!! $areasConhecimento->nome_grande_area !!}" maxlength="255">
-                    @if ($errors->has('grande_area'))
-                        <span class="help-block">
-                            <span class="text-danger"><strong>{{ $errors->first('grande_area') }}</strong></span>
-                        </span>
-                    @endif
-                  </div>
-                  <div class="form-group col-md-4 {{ $errors->has('area_conhecimento') ? 'has-error' :'' }}">
-                    <label class="control-label" for="area_conhecimento">Área de conhecimento *</label>
-                    <!-- AJUDA -->
-                    <small><a href="javascript:;" data-toggle="popover" data-content="" title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
-                    <input type="text" class="form-control" id="area_conhecimento" name="area_conhecimento" placeholder="Área de conhecimento" value="{!! $areasConhecimento->nome_area_conhecimento !!}" maxlength="255">
-                    @if ($errors->has('area_conhecimento'))
-                        <span class="help-block">
-                            <span class="text-danger"><strong>{{ $errors->first('area_conhecimento') }}</strong></span>
-                        </span>
-                    @endif
-                  </div>
-                  <div class="form-group col-md-4 {{ $errors->has('subarea') ? 'has-error' :'' }}">
-                    <label class="control-label" for="subarea">Subárea *</label>
-                    <!-- AJUDA -->
-                    <small><a href="javascript:;" data-toggle="popover" data-content=" title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
-                    <input type="text" class="form-control" id="subarea" name="subarea" placeholder="Subárea" value="{!! $areasConhecimento->nome_subarea !!}" maxlength="255">
-                    @if ($errors->has('subarea'))
-                        <span class="help-block">
-                            <span class="text-danger"><strong>{{ $errors->first('subarea') }}</strong></span>
-                        </span>
-                    @endif
-                  </div>
-                  <div class="form-group col-md-4 {{ $errors->has('especialidade') ? 'has-error' :'' }}">
-                    <label class="control-label" for="especialidade">Especialidade *</label>
-                    <!-- AJUDA -->
-                    <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo sua Rua, Avenida, Praça, etc. e o número de sua residência." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
-                    <input type="text" class="form-control" id="especialidade" name="especialidade" placeholder="Especialidade" value="{!! $areasConhecimento->nome_especialidade !!}" maxlength="255">
-                    @if ($errors->has('especialidade'))
-                        <span class="help-block">
-                            <span class="text-danger"><strong>{{ $errors->first('especialidade') }}</strong></span>
-                        </span>
-                    @endif
-                  </div>
+
+              <div class="row">
+                <div class="form-group col-md-6 {{ $errors->has('grande_area') ? 'has-error' :'' }}">
+                  <label class="control-label" for="grande_area">Grande área *</label>
+                  <!-- AJUDA -->
+                  <small><a href="javascript:;" data-toggle="popover" data-content="" title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <input type="text" class="form-control" id="grande_area" name="grande_area" placeholder="Grande área" value="{!! $areasConhecimento->nome_grande_area !!}" maxlength="255">
+                  @if ($errors->has('grande_area'))
+                  <span class="help-block">
+                    <span class="text-danger"><strong>{{ $errors->first('grande_area') }}</strong></span>
+                  </span>
+                  @endif
                 </div>
-              </fieldset>
+                <div class="form-group col-md-6 {{ $errors->has('area_conhecimento') ? 'has-error' :'' }}">
+                  <label class="control-label" for="area_conhecimento">Área de conhecimento *</label>
+                  <!-- AJUDA -->
+                  <small><a href="javascript:;" data-toggle="popover" data-content="" title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <input type="text" class="form-control" id="area_conhecimento" name="area_conhecimento" placeholder="Área de conhecimento" value="{!! $areasConhecimento->nome_area_conhecimento !!}" maxlength="255">
+                  @if ($errors->has('area_conhecimento'))
+                  <span class="help-block">
+                    <span class="text-danger"><strong>{{ $errors->first('area_conhecimento') }}</strong></span>
+                  </span>
+                  @endif
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6 {{ $errors->has('subarea') ? 'has-error' :'' }}">
+                  <label class="control-label" for="subarea">Subárea *</label>
+                  <!-- AJUDA -->
+                  <small><a href="javascript:;" data-toggle="popover" data-content="" title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <input type="text" class="form-control" id="subarea" name="subarea" placeholder="Subárea" value="{!! $areasConhecimento->nome_subarea !!}" maxlength="255">
+                  @if ($errors->has('subarea'))
+                  <span class="help-block">
+                    <span class="text-danger"><strong>{{ $errors->first('subarea') }}</strong></span>
+                  </span>
+                  @endif
+                </div>
+                <div class="form-group col-md-6 {{ $errors->has('especialidade') ? 'has-error' :'' }}">
+                  <label class="control-label" for="especialidade">Especialidade *</label>
+                  <!-- AJUDA -->
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo sua Rua, Avenida, Praça, etc. e o número de sua residência." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <input type="text" class="form-control" id="especialidade" name="especialidade" placeholder="Especialidade" value="{!! $areasConhecimento->nome_especialidade !!}" maxlength="255">
+                  @if ($errors->has('especialidade'))
+                  <span class="help-block">
+                    <span class="text-danger"><strong>{{ $errors->first('especialidade') }}</strong></span>
+                  </span>
+                  @endif
+                </div>
+              </div>
               @endrole
 
-
+            </fieldset>
 
 
             <!-- DADOS DE CONTATO -->
@@ -324,19 +321,6 @@
                   @endif
                 </div>
 
-                <div class="form-group col-md-6 {{ $errors->has('email_contato') ? 'has-error' :'' }}">
-                  <label class="control-label" for="email_contato">E-mail *</label>
-                  <!-- AJUDA-->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Este e-mail <strong>NÃO</strong> será utilizado por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
-                  <input type="email" class="form-control" id="email_contato" name="email_contato" placeholder="E-mail de contato" value="{!! $email->endereco !!}" maxlength="100">
-                  @if ($errors->has('email_secundario'))
-                  <span class="help-block">
-                    <span class="text-danger"><strong>{{ $errors->first('email_contato') }}</strong></span>
-                  </span>
-                  @endif
-                </div>
-              </div>
-
                 <div class="form-group col-md-6 {{ $errors->has('email_secundario') ? 'has-error' :'' }}">
                   <label class="control-label" for="email_secundario">E-mail secundário</label>
                   <!-- AJUDA-->
@@ -353,32 +337,35 @@
             <!-- DADOS DE ACESSO AO SISTEMA -->
             <fieldset>
               <legend>Dados de Acesso ao sistema</legend>
-              <div class="form-group col-md-6 {{ $errors->has('email_acesso') ? 'has-error' :'' }}">
-                <label class="control-label" for="email_acesso">E-mail de acesso ao sistema</label>
-                <!-- AJUDA-->
-                <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Este e-mail <strong>SERÁ</strong> utilizado por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
-                <input type="email" class="form-control" id="email_acesso" name="email_acesso" placeholder="E-mail secundário" value="{!! $pessoaUsuario->email !!}" maxlength="100">
-                @if ($errors->has('email_acesso'))
-                <span class="help-block">
-                  <span class="text-danger"><strong>{{ $errors->first('email_acesso') }}</strong></span>
-                </span>
-                @endif
+              <div class="row">
+                <div class="form-group col-md-6 {{ $errors->has('email_acesso') ? 'has-error' :'' }}">
+                  <label class="control-label" for="email_acesso">E-mail de Acesso ao Sistema e de Contato</label>
+                  <!-- AJUDA-->
+                  <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Este e-mail <strong>SERÁ</strong> utilizado por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <input type="email" class="form-control" id="email_acesso" name="email_acesso" placeholder="E-mail secundário" value="{!! $pessoaUsuario->email !!}" maxlength="100">
+                  @if ($errors->has('email_acesso'))
+                  <span class="help-block">
+                    <span class="text-danger"><strong>{{ $errors->first('email_acesso') }}</strong></span>
+                  </span>
+                  @endif
+                </div>
+
+                <div class="form-group col-md-6 {{ $errors->has('password') ? 'has-error' :'' }}">
+                  <label class="control-label" for="password">Senha de acesso ao Sistema</label>
+                  <!-- AJUDA-->
+                  <!-- <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Esta senha será utilizada por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Nova senha" value="" maxlength="100">
+                  @if ($errors->has('password'))
+                  <span class="help-block">
+                    <span class="text-danger"><strong>{{ $errors->first('password') }}</strong></span>
+                  </span>
+                  @endif -->
+                  <a class="btn btn-primary btn-block" href="" role="button"><span class="glyphicon glyphicon-lock glyphicon-space"></span>Clique para alterar sua Senha</a>
+                </div>
               </div>
-
-            <div class="form-group col-md-6 {{ $errors->has('password') ? 'has-error' :'' }}">
-              <label class="control-label" for="password">Senha de acesso ao sistema</label>
-              <!-- AJUDA-->
-              <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Esta senha será utilizada por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
-              <input type="password" class="form-control" id="password" name="password" placeholder="Nova senha" value="" maxlength="100">
-              @if ($errors->has('password'))
-              <span class="help-block">
-                <span class="text-danger"><strong>{{ $errors->first('password') }}</strong></span>
-              </span>
-              @endif
-            </div>
-
-
             </fieldset>
+
+            <hr>
 
             <div class="row">
               <div class="col-md-4 col-md-offset-4">

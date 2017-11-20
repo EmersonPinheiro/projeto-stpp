@@ -18,7 +18,6 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-
         <?php
         use App\Pessoa;
         $pessoa = Pessoa::join('Usuario', 'Pessoa.cod_pessoa', 'Usuario.Pessoa_cod_pessoa')->where('cod_usuario', '=', Auth::user()->cod_usuario)->first();
@@ -30,6 +29,7 @@
         @role('propositor')
         <li><a href="/propostas" class="navbar-link">Suas Propostas</a></li>
         @endrole
+
         @role('parecerista')
         <li><a href="/painel-parecerista" class="navbar-link">Seus Pareceres</a></li>
         @endrole
