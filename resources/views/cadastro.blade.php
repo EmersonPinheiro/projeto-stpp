@@ -136,7 +136,7 @@
                 <div class="form-group col-md-5 {{ $errors->has('instituicao') ? 'has-error' :'' }}">
                   <label class="control-label" for="instituicao">Instituição *</label>
                   <!-- AJUDA -->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com a Instituição a qual você está vinculado." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com a Instituição à qual você está vinculado." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="instituicao" name="instituicao" placeholder="Instituição" value="{{old('instituicao')}}" maxlength="100">
                   @if ($errors->has('instituicao'))
                       <span class="help-block">
@@ -147,6 +147,8 @@
 
                 <div class="form-group col-md-2 {{ $errors->has('sigla') ? 'has-error' :'' }}">
                   <label for="sigla" class="control-label">Sigla</label>
+                  <!-- AJUDA -->
+                  <small><a href="javascript:;" data-toggle="popover" data-content="Preenche este campo com a sigla da instituição à qual você está vinculado (se houver)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="text" class="form-control" id="sigla" name="sigla" placeholder="Sigla" value="{{old('sigla')}}" maxlength="20">
                   @if ($errors->has('sigla'))
                       <span class="help-block">
@@ -167,59 +169,6 @@
                   @endif
                 </div>
               </div>
-<!--
-              <div class="row">
-                <div class="form-group col-md-6 {{ $errors->has('grande_area') ? 'has-error' :'' }}">
-                  <label class="control-label" for="grande_area">Grande Área *</label>
-
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Grande Área definida pelo CNPQ." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
-                  <input type="text" class="form-control" id="grande_area" name="grande_area" placeholder="Grande Área" value="{{old('grande_area')}}" maxlength="100">
-                  @if ($errors->has('grande_area'))
-                      <span class="help-block">
-                          <span class="text-danger"><strong>{{ $errors->first('grande_area') }}</strong></span>
-                      </span>
-                  @endif
-                </div>
-
-                <div class="form-group col-md-6 {{ $errors->has('area_conhecimento') ? 'has-error' :'' }}">
-                  <label class="control-label" for="area_conhecimento">Área de Conhecimento *</label>
-
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Área de Conhecimento definida pelo CNPQ." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
-                  <input type="text" class="form-control" id="area_conhecimento" name="area_conhecimento" placeholder="Área de Conhecimento" value="{{old('area_conhecimento')}}" maxlength="100">
-                  @if ($errors->has('area_conhecimento'))
-                      <span class="help-block">
-                          <span class="text-danger"><strong>{{ $errors->first('area_conhecimento') }}</strong></span>
-                      </span>
-                  @endif
-                </div>
-              </div>
-
-              <div class="row">
-                  <div class="form-group col-md-6 {{ $errors->has('subarea') ? 'has-error' :'' }}">
-                  <label class="control-label" for="subarea">Subarea</label>
-
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Subarea definida pelo CNPQ (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
-                  <input type="text" class="form-control" id="subarea" name="subarea" placeholder="Subarea" value="{{old('subarea')}}" maxlength="100">
-                  @if ($errors->has('subarea'))
-                      <span class="help-block">
-                          <span class="text-danger"><strong>{{ $errors->first('subarea') }}</strong></span>
-                      </span>
-                  @endif
-                </div>
-
-                <div class="form-group col-md-6 {{ $errors->has('especialidade') ? 'has-error' :'' }}">
-                  <label class="control-label" for="especialidade">Especialidade</label>
-
-                  <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com sua Especialidade definida pelo CNPQ (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
-                  <input type="text" class="form-control" id="especialidade" name="especialidade" placeholder="Especialidade" value="{{old('especialidade')}}" maxlength="100">
-                  @if ($errors->has('especialidade'))
-                      <span class="help-block">
-                          <span class="text-danger"><strong>{{ $errors->first('especialidade') }}</strong></span>
-                      </span>
-                  @endif
-                </div>
-              </div>
-            </fieldset>-->
 
             <!-- DADOS DE CONTATO -->
             <fieldset>
@@ -320,7 +269,7 @@
                 <div class="form-group col-md-6 {{ $errors->has('email_secundario') ? 'has-error' :'' }}">
                   <label class="control-label" for="email_secundario">E-mail secundário</label>
                   <!-- AJUDA-->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Este e-mail <strong>NÃO</strong> será utilizado por você para acessar o sistema (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
+                  <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-danger'>Atenção!</span> Este e-mail é opcional e <strong>NÃO</strong> será utilizado por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
                   <input type="email" class="form-control" id="email_secundario" name="email_secundario" placeholder="E-mail secundário" value="{{old('email_secundario')}}" maxlength="100">
                   @if ($errors->has('email_secundario'))
                   <span class="help-block">
@@ -334,8 +283,8 @@
             <!-- DADOS DE ACESSO AO SISTEMA -->
             <fieldset>
               <legend>Dados de Acesso ao Sistema</legend>
-              <div class="alert alert-warning" role="alert">
-                <span class="glyphicon glyphicon-alert glyphicon-space"></span><strong>Atenção!</strong> Os dados a seguir serão utilizados por você para fazer login.
+              <div class="alert alert-info" role="alert">
+                <span class="glyphicon glyphicon-info-sign glyphicon-space"></span>Os dados a seguir serão utilizados por você para acessar o sistema (fazer login). Você receberá um link de confirmação no endereço de e-mail informado abaixo ao finalizar o cadastro. Caso não o encontre em sua caixa de entrada, verifique sua caixa de spam.
               </div>
               <div class="row">
                 <div class="form-group col-md-12 {{ $errors->has('email') ? 'has-error' :'' }}">
