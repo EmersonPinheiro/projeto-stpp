@@ -168,10 +168,10 @@
                   </thead>
                   <tbody>
                     @foreach($pareceristasPareceres as $pareceristaParecer)
-                      <td><a href="{!! action('PerfilController@show', $pareceristaParecer->slug) !!}">{!! $pareceristaParecer->nome !!} {!! $pareceristaParecer->sobrenome !!}</a></td>
+                    <td><a href="{!! action('PerfilController@show', $pareceristaParecer->slug) !!}">{!! $pareceristaParecer->nome !!} {!! $pareceristaParecer->sobrenome !!}</a></td>
                       <td>
                         @if($pareceristaParecer->envio)
-                          <a class="col-md-4" href="{!! action('ParecerController@show', $pareceristaParecer->cod_parecer) !!}">Visualizar</a>
+                          <a class="col-md-4" href="{!! action('ParecerController@show', $pareceristaParecer->cod_parecer) !!}" target="_blank">Visualizar</a>
                         @else
                           @if($pareceristaParecer->prazo_restante == 0 and $proposta->situacao != 'Cancelada')
                             <a class="btn btn-primary" href="{!! action('ParecerController@prorrogarPrazo', $pareceristaParecer->cod_parecer) !!}">Prorrogar Prazo em 30 dias</a>
@@ -196,7 +196,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-right">
-                <a class="btn btn-primary" href="{!! action('RelatorioController@index', $proposta->cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-book glyphicon-space"></span>Gerar Relatório</a>
+                <a class="btn btn-primary" href="{!! action('RelatorioController@index', $proposta->cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-file glyphicon-space"></span>Gerar Relatório</a>
                 @if($proposta->situacao != 'Cancelada')
                   <a class="btn btn-primary" href="{!! action('AdminController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil glyphicon-space"></span>Editar Proposta</a>
                   <button class="btn btn-danger" role="button" data-toggle="modal" data-target="#myModal2"><span class="glyphicon glyphicon-remove glyphicon-space"></span>Cancelar Proposta</button>
@@ -260,24 +260,6 @@
         </div> <!-- modal-content -->
       </div> <!-- modal-dialog -->
     </div>
-
-  </div> <!-- /container -->
-</div> <!-- /content -->
-
-
-
-
-              <!--TODO: <div class="pull-right">
-                @if($proposta->situacao != 'Cancelada')
-                  <a class="btn btn-primary" href="{!! action('AdminController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;Editar Proposta</a>
-
-                @else
-                  <h5>Proposta CANCELADA!</h5>
-                @endif
-                <a class="btn btn-primary" href="{!! action('RelatorioController@index', $proposta->cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;Relatório</a>
-              </div>-->
-
-
 
   </div> <!-- /container -->
 </div> <!-- /content -->

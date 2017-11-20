@@ -19,12 +19,6 @@
         <div class="col-md-4">
           <div class="quadro-login">
 
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-
             @include('formLogin')
 
           </div> <!-- quadro-login -->

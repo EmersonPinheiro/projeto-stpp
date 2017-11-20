@@ -1,69 +1,75 @@
 @extends('master')
-@section('title', 'Enviar parecer')
+@section('title', 'Informações da obra')
 
 @section('content')
+
 <!-- CONTENT -->
-
-
-
 <div class="content">
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
-        <div class="quadro-painel painel-info-proposta">
-          <div class="panel panel-default">
-            <!-- CABEÇALHO PAINEL -->
-            <div class="panel-heading">
-              <span class="panel-title"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;{!! $obraParecer->titulo !!}</span>
-            </div>
+        <div class="quadro text-justify">
 
-            @foreach ($errors->all() as $error)
-            <br>
+          <a href="/painel-parecerista"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
+
+          <h3><span class="glyphicon glyphicon-book glyphicon-space"></span><strong>{{$obraParecer->titulo}}</strong></h3>
+
+          @if (!$errors->isEmpty())
             <div class="alert alert-danger">
+              <p><span class="glyphicon glyphicon-exclamation-sign glyphicon-space"></span>
+              <strong>Ops! Algo deu errado.</strong></p>
+              @foreach ($errors->all() as $error)
               <p>{{ $error }}</p>
+              @endforeach
             </div>
-            @endforeach
+          @endif
 
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
+          @if (session('status'))
+              <div class="alert alert-info">
+                  {{ session('status') }}
+              </div>
+          @endif
+
+          <h4 class="titulo">Informações da Obra</h4>
+          @if(!$obraParecer->envio)
+            <div class="alert alert-danger alert-trim">
+              <strong>Restam {!! $obraParecer->prazo_restante !!} dias para o envio do parecer.</strong></p>
+            </div>
+            @if($obraParecer->prazo_restante == 0)
+              <br><p><strong><a href="{!! action('ParecerController@solicitarPrazo', $obraParecer->cod_parecer) !!}">Clique para solicitar prorrogação do prazo.</a></p>
             @endif
+          @else
+            <div  class="alert alert-success alert-trim">
+              <p>Parecer enviado!</p>
+            </div>
+          @endif
 
-            <div class="panel-body text-justify">
-              <a href="/painel-parecerista"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
-              <h4 class="titulo">Informações da Obra</h4>
-              <p><strong>Título da Obra: </strong>{!! $obraParecer->titulo !!}</p>
-              <p><strong>Subtítulo da Obra: </strong>{!! $obraParecer->subtitulo !!}</p>
-              <p><strong>Resumo: </strong>{!! $obraParecer->resumo !!}</p>
-              <p><strong>Obra: </strong><a href="{!! action('DocumentosController@showMaterialParecerista', $idMaterial) !!}">&nbsp;&nbsp;&nbsp;Acessar material da obra </a><br>
-              @if(!$obraParecer->envio)
-                <p><strong class="alert alert-danger">Dias restantes: {!! $obraParecer->prazo_restante !!}</strong></p>
-                @if($obraParecer->prazo_restante == 0)
-                  <br><p><strong><a href="{!! action('ParecerController@solicitarPrazo', $obraParecer->cod_parecer) !!}">Clique aqui para solicitar prorrogação do prazo.</a></strong></p>
-                @endif
-              @else
-                <p><strong class="alert alert-success">Parecer enviado!</strong></p>
-              @endif
-              <h4 class="titulo">Parecer</h4>
-              <form method="post" enctype="multipart/form-data">
+          <p><strong>Título da Obra: </strong>{!! $obraParecer->titulo !!}</p>
+          <p><strong>Subtítulo da Obra: </strong>{!! $obraParecer->subtitulo !!}</p>
+          <p><strong>Resumo: </strong>{!! $obraParecer->resumo !!}</p>
+          <p><strong>Material: </strong><a href="{!! action('DocumentosController@showMaterialParecerista', $idMaterial) !!}">visualizar ou baixar documento</a><br>
+
+          <form method="post" enctype="multipart/form-data">
+            <fieldset>
+              <legend>Parecer</legend>
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                 <div class="form-group">
-                  <label for="cad7">Parecer (.pdf)</label>
-                  <input type="file" name="parecer" class="form-control" id="cad7">
+                  <label for="parecer">Parecer (.pdf)</label>
+                  <input type="file" name="parecer" class="form-control" id="parecer">
                 </div>
                 <div class="form-group">
-                  <label for="cad4">Observações</label>
-                  <textarea type="text" class="form-control" id="cad4" placeholder="Observações"></textarea>
+                  <label for="obs">Observações</label>
+                  <textarea type="text" class="form-control" id="obs" name="obs" placeholder="Observações"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;&nbsp;Enviar Parecer</button>
-              </form>
-            </div>
-            <div class="panel-footer">
-              <a href="/painel-parecerista"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
-            </div>
-          </div> <!-- painel -->
-        </div> <!-- /quadro-painel /painel-info-propostas -->
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Enviar Parecer</button>
+            </fieldset>
+          </form>
+          <hr>
+
+          <a href="/painel-parecerista"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
+
+        </div>
+
       </div> <!-- /col -->
     </div> <!-- /row -->
   </div> <!-- /container -->
