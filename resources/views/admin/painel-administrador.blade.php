@@ -75,17 +75,20 @@
             </div>
             <!-- CORPO PAINEL -->
             <div class="panel-body">
-              @foreach($admin->unreadNotifications as $notification)
-              <div class="alert alert-info alert-dismissible" role="alert">
-                {{$notification->data['message_user']}}
-                <button action="" class="btn close" data-dismiss="alert">&times;</button>
-              </div>
-              @endforeach
-              <div class="alert alert-info alert-dismissible">
-                Tudo certo!
-                <button class="btn close" data-dismiss="alert">&times;</button>
-              </div>
-
+              @if($admin->unreadNotifications->isEmpty())
+                <div class="alert alert-info">
+                  <span class="glyphicon glyphicon-pushpin glyphicon-space"></span>
+                  Não há notificações.
+                </div>
+              @else
+                @foreach($admin->unreadNotifications as $notification)
+                  <div class="alert alert-info" role="alert">
+                    <p><span class="glyphicon glyphicon-pushpin glyphicon-space"></span>
+                    {{$notification->data['message_user']}}</p>
+                    <p><small>{{$notification->created_at}}</small></p>
+                  </div>
+                @endforeach
+              @endif
             </div> <!-- panel-body -->
           </div> <!-- panel -->
         </div> <!-- quadro-painel painel-notificacoes -->

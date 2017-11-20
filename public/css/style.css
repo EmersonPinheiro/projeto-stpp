@@ -183,14 +183,12 @@ fieldset {
 }
 
 .painel-propostas .panel-body {
-  min-height: 300px;
-  max-height: 400px;
+  height: 400px;
   overflow: auto;
 }
 
 .painel-notificacoes .panel-body {
-  min-height: 300px;
-  max-height: 450px;
+  height: 400px;
   overflow: auto;
 }
 

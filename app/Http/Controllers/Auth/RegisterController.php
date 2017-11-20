@@ -18,6 +18,7 @@ use App\Material;
 use App\Parecer;
 use App\VinculoInstitucional;
 use App\GrandeArea;
+use App\AreaConhecimento;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
