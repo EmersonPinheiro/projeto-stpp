@@ -76,7 +76,9 @@
           <h4 class="titulo">Arquivos</h4>
           <div class="row">
             <div class="col-md-12">
-              <h5 class="titulo">Material</h5>
+              <h5 class="titulo">Material
+                <!-- AJUDA -->
+                <small><a href="javascript:;" data-toggle="popover" data-content="Abaixo são exibidos os documentos com e sem identificação e o arquivo compactado das imagens enviados para a proposta. Você pode solicitar uma nova versão dos documentos através do botão 'Solicitar Nova Versão da Obra'." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small></h5>
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -104,16 +106,18 @@
                 </tbody>
               </table>
               @if($proposta->situacao != 'Cancelada')
-                <button class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-file glyphicon-space"></span>Solicitar Nova Versão</button>
+                <button class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-file glyphicon-space"></span>Solicitar Nova Versão da Obra</button>
               @endif
             </div>
           </div>
 
           <div class="row">
-            <div class="col-md-6">
-              <h5 class="titulo">Documentos de Sugestão de Alterações</h5>
+            <div class="col-md-12">
+              <h5 class="titulo">Documentos de Sugestão de Alterações
+                <!-- AJUDA -->
+                <small><a href="javascript:;" data-toggle="popover" data-content="Abaixo são exibidos os documentos de sugestão de alterações enviados no sistema. Você pode enviar um novo documento quando solicita uma nova versão da obra através do botão 'Solicitar nova versão da Obra'." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small></h5>
               @if(!$docsSugestoes->isEmpty())
-                <table>
+                <table class="table table-striped">
                   <thead>
                     <tr>
                       <th>Versão</th>
@@ -131,9 +135,13 @@
                 <p class="alert alert-info">Nenhuma alteração foi sugerida até o momento.</p>
               @endif
             </div>
+          </div>
 
-            <div class="col-md-6">
-              <h5 class="titulo">Ofícios de Alteração</h5>
+          <div class="row">
+            <div class="col-md-12">
+              <h5 class="titulo">Ofícios de Alteração
+                <!-- AJUDA -->
+                <small><a href="javascript:;" data-toggle="popover" data-content="Abaixo são exibidos os oficios de alteração enviados em complemento às novas versões da obra." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small></h5>
               @if(!$oficiosAlteracoes->isEmpty())
                 <table class="table table-striped">
                   <thead>
@@ -204,8 +212,6 @@
               </div>
             </div>
           </div>
-
-          <a href="/admin/painel-administrador"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
 
         </div> <!-- /quadro -->
       </div> <!-- /col -->

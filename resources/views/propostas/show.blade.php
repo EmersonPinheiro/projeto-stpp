@@ -34,6 +34,7 @@
           <p class="alert {{ $proposta->situacao != 'Cancelada' ? 'alert-warning' : 'alert-danger' }} alert-trim"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
           <p><strong>Título da Obra: </strong>{!! $obra->titulo !!}</p>
           <p><strong>Subtítulo da Obra: </strong>{!! $obra->subtitulo !!}</p>
+          <p><strong>Categoria da Obra: </strong>{!! $obra->categoria !!}</p>
           <p><strong>Autor(es):</strong></p>
           @foreach($autores as $autor)
             <p>{!! $autor->nome !!} {!! $autor->sobrenome !!}</p>
@@ -63,7 +64,9 @@
 
           <h4 class="titulo">Arquivos</h4>
 
-          <h5 class="titulo">Material</h5>
+          <h5 class="titulo">Material
+            <!-- AJUDA -->
+          <small><a href="javascript:;" data-toggle="popover" data-content="Abaixo são exibidos os documentos com e sem identificação e o arquivo compactado das imagens enviados para a proposta. Caso seja solicidado pelo Administrador do sistema, você poderá enviar uma nova versão deste masterial clicando no botão 'Enviar nova versão da Obra'. Todas as versões serão exibidas na tabela." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small></h5>
           <table class="table table-striped">
             <thead>
               <tr>
@@ -93,10 +96,12 @@
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cloud-upload glyphicon-space"></span>Enviar nova versão da Obra</button>
 
           <div class="row">
-            <div class="col-md-6">
-              <h5 class="titulo">Documentos de Sugestão de Alterações</h5>
+            <div class="col-md-12">
+              <h5 class="titulo">Documentos de Sugestão de Alterações
+                <!-- AJUDA -->
+                <small><a href="javascript:;" data-toggle="popover" data-content="Abaixo são exibidos os documentos de sugestão de alterações enviados pelo Administrador do sistema. Você deve enviar uma nova versão da obra, conforme sugerido, clicando no botão 'Enviar nova versão da Obra'." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small></h5>
               @if(!$docsSugestoes->isEmpty())
-                <table>
+                <table class="table table-striped">
                   <thead>
                     <tr>
                       <th>Versão</th>
@@ -114,9 +119,13 @@
                 <p class="alert alert-info">Nenhuma alteração foi sugerida até o momento.</p>
               @endif
             </div>
+          </div>
 
-            <div class="col-md-6">
-              <h5 class="titulo">Ofícios de Alteração</h5>
+          <div class="row">
+            <div class="col-md-12">
+              <h5 class="titulo">Ofícios de Alteração
+                <!-- AJUDA -->
+                <small><a href="javascript:;" data-toggle="popover" data-content="Abaixo são exibidos os oficios de alteração enviados em complemento às novas versões da obra." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small></h5>
               @if(!$oficiosAlteracoes->isEmpty())
                 <table class="table table-striped">
                   <thead>
@@ -149,8 +158,6 @@
               </div>
             </div>
           </div>
-
-          <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
 
         </div> <!-- /quadro-->
       </div> <!-- /col -->

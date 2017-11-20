@@ -47,7 +47,7 @@
           <p><strong>Título da Obra: </strong>{!! $obraParecer->titulo !!}</p>
           <p><strong>Subtítulo da Obra: </strong>{!! $obraParecer->subtitulo !!}</p>
           <p><strong>Resumo: </strong>{!! $obraParecer->resumo !!}</p>
-          <p><strong>Material: </strong><a href="{!! action('DocumentosController@showMaterialParecerista', $idMaterial) !!}">visualizar ou baixar documento</a><br>
+          <p><strong>Material: </strong><a href="{!! action('DocumentosController@showMaterialParecerista', $idMaterial) !!}">clique aqui para visualizar ou baixar documento</a><br>
 
           <form method="post" enctype="multipart/form-data">
             <fieldset>
@@ -65,8 +65,6 @@
             </fieldset>
           </form>
           <hr>
-
-          <a href="/painel-parecerista"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel</a>
 
         </div>
 

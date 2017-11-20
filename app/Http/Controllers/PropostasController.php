@@ -104,6 +104,7 @@ class PropostasController extends Controller
      */
     public function store(PropostaFormRequest $request)
     {
+        return $request->all();
 
         $usuario = Auth::user();
 
@@ -146,6 +147,7 @@ class PropostasController extends Controller
           'subtitulo'=>$request->get('subtitulo'),
           'resumo'=>$request->get('resumo'),
           'genese_relevancia'=>$request->get('genese_relevancia'),
+          'categoria'=>$request->get('categoria_obra'),
           'Proposta_cod_proposta'=>$proposta->cod_proposta,
           'Grande_Area_cod_grande_area'=>$grandeAreaObra->cod_grande_area,
         ]);
