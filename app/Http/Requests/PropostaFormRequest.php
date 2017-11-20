@@ -50,6 +50,7 @@ class PropostaFormRequest extends FormRequest
             'documento_s_identificacao'=>'required|mimes:doc,docx,odt',
             'documento_c_identificacao'=>'required|mimes:doc,docx,odt',
             'imagens'=>'nullable|file|mimes:rar,zip',
+            'termos'=>'required'
 
         ];
     }

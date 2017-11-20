@@ -434,6 +434,19 @@
                 </div>
               </fieldset>
 
+              <div class="row">
+                <div class="col-md-12 checkbox {{ $errors->has('termos') | !$errors->isEmpty() ? 'has-error' :'' }}">
+                  <label for="termos">
+                    <input type="checkbox" name="termos" id="termos"> * Li e concordo com os <a href="/termos-de-uso">Termos de Uso</a> do sistema.
+                  </label>
+                  @if ($errors->has('termos'))
+                  <span class="help-block">
+                    <span class="text-danger"><strong>{{ $errors->first('termos') }}</strong></span>
+                  </span>
+                  @endif
+                </div>
+              </div>
+
               <hr>
               <div class="row">
                 <div class="col-md-4 col-md-offset-4">

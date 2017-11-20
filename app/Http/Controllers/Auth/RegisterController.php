@@ -93,8 +93,8 @@ class RegisterController extends Controller
 
             'email'=>'required|email|max:100',
             'password'=>'required|min:6|max:60|confirmed',
-            'password_confirmation'=>'required|min:6|max:60',
-            //'termos'=>'required'
+            'password_confirmation'=>'required|min:6|max:60'
+
         ], $messages);
     }
 

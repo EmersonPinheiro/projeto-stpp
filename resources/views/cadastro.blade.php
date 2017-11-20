@@ -335,7 +335,7 @@
             <fieldset>
               <legend>Dados de Acesso ao Sistema</legend>
               <div class="alert alert-warning" role="alert">
-                Atenção! Os dados a seguir serão utilizados por você para fazer login.
+                <span class="glyphicon glyphicon-alert glyphicon-space"></span><strong>Atenção!</strong> Os dados a seguir serão utilizados por você para fazer login.
               </div>
               <div class="row">
                 <div class="form-group col-md-12 {{ $errors->has('email') ? 'has-error' :'' }}">
@@ -375,18 +375,6 @@
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-12 checkbox {{ $errors->has('termos') | !$errors->isEmpty() ? 'has-error' :'' }}">
-                  <label for="termos">
-                    <input type="checkbox" name="termos" id="termos"> * Li e concordo com os <a href="/termos-de-uso">Termos de Uso</a> do sistema.
-                  </label>
-                  @if ($errors->has('termos'))
-                  <span class="help-block">
-                    <span class="text-danger"><strong>{{ $errors->first('termos') }}</strong></span>
-                  </span>
-                  @endif
-                </div>
-              </div>
             </fieldset>
 
             <hr/>
