@@ -11,6 +11,11 @@
     Faça login para ter acesso ao sistema ou cadastre-se.
   </div>
   @endif
+  @if (session('status'))
+      <div class="alert alert-success">
+          {{ session('status') }}
+      </div>
+  @endif
   <form action="{!! route('login') !!}" method="post">
     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
     <div class="form-group">
