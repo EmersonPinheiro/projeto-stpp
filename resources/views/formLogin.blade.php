@@ -7,7 +7,7 @@
   @endforeach
   @else
   <div class="alert alert-info">
-    <span class="glyphicon glyphicon-info-sign glyphicon-space" aria-hidden="true"></span>
+    <span class="glyphicon glyphicon-info-sign glyphicon-space"></span>
     Faça login para ter acesso ao sistema ou cadastre-se.
   </div>
   @endif

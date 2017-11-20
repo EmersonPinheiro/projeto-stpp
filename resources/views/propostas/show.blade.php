@@ -118,7 +118,7 @@
             <div class="col-md-6">
               <h5 class="titulo">Ofícios de Alteração</h5>
               @if(!$oficiosAlteracoes->isEmpty())
-                <table>
+                <table class="table table-striped">
                   <thead>
                     <tr>
                       <th>Versão</th>
@@ -128,7 +128,7 @@
                   <tbody>
                     @foreach($oficiosAlteracoes as $oficioAlteracao)
                       <td>{!! $oficioAlteracao->versao !!}</td>
-                      <td><a href="{!! action('DocumentosController@showOficioAlteracao', $oficioAlteracao->cod_oficio) !!}">Visualizar</a></td>
+                      <td><a href="{!! action('DocumentosController@showOficioAlteracao', $oficioAlteracao->cod_oficio) !!}" target="_blank">Visualizar</a></td>
                     @endforeach
                   </tbody>
                 </table>
