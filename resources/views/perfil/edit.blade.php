@@ -5,6 +5,7 @@
 <div class="content">
   <div class="container">
     <div class="row">
+
       <div class="col-md-10 col-md-offset-1">
         <div class="quadro">
           <!-- RETORNAR -->
@@ -33,8 +34,15 @@
           <form method="post">
             <!-- TODO: VERIFICAR ESTES CAMPOS -->
             <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-
-            <input type="hidden" name="tipo" value="propositor">
+            <input type="hidden" name="cod_pessoa" value="{!! $pessoaUsuario->cod_pessoa !!}">
+            <input type="hidden" name="cod_usuario" value="{!! $pessoaUsuario->cod_usuario !!}">
+            <input type="hidden" name="cod_instituicao" value="{!! $instituicaoVinculo->cod_instituicao !!}">
+            <input type="hidden" name="cod_vinculo" value="{!! $instituicaoVinculo->cod_vinculo !!}">
+            <input type="hidden" name="cod_cidade" value="{!! $localizacao->cod_cidade !!}">
+            <input type="hidden" name="cod_est_prov" value="{!! $localizacao->cod_est_prov !!}">
+            <input type="hidden" name="cod_pais" value="{!! $localizacao->cod_pais !!}">
+            <input type="hidden" name="cod_telefone" value="{!! $telefone->cod_telefone !!}">
+            <input type="hidden" name="cod_email" value="{!! $email->cod_email !!}">
 
             <!-- DADOS PESSOAIS E INSTITUCIONAIS -->
             <!-- TODO: RECUPERAR VALORES DO BANCO -->
@@ -148,7 +156,7 @@
                   <label class="control-label" for="setor">Vínculo Institucional</label>
                   <!-- AJUDA -->
                   <small><a href="javascript:;" data-toggle="popover" data-content="Preencha este campo com o Setor ou Departamento aos quais você está vinculado (opcional)." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
-                  <input type="text" class="form-control" id="vinculo" name="vinculo" placeholder="Setor, Departamento, ..." value="" maxlength="200">
+                  <input type="text" class="form-control" id="vinculo" name="vinculo" placeholder="Setor, Departamento, ..." value="{!! $instituicaoVinculo->nome_vinculo !!}" maxlength="200">
                   @if ($errors->has('vinculo'))
                       <span class="help-block">
                           <span class="text-danger"><strong>{{ $errors->first('vinculo') }}</strong></span>
@@ -160,8 +168,12 @@
 
 
 
-              @if($pessoaUsuario->hasRole('parecerista'))
+              @role('parecerista')
               <!-- AREAS DE CONHECIMENTO  -->
+              <input type="hidden" name="cod_grande_area" value="{!! $areasConhecimento->cod_grande_area !!}">
+              <input type="hidden" name="cod_area_conhec" value="{!! $areasConhecimento->cod_area_conhec !!}">
+              <input type="hidden" name="cod_subarea" value="{!! $areasConhecimento->cod_subarea !!}">
+              <input type="hidden" name="cod_especialidade" value="{!! $areasConhecimento->cod_especialidade !!}">
               <fieldset>
                 <legend>Áreas de conhecimento</legend>
                 <div class="row">
@@ -211,7 +223,7 @@
                   </div>
                 </div>
               </fieldset>
-              @endif
+              @endrole
 
 
 
@@ -312,6 +324,19 @@
                   @endif
                 </div>
 
+                <div class="form-group col-md-6 {{ $errors->has('email_contato') ? 'has-error' :'' }}">
+                  <label class="control-label" for="email_contato">E-mail *</label>
+                  <!-- AJUDA-->
+                  <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Este e-mail <strong>NÃO</strong> será utilizado por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                  <input type="email" class="form-control" id="email_contato" name="email_contato" placeholder="E-mail de contato" value="{!! $email->endereco !!}" maxlength="100">
+                  @if ($errors->has('email_secundario'))
+                  <span class="help-block">
+                    <span class="text-danger"><strong>{{ $errors->first('email_contato') }}</strong></span>
+                  </span>
+                  @endif
+                </div>
+              </div>
+
                 <div class="form-group col-md-6 {{ $errors->has('email_secundario') ? 'has-error' :'' }}">
                   <label class="control-label" for="email_secundario">E-mail secundário</label>
                   <!-- AJUDA-->
@@ -323,7 +348,36 @@
                   </span>
                   @endif
                 </div>
+            </fieldset>
+
+            <!-- DADOS DE ACESSO AO SISTEMA -->
+            <fieldset>
+              <legend>Dados de Acesso ao sistema</legend>
+              <div class="form-group col-md-6 {{ $errors->has('email_acesso') ? 'has-error' :'' }}">
+                <label class="control-label" for="email_acesso">E-mail de acesso ao sistema</label>
+                <!-- AJUDA-->
+                <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Este e-mail <strong>SERÁ</strong> utilizado por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+                <input type="email" class="form-control" id="email_acesso" name="email_acesso" placeholder="E-mail secundário" value="{!! $pessoaUsuario->email !!}" maxlength="100">
+                @if ($errors->has('email_acesso'))
+                <span class="help-block">
+                  <span class="text-danger"><strong>{{ $errors->first('email_acesso') }}</strong></span>
+                </span>
+                @endif
               </div>
+
+            <div class="form-group col-md-6 {{ $errors->has('password') ? 'has-error' :'' }}">
+              <label class="control-label" for="password">Senha de acesso ao sistema</label>
+              <!-- AJUDA-->
+              <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-warning'>Atenção!</span> Esta senha será utilizada por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-info-sign"></span></a></small>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Nova senha" value="" maxlength="100">
+              @if ($errors->has('password'))
+              <span class="help-block">
+                <span class="text-danger"><strong>{{ $errors->first('password') }}</strong></span>
+              </span>
+              @endif
+            </div>
+
+
             </fieldset>
 
             <div class="row">
