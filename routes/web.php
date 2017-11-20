@@ -14,8 +14,8 @@
 Route::get('/','PagesController@home');
 Route::get('/home','PagesController@home'); //TODO: Retirar. Solução provisória.
 Route::get('/cadastro', 'PagesController@cadastro')->middleware('guest'); //RETIRAR (SUBSTITUIR PELO REGISTER PADRÃO)
-Route::get('/cadastro/verificar/{confirmation_token}', 'Auth\RegisterController@confirmation')->middleware('guest')->name('confirmarCadastro');
-//Route::get('/register/verificar/{confirmation_token}', 'RegisterController@confirmation')->middleware('guest');
+//Route::get('/cadastro/verificar/{confirmation_token}', 'Auth\RegisterController@confirmation')->middleware('guest')->name('confirmarCadastro');
+Route::get('/register/verificar/{confirmation_token}', 'Auth\RegisterController@confirmation')->middleware('guest')->name('confirmarCadastro');
 Route::get('/contato', 'PagesController@contato');
 Route::get('/ajuda', 'PagesController@ajuda');
 Route::get('/termos-de-uso', 'PagesController@termosDeUso');

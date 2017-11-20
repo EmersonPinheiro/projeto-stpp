@@ -20,14 +20,13 @@
             <div class="alert alert-danger">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <p><span class="glyphicon glyphicon-exclamation-sign glyphicon-space"></span>
-              Ops! Algo deu errado.</p>
-              <p>Preencha corretamente o formulário abaixo para ter acesso ao sistema. Os campos com asterisco (*) são obrigatórios.</p>
+              Ops! Algo deu errado. Preencha corretamente o formulário abaixo para ter acesso ao sistema. Os campos com asterisco (*) são obrigatórios.</p>
             </div>
           @else
             <!-- INFORMAÇÕES -->
             <div class="alert alert-info alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <span class="glyphicon glyphicon-question-sign glyphicon-space" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-info-sign glyphicon-space" aria-hidden="true"></span>
               Preencha o formulário abaixo para ter acesso ao sistema. Os campos com asterisco (*) são obrigatórios.
             </div>
           @endif

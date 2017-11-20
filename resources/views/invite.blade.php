@@ -61,8 +61,8 @@
                 <input type="file" class="form-control" id="documento_parecerista" name="documento_parecerista" placeholder="Material a ser enviado ao parecerista" value="{{old('documento_parecerista')}}"/>
               </div>
               <div class="col-md-3">
-                <label for="sobrenome">Número de Páginas</label>
-                <input type="number" class="form-control" id="paginas" name="paginas" placeholder="Nºde Páginas" value="{{old('paginas')}}"/>
+                <label for="numero_paginas">Número de Páginas</label>
+                <input type="number" class="form-control" id="numero_paginas" name="numero_paginas" placeholder="Nºde Páginas" value="{{old('paginas')}}"/>
               </div>
             </div>
             <hr>
