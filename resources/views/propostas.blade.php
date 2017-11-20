@@ -36,7 +36,7 @@
               <!-- LISTA DE PROPOSTAS -->
               @if($propostas->isEmpty())
                 <div class="alert alert-info" role="alert">
-                  <p>Você ainda não cadastrou propostas! Clique no botão abaixo para submeter uma nova proposta.</p>
+                  <p><span class="glyphicon glyphicon-info-sign glyphicon-space"></span>Você ainda não cadastrou propostas! Clique no botão abaixo para submeter uma nova proposta.</p>
                 </div>
               @else
                 @foreach($propostas->reverse() as $proposta)

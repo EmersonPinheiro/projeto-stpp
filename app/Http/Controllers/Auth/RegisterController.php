@@ -74,11 +74,11 @@ class RegisterController extends Controller
         ];
 
         return Validator::make($data, [
-            'nome'=>'required|min:1|max:50',
-            'sobrenome'=>'required|min:1|max:100',
+            'nome'=>'required|min:1|max:50|alpha',
+            'sobrenome'=>'required|min:1|max:100|alpha',
             'sexo'=>'required',
-            'cpf'=>'required|digits:11',
-            'rg'=>'required|digits_between:6,14',
+            'cpf'=>'required|digits:11|unique:Pessoa,cpf',
+            'rg'=>'required|digits_between:6,14|unique:Pessoa,rg',
             'estado_civil'=>'required',
 
             'instituicao'=>'required|min:2|max:100',
@@ -93,9 +93,14 @@ class RegisterController extends Controller
             'pais'=>'required|min:2|max:50',
             'telefone'=>'required|digits_between:6,14',
             'telefone_secundario'=>'nullable|digits_between:6,14',
-            'email_secundario'=>'nullable|max:100|email',
+            'email_secundario'=>'nullable|email|max:100',
 
-            'email'=>'required|email|max:100',
+            //'grande_area'=>'required|min:2|max:100|alpha',
+            //'area_conhecimento'=>'required|min:2|max:100|alpha',
+            //'subarea'=>'nullable|min:2|max:100|alpha',
+            //'especialidade'=>'nullable|min:2|max:100|alpha',
+
+            'email'=>'required|email|max:100|unique:Usuario,email',
             'password'=>'required|min:6|max:60|confirmed',
             'password_confirmation'=>'required|min:6|max:60'
 
@@ -244,7 +249,7 @@ class RegisterController extends Controller
 
         Mail::to($usuario->email)->send(new ConfirmacaoCadastro($usuario->confirmation_token));
 
-        return redirect('/')->with('status', 'Cadastro efetuado com sucesso, por favor verifique seus e-mails e confirme seu cadastro.');
+        return redirect('/')->with('status', 'Cadastro efetuado com sucesso, por favor verifique sua caixa de e-mails e confirme seu cadastro clicando no link de confirmação.');
     }
 
     public function confirmation($confirmation_token)
