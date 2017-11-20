@@ -41,19 +41,36 @@
             {{ csrf_field() }}
             <input type="hidden" id="proposta" name="proposta" value="{{ $codProposta }}">
             <div class="row">
-              <div class="col-md-12 form-group">
+              <div class="col-md-6 form-group">
                 <label for="email">E-mail do Avaliador</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" value="{{old('email')}}"/>
+              </div>
+              <div class="col-md-3 form-group">
                 <label for="nome">Nome do Avaliador</label>
                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" value="{{old('nome')}}"/>
+              </div>
+              <div class="col-md-3 form-group">
                 <label for="sobrenome">Sobrenome do Avaliador</label>
                 <input type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome" value="{{old('sobrenome')}}"/>
+              </div>
                 <!-- TODO: Inserir ajuda sobre o que é este documento -->
+            </div>
+            <div class="row">
+              <div class="col-md-6">
                 <label for="documento_parecerista">Material</label>
                 <input type="file" class="form-control" id="documento_parecerista" name="documento_parecerista" placeholder="Material a ser enviado ao parecerista" value="{{old('documento_parecerista')}}"/>
               </div>
+              <div class="col-md-3">
+                <label for="sobrenome">Número de Páginas</label>
+                <input type="number" class="form-control" id="paginas" name="paginas" placeholder="Nºde Páginas" value="{{old('paginas')}}"/>
+              </div>
             </div>
-            <button class="btn btn-primary" type="submit">Convidar Avaliador</button>
+            <hr>
+            <div class="row">
+              <div class="col-md-4 col-md-offset-4">
+                <button class="btn btn-primary btn-block" type="submit">Convidar Avaliador</button>
+              </div>
+            </div>
           </form>
         </div>
       </div>

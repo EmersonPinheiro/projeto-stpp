@@ -142,7 +142,7 @@ class AdminController extends Controller
         $docsSugestoes = DocSugestaoAlteracoes::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->get();
         $oficiosAlteracoes = OficioAlteracoes::where('Proposta_cod_proposta', '=', $proposta->cod_proposta)->get();
 
-        return view('admin.show-proposta', compact('proposta', 'obra', 'autores', 'pareceristasPareceres', 'materiais', 'funcoes', 'docsSugestoes', 'oficiosAlteracoes'));
+        return view('admin.show-proposta', compact('proposta', 'obra', 'autores', 'pareceristasPareceres', 'materiais', 'funcoes', 'docsSugestoes', 'oficiosAlteracoes', 'tecnicos'));
     }
 
     /**
