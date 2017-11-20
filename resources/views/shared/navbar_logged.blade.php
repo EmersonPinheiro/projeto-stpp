@@ -25,7 +25,7 @@
         //dd(Auth::user());
         ?>
 
-        <li>Bem vindo {!! $pessoa->nome !!}</li>
+        <li><span class="navbar-text navbar-usuario"><strong>Olá, {!! $pessoa->nome !!}!</strong></span></li>
 
         @role('propositor')
         <li><a href="/propostas" class="navbar-link">Suas Propostas</a></li>

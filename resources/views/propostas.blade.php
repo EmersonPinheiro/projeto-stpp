@@ -8,10 +8,17 @@
   <div class="container">
     <div class="row">
 
+      <div class="col-md-8">
+        @foreach ($errors->all() as $error)
+        <p class="alert alert-danger">{{ $error }}</p>
+        @endforeach
+      </div>
+
       <!-- PAINEL PRINCIPAL -->
       <div class="col-md-8">
         <div class="painel-propostas">
           <div class="panel panel-default">
+
             <!-- CABEÇALHO PAINEL -->
             <div class="panel-heading">
               <span class="panel-title"><span class="glyphicon glyphicon-th-list glyphicon-space"></span><strong>Suas Propostas</strong></span>
@@ -19,13 +26,14 @@
 
             <!-- CORPO PAINEL -->
             <div class="panel-body">
+
               <!-- LISTA DE PROPOSTAS -->
               @if($propostas->isEmpty())
                 <div class="alert alert-info" role="alert">
                   <p>Você ainda não cadastrou propostas! Clique no botão abaixo para submeter uma nova proposta.</p>
                 </div>
               @else
-                @foreach($propostas as $proposta)
+                @foreach($propostas->reverse() as $proposta)
                   <div class="painel-lista">
                     <!-- List group -->
                     <ul class="list-group">
@@ -35,7 +43,7 @@
                         </div>
                         <span class="glyphicon glyphicon-book glyphicon-space"></span>{!! $proposta->titulo !!}
                       </li>
-                      <li class="list-group-item">
+                      <li class="list-group-item text-justify">
                         <p class="alert alert-warning pull-right"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
                         <p><strong>Título da Obra: </strong>{!! $proposta->titulo !!}</p>
                         <p><strong>Subtítulo da Obra: </strong>{!! $proposta->subtitulo !!}</p>

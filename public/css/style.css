@@ -36,7 +36,7 @@ fieldset {
 }
 
 .glyphicon-space:before {
-  margin-right: 5px;
+  margin-right: 7px;
 
 }
 
@@ -90,7 +90,7 @@ fieldset {
 }
 
 .quadro-editora {
-  background-color: #CFD8DC;
+  background-color: #B0BEC5;
   border-radius: 1px;
   margin: 10px 0;
   min-height: 200px;
@@ -184,7 +184,7 @@ fieldset {
 
 .painel-propostas .panel-body {
   min-height: 300px;
-  max-height: 500px;
+  max-height: 400px;
   overflow: auto;
 }
 

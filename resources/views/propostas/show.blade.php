@@ -11,6 +11,7 @@
         <div class="quadro text-justify">
 
           <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
+
           <h3><span class="glyphicon glyphicon-book glyphicon-space"></span><strong>{{$obra->titulo}}</strong></h3>
 
           @if (!$errors->isEmpty())
@@ -30,12 +31,12 @@
           @endif
 
           <h4 class="titulo">Informações da Obra</h4>
-          <p class="alert alert-warning alert-trim"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
+          <p class="alert {{ $proposta->situacao != 'Cancelada' ? 'alert-warning' : 'alert-danger' }} alert-trim"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
           <p><strong>Título da Obra: </strong>{!! $obra->titulo !!}</p>
           <p><strong>Subtítulo da Obra: </strong>{!! $obra->subtitulo !!}</p>
-          <p><strong>Autor(es):
+          <p><strong>Autor(es):</strong></p>
           @foreach($autores as $autor)
-            </strong>{!! $autor->nome !!} {!! $autor->sobrenome !!}</p>
+            <p>{!! $autor->nome !!} {!! $autor->sobrenome !!}</p>
           @endforeach
           <p><strong>Resumo: </strong>{!! $obra->resumo !!}</p>
           <p><strong>Gênese e relevância: </strong>{!! $obra->genese_relevancia !!}</p>
@@ -74,7 +75,6 @@
             </thead>
             <tbody>
               @foreach($materiais as $material)
-
               <tr>
                 <td>{!! $material->versao !!}</td>
                 <td><a href="{!! action('DocumentosController@downloadMaterialIdentificado', $material->cod_material) !!}">Baixar</a></td>
@@ -118,7 +118,7 @@
             <div class="col-md-6">
               <h5 class="titulo">Ofícios de Alteração</h5>
               @if(!$oficiosAlteracoes->isEmpty())
-                <table>
+                <table class="table table-striped">
                   <thead>
                     <tr>
                       <th>Versão</th>
@@ -128,7 +128,7 @@
                   <tbody>
                     @foreach($oficiosAlteracoes as $oficioAlteracao)
                       <td>{!! $oficioAlteracao->versao !!}</td>
-                      <td><a href="{!! action('DocumentosController@showOficioAlteracao', $oficioAlteracao->cod_oficio) !!}">Visualizar</a></td>
+                      <td><a href="{!! action('DocumentosController@showOficioAlteracao', $oficioAlteracao->cod_oficio) !!}" target="_blank">Visualizar</a></td>
                     @endforeach
                   </tbody>
                 </table>
@@ -145,14 +145,10 @@
                 @if($proposta->situacao != 'Cancelada')
                 <a class="btn btn-primary" href="{!! action('PropostasController@edit', $obra->Proposta_cod_proposta) !!}" role="button"><span class="glyphicon glyphicon-pencil glyphicon-space"></span>Editar Proposta</a>
                 <a href="{!! action('PropostasController@solicitarCancelamento', $obra->Proposta_cod_proposta) !!}" role="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal2"><span class="glyphicon glyphicon-remove glyphicon-space"></span>Solicitar Cancelamento da Proposta</a>
-                @else
-                  <h5>Proposta CANCELADA!</h5>
                 @endif
-
               </div>
             </div>
           </div>
-
 
           <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
 
