@@ -98,7 +98,7 @@
                   @endif
                 </div>
               </div>
-<br>
+
               <div class="row">
                 <div class="form-group col-md-12 {{ $errors->has('genese_relevancia') ? 'has-error' :'' }}">
                   <label class="control-label" for="genese_relevancia">Gênese e Relevância da proposta de publicação *</label>
@@ -113,7 +113,7 @@
                   @endif
                 </div>
               </div>
-<br>
+
               <div class="row">
                 <div class="form-group col-md-6 {{ $errors->has('grande_area_obra') ? 'has-error' :'' }}">
                   <label class="control-label" for="grande_area_obra">Grande Área da Obra *</label>
