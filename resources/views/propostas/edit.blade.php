@@ -445,6 +445,7 @@
                 <button type="submit" class="btn btn-primary btn-block">Submeter alterações</button>
               </div>
             </div>
+          </div>
         </form>
 
         </div> <!-- quadro -->
