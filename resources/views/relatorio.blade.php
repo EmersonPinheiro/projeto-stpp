@@ -1,10 +1,8 @@
 @extends('master')
-@section('title', 'Enviar parecer')
+@section('title', 'Relatório')
 
 @section('content')
 <!-- CONTENT -->
-
-
 
 <div class="content">
   <div class="container">

@@ -5,6 +5,8 @@
 
 <p><strong>Título: </strong> {!! $obra->titulo !!}</p>
 <p><strong>Subtítulo: </strong> {!! $obra->subtitulo !!}</p>
+<p><strong>Número de páginas: </strong>{!! $numPaginas !!}</p>
 <p><strong>Resumo: </strong> {!! $obra->resumo !!}</p>
 
-<a href="{{ route('accept', $convite->token)}}">Clique aqui para aceitar!</a>
+
+<a href="{!! action('ConviteController@createParecerista', $convite->token) !!}">Clique aqui para acessar o sistema.</a>

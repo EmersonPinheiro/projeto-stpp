@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\ConviteParecerista;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
@@ -49,12 +50,21 @@ class LoginController extends Controller
       $usuario = Auth::user();
 
       if ($usuario->hasRole('propositor') && $usuario->hasRole('parecerista')) {
+        if ($convite = ConviteParecerista::where('email', '=', $usuario->email)->first()) {
+          return redirect(action('ConviteController@createParecerista', $convite->token));
+        }
         return redirect('/modo-acesso');
       }
       elseif ($usuario->hasRole('propositor')) {
+        if ($convite = ConviteParecerista::where('email', '=', $usuario->email)->first()) {
+          return redirect(action('ConviteController@createParecerista', $convite->token));
+        }
         return redirect('/propostas');
       }
       elseif($usuario->hasRole('parecerista')) {
+        if ($convite = ConviteParecerista::where('email', '=', $usuario->email)->first()) {
+          return redirect(action('ConviteController@createParecerista', $convite->token));
+        }
         return redirect('/painel-parecerista');
       }
       elseif($usuario->hasRole('admin')) {

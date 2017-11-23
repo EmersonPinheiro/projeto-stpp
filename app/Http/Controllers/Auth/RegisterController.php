@@ -228,21 +228,20 @@ class RegisterController extends Controller
             'Grande_Area_cod_grande_area'=>$grandeArea->cod_grande_area,
           ]);
 
+          /*
           $convite = ConviteParecerista::where('token', '=', $data['convite'])->first();
 
           $proposta = Proposta::where('cod_proposta', '=', $convite->Proposta_cod_proposta)->first();
 
           $parecer = Parecer::create([
 
-            //TODO: Implementar prazo.
             'prazo_envio'=>Carbon::now('America/Sao_Paulo')->addDays(61)->format('Y-m-d'),
             'Proposta_cod_proposta'=>$proposta->cod_proposta,
             'Usuario_Parecerista_cod_parecerista'=>$usuarioParecerista->cod_parecerista,
           ]);
 
-          //TODO: informações específicas do parecerista
-
           $convite->delete(); //Deleta o convite após o cadastro do parecerista
+          */
 
           $usuario->attachRole(3);//Associa a role 'parecerista'.
         }

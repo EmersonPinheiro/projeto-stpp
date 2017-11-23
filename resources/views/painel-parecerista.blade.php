@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', 'Propostas')
+@section('title', 'Pareceres')
 
 @section('content')
 

@@ -109,7 +109,9 @@ class ParecerController extends Controller
         $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')
                              ->get();
 
-        Notification::send($admin->all(), new ParecerEnviado($parecer));
+        $observacoes = $request->get('obs');
+
+        Notification::send($admin->all(), new ParecerEnviado($parecer, $observacoes));
 
         return redirect('/painel-parecerista')->with('status', 'Seu parecer foi enviado!');
     }

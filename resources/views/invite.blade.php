@@ -20,6 +20,9 @@
               <p><span class="glyphicon glyphicon-exclamation-sign glyphicon-space"></span>
               Ops! Algo deu errado.</p>
               <p>Preencha corretamente o formulário abaixo convidar um avaliador para a proposta.</p>
+              @foreach ($errors->all() as $error)
+                    <p class="alert alert-danger">{{ $error }}</p>
+                @endforeach
             </div>
           @else
             <!-- INFORMAÇÕES -->
@@ -61,8 +64,8 @@
                 <input type="file" class="form-control" id="documento_parecerista" name="documento_parecerista" placeholder="Material a ser enviado ao parecerista" value="{{old('documento_parecerista')}}"/>
               </div>
               <div class="col-md-3">
-                <label for="numero_paginas">Número de Páginas</label>
-                <input type="number" class="form-control" id="numero_paginas" name="numero_paginas" placeholder="Nºde Páginas" value="{{old('paginas')}}"/>
+                <label for="paginas">Número de Páginas</label>
+                <input type="number" class="form-control" id="paginas" name="paginas" placeholder="Nºde Páginas" value="{{old('paginas')}}"/>
               </div>
             </div>
             <hr>

@@ -89,8 +89,6 @@ class PerfilController extends Controller
           ->where('Grande_Area.cod_grande_area', '=', $usuarioTipo->Grande_Area_cod_grande_area)
           ->select('Grande_Area.nome as nome_grande_area', 'Area_Conhecimento.nome as nome_area_conhecimento', 'Subarea.nome as nome_subarea', 'Especialidade.nome as nome_especialidade')
           ->first();
-          //var_dump($usuarioTipo);
-        //var_dump($areasConhecimento);
       }
 
       $instituicaoVinculo = Instituicao::leftJoin('Vinculo_Institucional', 'Vinculo_Institucional.Instituicao_cod_instituicao', 'Instituicao.cod_instituicao')
@@ -147,8 +145,6 @@ class PerfilController extends Controller
           ->where('Grande_Area.cod_grande_area', '=', $usuarioTipo->Grande_Area_cod_grande_area)
           ->select('Grande_Area.nome as nome_grande_area', 'Area_Conhecimento.nome as nome_area_conhecimento', 'Subarea.nome as nome_subarea', 'Especialidade.nome as nome_especialidade')
           ->first();
-
-        //var_dump($areasConhecimento);
       }
 
       $instituicaoVinculo = Instituicao::leftJoin('Vinculo_Institucional', 'Vinculo_Institucional.Instituicao_cod_instituicao', 'Instituicao.cod_instituicao')

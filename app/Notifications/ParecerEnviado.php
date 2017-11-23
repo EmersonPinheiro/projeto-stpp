@@ -18,7 +18,7 @@ class ParecerEnviado extends Notification
      *
      * @return void
      */
-    public function __construct($parecer)
+    public function __construct($parecer, $observacoes)
     {
         $this->parecer = $parecer;
         $this->obra = Obra::where('Proposta_cod_proposta', '=', $this->parecer->Proposta_cod_proposta)->first();
@@ -27,6 +27,13 @@ class ParecerEnviado extends Notification
                                   ->where('Usuario_Parecerista.cod_parecerista', '=', $this->parecer->Usuario_Parecerista_cod_parecerista)
                                   ->select('Pessoa.*')
                                   ->first();
+
+        if ($observacoes != null) {
+          $this->observacoes = $observacoes;
+        }
+        else {
+          $this->observacoes = 'Não há.';
+        }
     }
 
     /**
@@ -51,12 +58,13 @@ class ParecerEnviado extends Notification
         //TODO: Talvez substituir por um método de download do parecer.
         $url = url('/admin/painel-administrador/'.$this->parecer->Proposta_cod_proposta);
 
-        return (new MailMessage)
-                    ->subject('Perecer enviado!')
-                    ->greeting('Olá!')
-                    ->line($this->parecerista->nome.' '.$this->parecerista->sobrenome.' enviou um parecer para a obra "'.$this->obra->titulo.'".')
-                    ->action('Acessar parecer', $url);
-    }
+          return (new MailMessage)
+                      ->subject('Perecer enviado!')
+                      ->greeting('Olá!')
+                      ->line($this->parecerista->nome.' '.$this->parecerista->sobrenome.' enviou um parecer para a obra "'.$this->obra->titulo.'".')
+                      ->action('Acessar parecer', $url)
+                      ->line('Observações: '.$this->observacoes);
+      }
 
     /**
      * Get the array representation of the notification.
@@ -68,7 +76,7 @@ class ParecerEnviado extends Notification
     {
         return [
             'message_user'=>$this->parecerista->nome.' '.$this->parecerista->sobrenome.' enviou um parecer para a obra "'.$this->obra->titulo.'".',
-            'message_report'=>$this->parecerista->nome.' '.$this->parecerista->sobrenome.' enviou um parecer.',
+            'message_report'=>$this->parecerista->nome.' '.$this->parecerista->sobrenome.' enviou um parecer. Observacoes: '.$this->observacoes,
             'cod_proposta'=>$this->parecer->Proposta_cod_proposta,
         ];
     }

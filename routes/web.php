@@ -14,6 +14,7 @@
 Route::get('/','PagesController@home');
 Route::get('/home','PagesController@home'); //TODO: Retirar. Solução provisória.
 Route::get('/cadastro', 'PagesController@cadastro')->middleware('guest'); //TODO: RETIRAR (SUBSTITUIR PELO REGISTER PADRÃO)
+Route::get('/cadastroParecerista/{token}', 'ConviteController@createParecerista')->middleware('guest');
 Route::get('/register/verificar/{confirmation_token}', 'Auth\RegisterController@confirmation')->middleware('guest')->name('confirmarCadastro');
 Route::get('/contato', 'PagesController@contato');
 Route::get('/ajuda', 'PagesController@ajuda');
@@ -21,11 +22,12 @@ Route::get('/termos-de-uso', 'PagesController@termosDeUso');
 
 Route::group(['middleware' => ['auth']], function () {
 
-  Route::get('/modo-acesso', 'PagesController@modoAcesso');
+  Route::get('/modo-acesso', 'PagesController@modoAcesso')->name('modo-acesso');
+  Route::get('/aceitar-convite/{token}', 'ConviteController@createParecerista')->name('aceitar-convite');
 
   Route::get('/enviar-proposta', 'PropostasController@create');
   Route::post('/enviar-proposta', 'PropostasController@store');
-  Route::get('/propostas', 'PropostasController@index');
+  Route::get('/propostas', 'PropostasController@index')->name('propostas');
   Route::get('/propostas/{id?}', 'PropostasController@show');
   Route::post('/propostas/{id?}/enviarNovaVersao', 'PropostasController@novaVersaoObra')->name('enviarNovaVersao');
   Route::get('/propostas/{id?}/edit', 'PropostasController@edit');
@@ -35,14 +37,14 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/propostas/{id?}/downloadImagens', 'DocumentosController@downloadImagens');
   Route::post('/propostas/{id?}/solicitarCancelamento', 'PropostasController@solicitarCancelamento');
 
-  Route::get('/painel-parecerista', 'ParecerController@index');
+  Route::get('/painel-parecerista', 'ParecerController@index')->name('painel-parecerista');
   Route::get('/enviar-parecer/{parecer?}', 'ParecerController@create');
   Route::post('/enviar-parecer/{parecer?}', 'ParecerController@store');
   Route::get('/enviar-parecer/{parecer?}/solicitarPrazo', 'ParecerController@solicitarPrazo');
   Route::get('/enviar-parecer/{parecer?}/showMaterialParecerista', 'DocumentosController@showMaterialParecerista');
   Route::get('/propostas/{id?}/showDocSugestao', 'DocumentosController@showDocSugestao');
 
-  Route::get('/admin/painel-administrador', 'AdminController@index');
+  Route::get('/admin/painel-administrador', 'AdminController@index')->name('painel-administrador');
   Route::get('/admin/painel-administrador/{id?}', 'AdminController@show');
   Route::get('/admin/painel-administrador/{id?}/edit', 'AdminController@edit');
   Route::post('/admin/painel-administrador/{id?}/edit', 'AdminController@update');
@@ -63,8 +65,9 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/perfil/{slug}', 'PerfilController@show');
   Route::get('/perfil/{slug}/edit', 'PerfilController@edit');
   Route::post('/perfil/{slug}/edit', 'PerfilController@update');
+  Route::get('/accept/{token}', 'ConviteController@accept')->name('accept');
+  Route::get('/reject/{token}', 'ConviteController@reject')->name('reject');
 });
 
-Route::get('/accept/{token}', 'ConviteController@accept')->name('accept')->middleware('guest');
 
 Auth::routes();
