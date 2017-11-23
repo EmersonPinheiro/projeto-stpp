@@ -124,14 +124,14 @@
             </div>
           </div>
 
-          @if($usuarioLogado->email == $usuarioTipo->email  )
+          @if($usuarioLogado->email == $pessoaUsuario->email  )
           <div class="row">
             <div class="col-md-12">
               <h4 class="titulo">Dados de Acesso ao Sistema</h4>
               <table class="table table-striped">
                 <tr>
                   <td><strong>E-mail: </strong></td>
-                  <td> {!! $usuarioTipo->email !!} </td>
+                  <td> {!! $pessoaUsuario->email !!} </td>
                   <tr>
                     <td><strong>Senha: </strong></td>
                     <td >
