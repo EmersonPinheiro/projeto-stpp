@@ -34,8 +34,8 @@ return [
     'date'                 => ':attribute não é uma data válida.',
     'date_format'          => ':attribute não corresponde ao formato :format.',
     'different'            => ':attribute e :other devem ser diferentes.',
-    'digits'               => ':attribute deve conter :digits digitos.',
-    'digits_between'       => ':attribute deve ter entre :min e :max digitos.',
+    'digits'               => ':attribute deve conter :digits digitos numéricos.',
+    'digits_between'       => ':attribute deve ter entre :min e :max digitos numéricos.',
     'dimensions'           => ':attribute possui dimensões de imagem inválidas.',
     'distinct'             => 'O campo :attribute contém um valor duplicado.',
     'email'                => ':attribute deve ser um endereçode e-mail válido.',
@@ -104,6 +104,8 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+
+    'cpf_valido' => ':attribute inválido.',
 
     /*
     |--------------------------------------------------------------------------
