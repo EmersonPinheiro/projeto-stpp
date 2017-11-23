@@ -74,10 +74,10 @@ class RegisterController extends Controller
         ];
 
         return Validator::make($data, [
-            'nome'=>'required|min:1|max:50|alpha',
-            'sobrenome'=>'required|min:1|max:100|alpha',
+            'nome'=>'required|min:1|max:50|string',
+            'sobrenome'=>'required|min:1|max:100|string',
             'sexo'=>'required',
-            'cpf'=>'required|digits:11|unique:Pessoa,cpf',
+            'cpf'=>'required|digits:11|unique:Pessoa,cpf|cpf_valido',
             'rg'=>'required|digits_between:6,14|unique:Pessoa,rg',
             'estado_civil'=>'required',
 

@@ -445,9 +445,8 @@
                 <button type="submit" class="btn btn-primary btn-block">Submeter alterações</button>
               </div>
             </div>
+          </div>
         </form>
-
-          <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
 
         </div> <!-- quadro -->
       </div>
