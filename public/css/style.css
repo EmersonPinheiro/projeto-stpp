@@ -28,7 +28,7 @@ label {
 }
 
 fieldset {
-  margin-top: 20px;
+  margin: 25px 0;
 }
 
 .popover {
@@ -42,6 +42,10 @@ fieldset {
 
 .alert-trim {
   display: inline-block;
+}
+
+.alert-danger, .alert-warning {
+  font-weight: bold;
 }
 
 .content {

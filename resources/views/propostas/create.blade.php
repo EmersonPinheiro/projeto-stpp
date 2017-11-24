@@ -113,10 +113,10 @@
                 <!-- TODO: Escrever ajuda sobre o que é a genese e relevancia -->
                 <div class="row">
                   <div class="form-group col-md-12 {{ $errors->has('genese_relevancia') ? 'has-error' :'' }}">
-                    <label class="control-label" for="genese_relevancia">Gênese e Relevância da proposta de publicação *</label>
+                    <label class="control-label" for="genese_relevancia">Gênese e Relevância da Obra *</label>
                     <!-- AJUDA -->
                     <small><a href="javascript:;" data-toggle="popover" data-content="<a href='/ajuda#genese-relevancia' target='_blank'>Clique aqui</a> para saber mais sobre Gênese e Relevância. Este campo deve conter no máximo 5000 caracteres, contando com os espaços. Abaixo deste campo há um indicador de caracteres restantes." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
-                    <textarea type="text" rows="8" class="form-control" id="genese_relevancia" name="genese_relevancia" placeholder="Gênese e Relevância da sua proposta" value="{{old('genese_relevancia')}}" maxlength="5000">{{old('genese_relevancia')}}</textarea>
+                    <textarea type="text" rows="8" class="form-control" id="genese_relevancia" name="genese_relevancia" placeholder="Gênese e Relevância da Obra" value="{{old('genese_relevancia')}}" maxlength="5000">{{old('genese_relevancia')}}</textarea>
                     <p id="restantes_gr" class="pull-right"></p>
                     @if ($errors->has('genese_relevancia'))
                         <span class="help-block">
@@ -384,25 +384,24 @@
                       </span>
                   @endif
                 </div>
+                <div class="row">
+                  <div class="col-md-12 checkbox {{ $errors->has('termos') | !$errors->isEmpty() ? 'has-error' :'' }}">
+                    <label for="termos">
+                      <input type="checkbox" name="termos" id="termos"> * Li e concordo com os <a href="/termos-de-uso" target="_blank" >Termos de Uso</a> do sistema.
+                    </label>
+                    @if ($errors->has('termos'))
+                    <span class="help-block">
+                      <span class="text-danger"><strong>{{ $errors->first('termos') }}</strong></span>
+                    </span>
+                    @endif
+                  </div>
+                </div>
               </fieldset>
 
-              <div class="row">
-                <div class="col-md-12 checkbox {{ $errors->has('termos') | !$errors->isEmpty() ? 'has-error' :'' }}">
-                  <label for="termos">
-                    <input type="checkbox" name="termos" id="termos"> * Li e concordo com os <a href="/termos-de-uso" target="_blank" >Termos de Uso</a> do sistema.
-                  </label>
-                  @if ($errors->has('termos'))
-                  <span class="help-block">
-                    <span class="text-danger"><strong>{{ $errors->first('termos') }}</strong></span>
-                  </span>
-                  @endif
-                </div>
-              </div>
 
-              <hr>
               <div class="row">
                 <div class="col-md-4 col-md-offset-4">
-                  <button type="submit" class="btn btn-primary btn-block">Submeter proposta</button>
+                  <button type="submit" class="btn btn-primary btn-block btn-loading">Submeter Proposta</button>
                 </div>
               </div>
             </form>
