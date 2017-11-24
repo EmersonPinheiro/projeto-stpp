@@ -112,12 +112,12 @@
                   <label class="control-label" for="estado_civil">Estado Civil *</label>
                   <select class="form-control" id="estado_civil" name="estado_civil">
                     <option value="">Selecione</option>
-                    <option value="Solteiro" @if (old('estado_civil') == 'Solteiro') selected="selected" @endif>Solteiro</option>
-                    <option value="Casado" @if (old('estado_civil') == 'Casado') selected="selected" @endif>Casado</option>
-                    <option value="Separado" @if (old('estado_civil') == 'Separado') selected="selected" @endif>Separado</option>
-                    <option value="Divorciado" @if (old('estado_civil') == 'Divorciado') selected="selected" @endif>Divorciado</option>
-                    <option value="Viúvo" @if (old('estado_civil') == 'Viúvo') selected="selected" @endif>Viúvo</option>
-                    <option value="Amasiado" @if (old('estado_civil') == 'Amasiado') selected="selected" @endif>Amasiado</option>
+                    <option value="Solteiro" @if (old('estado_civil') == 'Solteiro') selected="selected" @endif>Solteiro(a)</option>
+                    <option value="Casado" @if (old('estado_civil') == 'Casado') selected="selected" @endif>Casado(a)</option>
+                    <option value="Separado" @if (old('estado_civil') == 'Separado') selected="selected" @endif>Separado(a)</option>
+                    <option value="Divorciado" @if (old('estado_civil') == 'Divorciado') selected="selected" @endif>Divorciado(a)</option>
+                    <option value="Viúvo" @if (old('estado_civil') == 'Viúvo') selected="selected" @endif>Viúvo(a)</option>
+                    <option value="Amasiado" @if (old('estado_civil') == 'Amasiado') selected="selected" @endif>Amasiado(a)</option>
                   </select>
                   @if ($errors->has('estado_civil'))
                       <span class="help-block">
@@ -325,11 +325,9 @@
 
             </fieldset>
 
-            <hr/>
-
             <div class="row">
               <div class="col-md-4 col-md-offset-4">
-                <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                <button type="submit" class="btn btn-primary btn-block btn-loading">Finalizar Cadastro</button>
               </div>
             </div>
           </form>
