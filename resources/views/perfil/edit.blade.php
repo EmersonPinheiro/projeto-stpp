@@ -20,6 +20,9 @@
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <p><span class="glyphicon glyphicon-exclamation-sign glyphicon-space"></span>
               Ops! Algo deu errado.</p>
+              @foreach ($errors->all() as $error)
+                    <p class="alert alert-danger">{{ $error }}</p>
+                @endforeach
             </div>
           @endif
 

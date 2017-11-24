@@ -228,7 +228,6 @@ class PropostasController extends Controller
           ]);
         }
 
-
         Telefone::create([
           'numero'=>$request->get('telefone'),
           'tipo'=>'1',
@@ -490,13 +489,30 @@ class PropostasController extends Controller
         'Proposta_cod_proposta'=>$request->get('cod_proposta'),
       ]);
 
-      $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')
-                           ->get();
+      $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')->get();
 
       Notification::send($admin->all(), new NovaVersaoObraEnviada($proposta));
 
       return redirect(action('PropostasController@show', $request->cod_proposta))->with('status', 'A nova versão da obra foi enviada!');
 
+    }
+
+    public function pareceristaToPropositor($codUsuario)
+    {
+      $usuario = User::join('Usuario_Parecerista', 'Usuario_Parecerista.Usuario_cod_usuario', '=', 'Usuario.cod_usuario')
+                     ->where('cod_usuario', '=', $codUsuario)->first();
+
+      if ($propositor = UsuarioPropositor::where('Usuario_cod_usuario', '=', $usuario->cod_usuario)->first()) {
+        return redirect()->back()->withErrors('Você já é um propositor!');
+      }
+
+      UsuarioPropositor::create([
+        'Usuario_cod_usuario'=>$usuario->cod_usuario,
+        'Instituicao_cod_instituicao'=>$usuario->Instituicao_cod_instituicao,
+      ]);
+
+      $usuario->attachRole(1);
+      return redirect()->back()->with('status', 'Você agora pode enviar propostas! Clique em "Suas propostas" no menu superior para enviar uma.');
     }
 
 }

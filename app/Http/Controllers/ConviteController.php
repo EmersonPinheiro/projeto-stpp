@@ -17,7 +17,11 @@ use App\Http\Requests\ConviteFormRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\ConviteAceito;
+use App\Notifications\ConviteRejeitado;
+
 class ConviteController extends Controller
 {
     public function invite($id)
@@ -28,15 +32,26 @@ class ConviteController extends Controller
 
     public function process(ConviteFormRequest $request)
     {
-      do {
-          $token = str_random();
-      }
-      while (ConviteParecerista::where('token', $token)->first());
-
       /* VERIFICA SE JÁ EXISTE UM CONVITE COM ESSE EMAIL */
       if ($convite = ConviteParecerista::where('email', '=', $request->get('email'))->first()) {
         return redirect()->back()->withErrors('Já existe um convite ativo para esta pessoa.');
       }
+
+      $propositor = User::join('Usuario_Propositor', 'Usuario_Propositor.Usuario_cod_usuario', 'Usuario.cod_usuario')
+                    ->join('Proposta', 'Proposta.Usuario_Propositor_cod_propositor', '=', 'Usuario_Propositor.cod_propositor')
+                    ->where('Proposta.cod_proposta', '=', $request->get('proposta'))
+                    ->where('Usuario.email', '=', $request->get('email'))
+                    ->first();
+
+      /* VERIFICA SE O CONVITE É PARA O PRÓPRIO PROPOSITOR */
+      if ($propositor != null) {
+        return redirect()->back()->withErrors('Você não pode convidar o propositor a ser parecerista da própria obra!');
+      }
+
+      do {
+          $token = str_random();
+      }
+      while (ConviteParecerista::where('token', $token)->first());
 
       $convite = ConviteParecerista::create([
               'email' => $request->get('email'),
@@ -116,10 +131,14 @@ class ConviteController extends Controller
       ]);
 
       $usuario->attachRole(3);
+
+      $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')->get();
+
+      Notification::send($admin->all(), new ConviteAceito($convite));
+
       $convite->delete();
     }
 
-    //TODO: Disparar notificação de convite aceito.
 
     return view('/home')->with('status', 'O convite foi aceito. Fique atento ao prazo de envio do parecer.');
   }
@@ -129,9 +148,12 @@ class ConviteController extends Controller
     if (!$convite = ConviteParecerista::where('token', $token)->first()) {
       abort(404);
     }
-    $convite->delete();
 
-    //TODO: Disparar notificação de convite rejeitado.
+    $admin = User::join('Usuario_Adm', 'Usuario.cod_usuario', '=', 'Usuario_Adm.Usuario_cod_usuario')->get();
+
+    Notification::send($admin->all(), new ConviteRejeitado($convite));
+
+    $convite->delete();
 
     return redirect('/home')->with('status', 'O convite foi rejeitado.');
   }

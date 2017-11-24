@@ -35,7 +35,7 @@ class PropostaEditFormRequest extends FormRequest
           'area_conhecimento_obra'=>'required|min:2|max:100',
           'subarea_obra'=>'nullable|min:2|max:100',
           'especialidade_obra'=>'nullable|min:2|max:100',
-          'nome'=>'required|min:1|max:50',
+        /*  'nome'=>'required|min:1|max:50',
           'sobrenome'=>'required|min:1|max:100',
           'sexo'=>'required',
           'cpf'=>'required|digits:11',
@@ -46,7 +46,7 @@ class PropostaEditFormRequest extends FormRequest
           'telefone_secundario'=>'nullable|digits_between:6,14',
           'instituicao'=>'required|min:2|max:100',
           'sigla'=>'nullable|min:2|max:20',
-          'vinculo'=>'nullable|min:2|max:200',
+          'vinculo'=>'nullable|min:2|max:200',*/
         ];
     }
 }

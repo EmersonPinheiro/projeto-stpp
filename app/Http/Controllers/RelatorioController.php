@@ -23,6 +23,11 @@ class RelatorioController extends Controller
 
    public function index($id)
    {
+
+     $admin = Auth::user();
+     if (!$admin->hasRole('admin')) {
+       abort(404);
+     }
      /* MYSQL */
      $notificacoes = DB::table('notifications')
                        ->select(DB::raw("id, type, notifiable_id, notifiable_type,

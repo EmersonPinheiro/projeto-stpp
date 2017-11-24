@@ -33,11 +33,6 @@ class AdminController extends Controller
       return redirect('/');
     }
 
-    $admin = Auth::user();
-    if (!$admin->hasRole('admin')) {
-      abort(404);
-    }
-
   }
     /**
      * Display a listing of the resource.
@@ -47,7 +42,9 @@ class AdminController extends Controller
     public function index()
     {
         $admin = Auth::user();
-
+        if (!$admin->hasRole('admin')) {
+          abort(404);
+        }
         $propostas = Proposta::join('Obra', 'Obra.Proposta_cod_proposta', '=', 'Proposta.cod_proposta')->get();
 
         return view('admin.painel-administrador', compact('propostas', 'admin'));
@@ -82,6 +79,10 @@ class AdminController extends Controller
      */
     public function show($id)
     {
+        $admin = Auth::user();
+        if (!$admin->hasRole('admin')) {
+          abort(404);
+        }
         if (($proposta = Proposta::where('cod_proposta', '=', $id)->first()) == null) {
           abort(404);
         }
@@ -138,6 +139,10 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
+      $admin = Auth::user();
+      if (!$admin->hasRole('admin')) {
+        abort(404);
+      }
       if (($proposta = Proposta::where('cod_proposta', '=', $id)->first()) == null) {
         abort(404);
       }
@@ -194,6 +199,10 @@ class AdminController extends Controller
      */
     public function update(PropostaEditFormRequest $request, $id)
     {
+      $admin = Auth::user();
+      if (!$admin->hasRole('admin')) {
+        abort(404);
+      }
 
       if (($proposta = Proposta::where('cod_proposta', '=', $id)->first()) == null) {
         abort(404);
@@ -252,7 +261,10 @@ class AdminController extends Controller
 
     public function cancelarProposta($id)
     {
-
+      $admin = Auth::user();
+      if (!$admin->hasRole('admin')) {
+        abort(404);
+      }
       if (($proposta = Proposta::where('cod_proposta', '=', $id)->first()) == null) {
         abort(404);
       }
@@ -272,6 +284,10 @@ class AdminController extends Controller
 
     public function solicitarNovaVersao(SolicitarNovaVersaoFormRequest $request, $id)
     {
+      $admin = Auth::user();
+      if (!$admin->hasRole('admin')) {
+        abort(404);
+      }
       $proposta = Proposta::where('cod_proposta', '=', $id)->first();
 
       $propositor = User::join('Usuario_Propositor', 'Usuario.cod_usuario', '=', 'Usuario_Propositor.Usuario_cod_usuario')

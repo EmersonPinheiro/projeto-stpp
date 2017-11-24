@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', 'Enviar proposta')
+@section('title', 'Editar proposta')
 
 @section('content')
 <!-- CONTENT -->
@@ -184,9 +184,9 @@
               <div class="alert alert-warning">
                 <p><span class="glyphicon glyphicon-alert glyphicon-space"></span><strong>Atenção!</strong> Suas próprias informações podem ser alteradas apenas na guia <strong>Perfil</strong> localizada na barra superior da página. Somente o campo <strong>Categoria</strong> pode ser editado nesta página.</p>
               </div>
+              @foreach($autores as $autor)
               <!-- TODO: verificar inclusão de amis autores
               <table class="table table-striped">
-                @foreach($autores as $autor)
                 <thead>
                   <tr>
                     <th>Nº</th>

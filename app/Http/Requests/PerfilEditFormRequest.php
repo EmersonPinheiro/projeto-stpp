@@ -35,8 +35,8 @@ class PerfilEditFormRequest extends FormRequest
           'instituicao'=>'required|min:2|max:100',
           'sigla'=>'nullable|min:2|max:20',
           'vinculo'=>'nullable|min:2|max:200',
-          'email_contato'=>'required|email',
-          'email_acesso'=>'required|email',
+          'email'=>'required|email',
+          'email_secundario'=>'nullable|email',
           //'password'=>'required'
         ];
     }

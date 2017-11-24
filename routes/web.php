@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::post('/propostas/{id?}/solicitarCancelamento', 'PropostasController@solicitarCancelamento');
 
   Route::get('/painel-parecerista', 'ParecerController@index')->name('painel-parecerista');
+  Route::get('/painel-parecerista/pareceristaToPropositor/{codUsuario}', 'PropostasController@pareceristaToPropositor');
   Route::get('/enviar-parecer/{parecer?}', 'ParecerController@create');
   Route::post('/enviar-parecer/{parecer?}', 'ParecerController@store');
   Route::get('/enviar-parecer/{parecer?}/solicitarPrazo', 'ParecerController@solicitarPrazo');

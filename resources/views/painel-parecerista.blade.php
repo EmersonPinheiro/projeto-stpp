@@ -105,6 +105,9 @@
         </div> <!-- quadro-painel painel-notificacoes -->
       </div> <!-- col -->
 
+      @if((Auth::user()->hasRole('parecerista')) and !(Auth::user()->hasRole('propositor')))
+      <a href="{!! action('PropostasController@pareceristaToPropositor', Auth::user()->cod_usuario) !!}">Clique aqui para enviar propostas. Torne-se um propositor!</a>
+      @endif
     </div> <!-- row -->
   </div> <!--container -->
 </div> <!-- content -->

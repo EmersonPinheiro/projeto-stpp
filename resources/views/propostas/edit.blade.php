@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', 'Enviar proposta')
+@section('title', 'Editar proposta')
 
 @section('content')
 <!-- CONTENT -->
