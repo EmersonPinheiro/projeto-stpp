@@ -30,8 +30,12 @@ $(document).ready(function() {
     }
   });
 
-  $(document).on('click', '#info-adicionais', function(){
+  $('#info-adicionais').on('click', function(){
     $('.invisivel').slideToggle(300);
+  });
+
+  $('.btn-loading').on('click', function() {
+    $(this).html('Carregando...').addClass('disabled');
   });
 
 });

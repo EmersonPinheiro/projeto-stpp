@@ -171,7 +171,7 @@
             <fieldset>
               <legend>Dados do(s) Autor(es)</legend>
               <div class="alert alert-warning">
-                <p><span class="glyphicon glyphicon-alert glyphicon-space"></span><strong>Atenção!</strong> Suas próprias informações podem ser alteradas apenas na guia <strong>Perfil</strong> localizada na barra superior da página. Somente o campo <strong>Categoria</strong> pode ser editado nesta página.</p>
+                <p><span class="glyphicon glyphicon-alert glyphicon-space"></span>Atenção! Suas próprias informações podem ser alteradas apenas na guia Perfil localizada na barra superior da página. Somente o campo Categoria pode ser editado nesta página.</p>
               </div>
               <!-- TODO: verificar inclusão de amis autores
               <table class="table table-striped">
@@ -284,7 +284,6 @@
                     @endif
                   </div>
 
-                  <!-- RECUPERAR VALOR ANTIGO!!!! -->
                   <div class="form-group col-md-4 {{ $errors->has('estado_civil') ? 'has-error' :'' }}">
                     <label class="control-label" for="estado_civil">Estado Civil *</label>
                     <?php !$errors->isEmpty() ? $estado_civil_aux=old('estado_civil') : $estado_civil_aux=$autor->estado_civil ?>

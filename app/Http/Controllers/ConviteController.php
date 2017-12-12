@@ -105,7 +105,7 @@ class ConviteController extends Controller
       if($usuarioParecerista = UsuarioParecerista::where('Usuario_cod_usuario', '=', $usuario->cod_usuario)->first()){
 
         $parecer = Parecer::create([
-          'prazo_envio'=>Carbon::now('America/Sao_Paulo')->addDays(61)->format('Y-m-d'),
+          'prazo_envio'=>Carbon::now('America/Sao_Paulo')->addDays(0)->format('Y-m-d'),
           'Proposta_cod_proposta'=>$proposta->cod_proposta,
           'Usuario_Parecerista_cod_parecerista'=>$usuarioParecerista->cod_parecerista,
         ]);
@@ -125,7 +125,7 @@ class ConviteController extends Controller
       ]);
 
       $parecer = Parecer::create([
-        'prazo_envio'=>Carbon::now('America/Sao_Paulo')->addDays(61)->format('Y-m-d'),
+        'prazo_envio'=>Carbon::now('America/Sao_Paulo')->addDays(0)->format('Y-m-d'),
         'Proposta_cod_proposta'=>$proposta->cod_proposta,
         'Usuario_Parecerista_cod_parecerista'=>$usuarioParecerista->cod_parecerista,
       ]);
