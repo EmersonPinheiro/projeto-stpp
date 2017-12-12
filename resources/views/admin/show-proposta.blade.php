@@ -189,7 +189,8 @@
                           <a class="col-md-4" href="{!! action('ParecerController@show', $pareceristaParecer->cod_parecer) !!}" target="_blank">Visualizar</a>
                         @else
                           @if($pareceristaParecer->prazo_restante == 0 and $proposta->situacao != 'Cancelada')
-                            <a class="btn btn-primary" href="{!! action('ParecerController@prorrogarPrazo', $pareceristaParecer->cod_parecer) !!}">Prorrogar Prazo em 30 dias</a>
+                            <p>Prazo expirado!</p>
+                            <a class="btn btn-warning" href="{!! action('ParecerController@prorrogarPrazo', $pareceristaParecer->cod_parecer) !!}">Prorrogar prazo em 30 dias</a>
                           @else
                             <p>Parecer ainda não enviado.</p>
                           @endif

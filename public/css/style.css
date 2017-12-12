@@ -44,10 +44,6 @@ fieldset {
   display: inline-block;
 }
 
-.alert-danger, .alert-warning {
-  font-weight: bold;
-}
-
 .content {
   margin-bottom: 20px;
   min-height: 100%;

@@ -184,6 +184,7 @@ class RegisterController extends Controller
 
         $instituicao = Instituicao::firstOrCreate([
           'nome'=>$data['instituicao'],
+          'sigla'=>$data['sigla'],
         ]);
 
         if ($data['vinculo'] != null) {

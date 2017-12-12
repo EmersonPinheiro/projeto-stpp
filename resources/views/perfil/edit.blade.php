@@ -9,7 +9,7 @@
       <div class="col-md-10 col-md-offset-1">
         <div class="quadro">
           <!-- RETORNAR -->
-          <a href="/home"><span class="glyphicon glyphicon-menu-left"></span>Voltar o Painel de Propostas</a>
+          <a href="/propostas"><span class="glyphicon glyphicon-menu-left"></span> Voltar para o Painel das Propostas</a>
 
           <!-- TÍTULO -->
           <h3><span class="glyphicon glyphicon-user glyphicon-space"></span><strong>Editar Perfil</strong></h3>
@@ -75,9 +75,11 @@
                 <!-- TODO: RECUPERAR VALOR ANTIGO!!!! -->
                 <div class="form-group col-md-2 {{ $errors->has('sexo') ? 'has-error' :'' }}">
                   <label for="sexo" class="control-label">Sexo *</label>
+                  <?php !$errors->isEmpty() ? $sexo_aux=old('sexo') : $sexo_aux=$pessoaUsuario->sexo ?>
                   <select class="form-control" id="sexo" name="sexo">
-                    <option value="F" selected>F</option>
-                    <option value="M">M</option>
+                    <option value="">Selecione</option>
+                    <option value="F" @if ($sexo_aux == 'F') selected="selected" @endif>F</option>
+                    <option value="M" @if ($sexo_aux == 'M') selected="selected" @endif>M</option>
                   </select>
                   @if ($errors->has('sexo'))
                       <span class="help-block">
@@ -112,16 +114,17 @@
                   @endif
                 </div>
 
-                <!-- TODO: RECUPERAR VALOR ANTIGO!!!! -->
                 <div class="form-group col-md-4 {{ $errors->has('estado_civil') ? 'has-error' :'' }}">
                   <label class="control-label" for="estado_civil">Estado Civil *</label>
+                  <?php !$errors->isEmpty() ? $estado_civil_aux=old('estado_civil') : $estado_civil_aux=$pessoaUsuario->estado_civil ?>
                   <select class="form-control" id="estado_civil" name="estado_civil">
-                    <option value="Solteiro">Solteiro</option>
-                    <option value="Casado">Casado</option>
-                    <option value="Separado">Separado</option>
-                    <option value="Divorciado">Divorciado</option>
-                    <option value="Viúvo">Viúvo</option>
-                    <option value="Amasiado">Amasiado</option>
+                    <option value="">Selecione</option>
+                    <option value="Solteiro" @if ($estado_civil_aux  == 'Solteiro') selected="selected" @endif>Solteiro(a)</option>
+                    <option value="Casado" @if ($estado_civil_aux == 'Casado') selected="selected" @endif>Casado(a)</option>
+                    <option value="Separado" @if ($estado_civil_aux == 'Separado') selected="selected" @endif>Separado(a)</option>
+                    <option value="Divorciado" @if ($estado_civil_aux == 'Divorciado') selected="selected" @endif>Divorciado(a)</option>
+                    <option value="Viúvo" @if ($estado_civil_aux == 'Viúvo') selected="selected" @endif>Viúvo(a)</option>
+                    <option value="Amasiado" @if ($estado_civil_aux == 'Amasiado') selected="selected" @endif>Amasiado(a)</option>
                   </select>
                   @if ($errors->has('estado_civil'))
                       <span class="help-block">
