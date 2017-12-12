@@ -41,7 +41,7 @@ class LoginController extends Controller
             //return redirect('/')->withErrors('Cadastro ainda não confirmado! Por favor, verifique seus e-mails e confirme seu cadastro');
         }
 
-        return $this->sendFailedLoginResponse($request)->withErrors('Cadastro não confirmado!');
+        return $this->sendFailedLoginResponse($request);
     }
 
     //TODO: Verificar uma solução melhor dos redirecionamentos.

@@ -195,6 +195,7 @@ class PerfilController extends Controller
 
       Instituicao::where('cod_instituicao', $request->get('cod_instituicao'))->update([
         'nome'=>$request->get('instituicao'),
+        'sigla'=>$request->get('sigla'),
       ]);
 
       VinculoInstitucional::where('cod_vinculo', $request->get('cod_vinculo'))->update([
