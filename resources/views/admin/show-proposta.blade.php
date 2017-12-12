@@ -159,8 +159,10 @@
                   </thead>
                   <tbody>
                     @foreach($oficiosAlteracoes as $oficioAlteracao)
+                    <tr>
                       <td>{!! $oficioAlteracao->versao !!}</td>
                       <td><a href="{!! action('DocumentosController@showOficioAlteracao', $oficioAlteracao->cod_oficio) !!}" target="_blank">Visualizar</a></td>
+                    </tr>
                     @endforeach
                   </tbody>
                 </table>
@@ -183,19 +185,21 @@
                   </thead>
                   <tbody>
                     @foreach($pareceristasPareceres as $pareceristaParecer)
-                    <td><a href="{!! action('PerfilController@show', $pareceristaParecer->slug) !!}">{!! $pareceristaParecer->nome !!} {!! $pareceristaParecer->sobrenome !!}</a></td>
+                    <tr>
+                      <td><a href="{!! action('PerfilController@show', $pareceristaParecer->slug) !!}">{!! $pareceristaParecer->nome !!} {!! $pareceristaParecer->sobrenome !!}</a></td>
                       <td>
                         @if($pareceristaParecer->envio)
-                          <a class="col-md-4" href="{!! action('ParecerController@show', $pareceristaParecer->cod_parecer) !!}" target="_blank">Visualizar</a>
+                        <a class="col-md-4" href="{!! action('ParecerController@show', $pareceristaParecer->cod_parecer) !!}" target="_blank">Visualizar</a>
                         @else
-                          @if($pareceristaParecer->prazo_restante == 0 and $proposta->situacao != 'Cancelada')
-                            <p>Prazo expirado!</p>
-                            <a class="btn btn-warning" href="{!! action('ParecerController@prorrogarPrazo', $pareceristaParecer->cod_parecer) !!}">Prorrogar prazo em 30 dias</a>
-                          @else
-                            <p>Parecer ainda não enviado.</p>
-                          @endif
+                        @if($pareceristaParecer->prazo_restante == 0 and $proposta->situacao != 'Cancelada')
+                        <p>Prazo expirado!</p>
+                        <a class="btn btn-warning" href="{!! action('ParecerController@prorrogarPrazo', $pareceristaParecer->cod_parecer) !!}">Prorrogar prazo em 30 dias</a>
+                        @else
+                        <p>Parecer ainda não enviado.</p>
+                        @endif
                         @endif
                       </td>
+                    </tr>
                     @endforeach
                   </tbody>
                 </table>

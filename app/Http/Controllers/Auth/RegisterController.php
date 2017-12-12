@@ -93,7 +93,6 @@ class RegisterController extends Controller
             'pais'=>'required|min:2|max:50',
             'telefone'=>'required|digits_between:6,14',
             'telefone_secundario'=>'nullable|digits_between:6,14',
-            'email_secundario'=>'nullable|email|max:100',
 
             //'grande_area'=>'required|min:2|max:100|alpha',
             //'area_conhecimento'=>'required|min:2|max:100|alpha',
@@ -159,14 +158,6 @@ class RegisterController extends Controller
           'tipo'=>'1',
           'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
         ]);
-
-        if($data['email_secundario'] != null){
-          DB::table('Email')->insert([
-            'endereco'=>$data['email_secundario'],
-            'tipo'=>'2',
-            'Pessoa_cod_pessoa'=>$pessoa->cod_pessoa,
-          ]);
-        }
 
         DB::table('Telefone')->insert([
           'numero'=>$data['telefone'],

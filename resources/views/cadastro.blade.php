@@ -231,7 +231,7 @@
 
                 <div class="form-group col-md-4 {{ $errors->has('pais') ? 'has-error' :'' }}">
                   <label class="control-label" for="pais">País *</label>
-                  <input type="text" id="pais" name="pais" class="form-control" placeholder="País" value="{{old('pais')}}" maxlength="50">
+                  <input type="text" id="pais" name="pais" class="form-control" placeholder="País" value="{{ !$errors->isEmpty() ? old('pais') : 'Brasil' }}" maxlength="50">
                   @if ($errors->has('pais'))
                   <span class="help-block">
                     <span class="text-danger"><strong>{{ $errors->first('pais') }}</strong></span>
@@ -241,7 +241,7 @@
               </div>
 
               <div class="row">
-                <div class="form-group col-md-3 {{ $errors->has('telefone') ? 'has-error' :'' }}">
+                <div class="form-group col-md-6 {{ $errors->has('telefone') ? 'has-error' :'' }}">
                   <label class="control-label" for="telefone">Telefone *</label>
                   <!-- AJUDA-->
                   <small><a href="javascript:;" data-toggle="popover" data-content="O campo Telefone deve conter apenas números. Não é permitida a inserção de parênteses ou traços. Informe o deu DDD." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
@@ -253,7 +253,7 @@
                   @endif
                 </div>
 
-                <div class="form-group col-md-3 {{ $errors->has('telefone_secundario') ? 'has-error' :'' }}">
+                <div class="form-group col-md-6 {{ $errors->has('telefone_secundario') ? 'has-error' :'' }}">
                   <label class="control-label" for="telefone_secundario">Telefone secundário</label>
                   <!-- AJUDA-->
                   <small><a href="javascript:;" data-toggle="popover" data-content="O campo Telefone Secundário deve conter apenas números. Não é permitida a inserção de parênteses ou traços. Informe o deu DDD. Este campo é opcional." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
@@ -262,18 +262,6 @@
                       <span class="help-block">
                           <span class="text-danger"><strong>{{ $errors->first('telefone_secundario') }}</strong></span>
                       </span>
-                  @endif
-                </div>
-
-                <div class="form-group col-md-6 {{ $errors->has('email_secundario') ? 'has-error' :'' }}">
-                  <label class="control-label" for="email_secundario">E-mail secundário</label>
-                  <!-- AJUDA-->
-                  <small><a href="javascript:;" data-toggle="popover" data-content="<span class='text-danger'>Atenção!</span> Este e-mail é opcional e <strong>NÃO</strong> será utilizado por você para acessar o sistema." title="<strong>Ajuda</strong>"><span class="glyphicon glyphicon-question-sign"></span></a></small>
-                  <input type="email" class="form-control" id="email_secundario" name="email_secundario" placeholder="E-mail secundário" value="{{old('email_secundario')}}" maxlength="100">
-                  @if ($errors->has('email_secundario'))
-                  <span class="help-block">
-                    <span class="text-danger"><strong>{{ $errors->first('email_secundario') }}</strong></span>
-                  </span>
                   @endif
                 </div>
               </div>
