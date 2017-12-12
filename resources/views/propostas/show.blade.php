@@ -34,7 +34,7 @@
           <p class="alert {{ $proposta->situacao != 'Cancelada' ? 'alert-warning' : 'alert-danger' }} alert-trim"><strong>Situação: </strong>{!! $proposta->situacao !!}</p>
           <p><strong>Título da Obra: </strong>{!! $obra->titulo !!}</p>
           <p><strong>Subtítulo da Obra: </strong>{!! $obra->subtitulo !!}</p>
-          <p><strong>Categoria da Obra: </strong> 
+          <p><strong>Categoria da Obra: </strong>
             @if($obra->categoria == 1)
               Livro
             @elseif($obra->categoria == 2)
@@ -212,19 +212,19 @@
 
               <div class="form-group">
                 <label for="novo_documento_identificado">Documento COM identificação (.doc)</label>
-                <input type="file" class="form-control" id="novo_documento_identificado" name="novo_documento_identificado">
+                <input type="file" class="form-control" id="novo_documento_identificado" name="novo_documento_identificado" accept="application/msword,application/vnd.oasis.opendocument.text,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
               </div>
               <div class="form-group">
                 <label for="novo_documento_nao_identificado">Documento SEM identificação (.doc)</label>
-                <input type="file" class="form-control" id="novo_documento_nao_identificado" name="novo_documento_nao_identificado">
+                <input type="file" class="form-control" id="novo_documento_nao_identificado" name="novo_documento_nao_identificado" accept="application/msword,application/vnd.oasis.opendocument.text,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
               </div>
               <div class="form-group">
                 <label for="novas_imagens">Imagens (.zip ou .rar)</label>
-                <input type="file" class="form-control" id="novas_imagens" name="novas_imagens">
+                <input type="file" class="form-control" id="novas_imagens" name="novas_imagens" accept="application/zip">
               </div>
               <div class="form-group">
                 <label for="oficio">Ofício de Alterações (.pdf)</label>
-                <input type="file" class="form-control" id="oficio" name="oficio">
+                <input type="file" class="form-control" id="oficio" name="oficio" accept="application/pdf">
               </div>
               <div class="modal-footer">
                 <button class="btn btn-default" type="button" data-dismiss="modal">Cancelar</button>

@@ -356,7 +356,7 @@
 
                 <div class="form-group col-md-4 {{ $errors->has('documento_s_identificacao') | !$errors->isEmpty() ? 'has-error' :'' }}">
                   <label class="control-label" for="documento_s_identificacao">Documento sem Identificação *<br/>(.doc, .docx ou .odt)</label>
-                  <input type="file" id="documento_s_identificacao" name="documento_s_identificacao" class="form-control">
+                  <input type="file"  id="documento_s_identificacao" name="documento_s_identificacao" class="form-control" accept="application/msword,application/vnd.oasis.opendocument.text,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                   @if ($errors->has('documento_s_identificacao'))
                       <span class="help-block">
                           <span class="text-danger"><strong>{{ $errors->first('documento_s_identificacao') }}</strong></span>
@@ -367,7 +367,7 @@
 
                 <div class="form-group col-md-4 {{ $errors->has('documento_c_identificacao') | !$errors->isEmpty() ? 'has-error' :'' }}">
                   <label class="control-label" for="documento_c_identificacao">Documento com Identificação *<br/>(.doc, .docx ou .odt)</label>
-                  <input type="file" id="documento_c_identificacao" name="documento_c_identificacao" class="form-control">
+                  <input type="file" id="documento_c_identificacao" name="documento_c_identificacao" class="form-control" accept="application/msword,application/vnd.oasis.opendocument.text,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                   @if ($errors->has('documento_c_identificacao'))
                       <span class="help-block">
                           <span class="text-danger"><strong>{{ $errors->first('documento_c_identificacao') }}</strong></span>
@@ -377,7 +377,7 @@
 
                 <div class="form-group col-md-4 {{ $errors->has('imagens') | !$errors->isEmpty() ? 'has-error' :'' }}">
                   <label class="control-label" for="imagens">Imagens *<br/>(.rar ou .zip)</label>
-                  <input type="file" id="imagens" name="imagens" class="form-control">
+                  <input type="file" id="imagens" name="imagens" class="form-control" accept="application/zip,application/x-zip-compressed">
                   @if ($errors->has('imagens'))
                       <span class="help-block">
                           <span class="text-danger"><strong>{{ $errors->first('imagens') }}</strong></span>

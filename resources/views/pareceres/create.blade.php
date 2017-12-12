@@ -55,7 +55,7 @@
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                 <div class="form-group">
                   <label for="parecer">Parecer (.pdf)</label>
-                  <input type="file" name="parecer" class="form-control" id="parecer">
+                  <input type="file" name="parecer" class="form-control" id="parecer" accept="application/pdf">
                 </div>
                 <div class="form-group">
                   <label for="obs">Observações</label>

@@ -48,8 +48,8 @@
                       <li class="list-group-item titulo-lista">
                         <div class="pull-right">
                           @if($obra->prazo_restante > 0)
-                          <a href="{!! action('ParecerController@create', $obra->cod_parecer) !!}">Enviar Parecer</a>
                             @if(!$obra->envio)
+                              <a href="{!! action('ParecerController@create', $obra->cod_parecer) !!}">Enviar Parecer</a>
                               <span class="text-danger">(Restam {!! $obra->prazo_restante !!} dias!)</span>
                             @else
                               <span class="text-success">(Parecer enviado!)</span>

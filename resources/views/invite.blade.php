@@ -61,7 +61,7 @@
             <div class="row">
               <div class="col-md-6">
                 <label for="documento_parecerista">Material</label>
-                <input type="file" class="form-control" id="documento_parecerista" name="documento_parecerista" placeholder="Material a ser enviado ao parecerista" value="{{old('documento_parecerista')}}"/>
+                <input type="file" class="form-control" id="documento_parecerista" name="documento_parecerista" placeholder="Material a ser enviado ao parecerista" value="{{old('documento_parecerista')}}" accept="application/pdf"/>
               </div>
               <div class="col-md-3">
                 <label for="paginas">Número de Páginas</label>

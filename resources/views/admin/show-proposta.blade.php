@@ -239,7 +239,7 @@
 
               <div class="form-group">
                 <label for="doc_sugestao">Documento de sugestão de alterações (.pdf)</label>
-                <input type="file" class="form-control" id="doc_sugestao" name="doc_sugestao">
+                <input type="file" class="form-control" id="doc_sugestao" name="doc_sugestao" accept="application/pdf">
               </div>
               <div class="modal-footer">
                 <button class="btn btn-default" type="button" data-dismiss="modal">Cancelar</button>
@@ -251,7 +251,7 @@
       </div> <!-- modal-dialog -->
     </div>
 
-    <!-- MODAL SOLICITAR NOVA VERSÃO -->
+    <!-- MODAL CANCELAR PROPOSTA -->
     <div class="modal fade" id="myModal2">
       <div class="modal-dialog modal-sm"> <!-- modal-sm, modal-lg -->
         <div class="modal-content">
